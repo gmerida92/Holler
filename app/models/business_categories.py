@@ -13,3 +13,5 @@ class BusinessCategory(db.Model):
     category_name = db.Column(db.String(256), nullable=True)
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
+
+    businesses = db.relationship('Business', back_populates='business_categories')

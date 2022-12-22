@@ -26,6 +26,9 @@ class Business(db.Model):
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
 
-    users = db.relationship('User', back_populates='business')
-    reviews = db.relationship('Review', back_populates='business', cascade='all, delete-orphan')
-    images = db.relationship('Image', back_populates='business', cascade='all, delete-orphan')
+    users = db.relationship('User', back_populates='businesses')
+    reviews = db.relationship('Review', back_populates='businesses', cascade='all, delete-orphan')
+    images = db.relationship('Image', back_populates='businesses', cascade='all, delete-orphan')
+    business_hours = db.relationship('BusinessHour', back_populates='businesses', cascade='all, delete-orphan')
+    business_categories = db.relationship('BusinessCategory', back_populates='businesses', cascade='all, delete-orphan')
+    business_attributes = db.relationship('BusinessAttribute', back_populates='businesses', cascade='all, delete-orphan')

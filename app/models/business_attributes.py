@@ -28,3 +28,5 @@ class BusinessAttribute(db.Model):
     offers_delivery = db.Column(db.Boolean, default=True, nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
+
+    businesses = db.relationship('Business', back_populates='business_attributes')

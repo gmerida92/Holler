@@ -15,3 +15,5 @@ class BusinessHour(db.Model):
     close_time = db.Column(db.Time, nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
+
+    businesses = db.relationship('business_hours', back_populates='business_hours')

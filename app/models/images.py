@@ -21,4 +21,4 @@ class Image(db.Model):
 
     users = db.relationship('User', back_populates='images')
     reviews = db.relationship('Review', back_populates='images')
-    business = db.relationship('Business', back_populates='images')
+    businesses = db.relationship('Business', back_populates='images')
