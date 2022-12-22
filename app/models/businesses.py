@@ -19,7 +19,7 @@ class Business(db.Model):
     country = db.Column(db.String(256), nullable=False)
     phone = db.Column(db.String(256), nullable=False)
     web_address = db.Column(db.Text, nullable=True)
-    is_open = db.Column(db.Boolean, nullable=False)
+    is_open = db.Column(db.Boolean, default=True, nullable=False)
     latitude = db.Column(db.Float, nullable=False)
     longitude = db.Column(db.Float, nullable=False)
     description = db.Column(db.String(256), nullable=True)
@@ -32,3 +32,19 @@ class Business(db.Model):
     business_hours = db.relationship('BusinessHour', back_populates='businesses', cascade='all, delete-orphan')
     business_categories = db.relationship('BusinessCategory', back_populates='businesses', cascade='all, delete-orphan')
     business_attributes = db.relationship('BusinessAttribute', back_populates='businesses', cascade='all, delete-orphan')
+
+    def to_dict_detail(self):
+        return {
+            'id': self.id,
+            'user_id': self.users.id,
+            'name': self.name,
+            'address': self.address,
+            'address_2': self.address_2,
+            'city': self.city,
+            'state': self.state,
+            'postal_code': self.postal_code,
+            'country': self.country,
+            'phone': self.phone,
+            'web_address': self.web_address,
+            'is_open': self.is_open
+        }

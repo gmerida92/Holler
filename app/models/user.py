@@ -49,3 +49,15 @@ class User(db.Model, UserMixin):
             'password': self.hashed_password,
             'profile_image': self.profile_image
         }
+    
+    def to_dict_detail(self):
+        return {
+            'id': self.id,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'profile_name': self.profile_image,
+            'biography': self.biography,
+            'location': self.location,
+            'review_count': len(self.reviews) if len(self.review) else 0,
+            'profile_image': self.profile_image,
+        }
