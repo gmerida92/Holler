@@ -5,14 +5,15 @@ from sqlalchemy.sql import func
 
 
 class User(db.Model, UserMixin):
+    
     __tablename__ = 'users'
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    first_name = db.column(db.String, nullable=False)
-    last_name = db.column(db.String, nullable=False)
+    first_name = db.column(db.String(256), nullable=False)
+    last_name = db.column(db.String(256), nullable=False)
     profile_name = db.Column(db.String(40), nullable=False)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)

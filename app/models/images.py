@@ -11,7 +11,7 @@ class Image(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.Foreignkey('users.id'), nullable=False)
     business_id = db.Column(db.Integer, db.Foreignkey('businesses.id'), nullable=False)
-    review_id = db.Column(db.Integer, db.Foreignkey('users.id'), nullable=True)
+    review_id = db.Column(db.Integer, db.Foreignkey('reviews.id'), nullable=True)
     image_url = db.Column(db.Text, nullable=False)
     caption = db.Column(db.String(256), nullable=True)
     label = db.Column(db.String(256), nullable=False)
