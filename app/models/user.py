@@ -23,6 +23,10 @@ class User(db.Model, UserMixin):
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
 
+    reviews = db.relationship('Review', back_populates='users', cascade='all, delete-orphan')
+    images = db.relationship('Image', back_populates='users', cascade='all, delete-orphan')
+    businesses = db.relationship('Business', back_populates='users', cascade='all, delete-orphan')
+
 
     @property
     def password(self):

@@ -1,9 +1,9 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from sqlalchemy.sql import func
 
-class BusinessAttribute(db.Model):
+class BusinessHour(db.Model):
 
-    __tablename__ = 'business_attributes'
+    __tablename__ = 'business_hours'
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}

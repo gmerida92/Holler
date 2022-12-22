@@ -18,3 +18,7 @@ class Image(db.Model):
     tag = db.Column(db.String(256), nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
+
+    users = db.relationship('User', back_populates='images')
+    reviews = db.relationship('Review', back_populates='images')
+    business = db.relationship('Business', back_populates='images')

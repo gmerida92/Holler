@@ -15,3 +15,7 @@ class Review(db.Model):
     review = db.Column(db.String(256), nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
+
+    users = db.relationship('User', back_populates='reviews')
+    images = db.relationship('Image', back_populates='reviews', cascade='all, delete-orphan')
+    businesses = db.relationship('Business', back_populates='reviews')
