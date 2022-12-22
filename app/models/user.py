@@ -1,6 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from sqlalchemy.sql import func
 
 
 class User(db.Model, UserMixin):
@@ -12,9 +13,15 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.column(db.String, nullable=False)
     last_name = db.column(db.String, nullable=False)
-    username = db.Column(db.String(40), nullable=False, unique=True)
+    profile_name = db.Column(db.String(40), nullable=False)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
+    biography = db.Column(db.String(256), nullable=True)
+    location = db.Column(db.String(256), nullable=True)
+    profile_image = db.Column(db.Text, nullable=True)
+    created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
+
 
     @property
     def password(self):
@@ -30,6 +37,10 @@ class User(db.Model, UserMixin):
     def to_dict(self):
         return {
             'id': self.id,
-            'username': self.username,
-            'email': self.email
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'profile_name': self.profile_name,
+            'email': self.email,
+            'password': self.hashed_password,
+            'profile_image': self.profile_image
         }
