@@ -19,3 +19,27 @@ class Review(db.Model):
     users = db.relationship('User', back_populates='reviews')
     images = db.relationship('Image', back_populates='reviews', cascade='all, delete-orphan')
     businesses = db.relationship('Business', back_populates='reviews')
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'business_id': self.business_id,
+            'user_id': self.user_id,
+            'stars': self.stars,
+            'review': self.review,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
+        }
+
+    # def to_dict_detail(self):
+    #     return {
+    #         'id': self.id,
+    #         'business_id': self.business_id,
+    #         'stars': self.stars,
+    #         'review': self.review,
+    #         'created_at': self.created_at,
+    #         'updated_at': self.updated_at,
+    #         # 'Owner': {},
+    #         # 'Business': {},
+    #         # 'Images': [{}]
+    #     }

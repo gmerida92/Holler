@@ -17,3 +17,14 @@ class BusinessHour(db.Model):
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
 
     businesses = db.relationship('business_hours', back_populates='business_hours')
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'business_id': self.business_id,
+            'day': self.day,
+            'open_time': self.open_time,
+            'close_time': self.close_time,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
+        }

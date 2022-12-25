@@ -22,3 +22,17 @@ class Image(db.Model):
     users = db.relationship('User', back_populates='images')
     reviews = db.relationship('Review', back_populates='images')
     businesses = db.relationship('Business', back_populates='images')
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'business_id': self.business_id,
+            'review_id': self.review_id,
+            'image_url': self.image_url,
+            'caption': self.caption,
+            'label': self.label,
+            'tag': self.tag,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
+        }

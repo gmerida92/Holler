@@ -33,7 +33,7 @@ class Business(db.Model):
     business_categories = db.relationship('BusinessCategory', back_populates='businesses', cascade='all, delete-orphan')
     business_attributes = db.relationship('BusinessAttribute', back_populates='businesses', cascade='all, delete-orphan')
 
-    def to_dict_detail(self):
+    def to_dict(self):
         return {
             'id': self.id,
             'user_id': self.users.id,
@@ -46,5 +46,10 @@ class Business(db.Model):
             'country': self.country,
             'phone': self.phone,
             'web_address': self.web_address,
-            'is_open': self.is_open
+            'is_open': self.is_open,
+            'latitude': self.latitude,
+            'longitude': self.longitude,
+            'description': self.description,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at,
         }
