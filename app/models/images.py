@@ -9,9 +9,9 @@ class Image(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.Foreignkey('users.id'), nullable=False)
-    business_id = db.Column(db.Integer, db.Foreignkey('businesses.id'), nullable=False)
-    review_id = db.Column(db.Integer, db.Foreignkey('reviews.id'), nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    business_id = db.Column(db.Integer, db.ForeignKey('businesses.id'), nullable=False)
+    review_id = db.Column(db.Integer, db.ForeignKey('reviews.id'), nullable=True)
     image_url = db.Column(db.Text, nullable=False)
     caption = db.Column(db.String(256), nullable=True)
     label = db.Column(db.String(256), nullable=False)
