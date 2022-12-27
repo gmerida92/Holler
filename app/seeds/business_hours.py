@@ -3,7 +3,7 @@ from app.models import db, BusinessHour, environment, SCHEMA
 
 
 # Adds a demo user, you can add other users here if you want
-def seed_business_attributes():
+def seed_business_hours():
     objects = [
         BusinessHour(business_id=1, day="Monday", open_time=datetime.time(11, 0), close_time=datetime.time(20, 30)),
         BusinessHour(business_id=1, day="Tuesday", open_time=datetime.time(11, 0), close_time=datetime.time(20, 30)),
@@ -65,7 +65,7 @@ def seed_business_attributes():
 # incrementing primary key, CASCADE deletes any dependent entities.  With
 # sqlite3 in development you need to instead use DELETE to remove all data and
 # it will reset the primary keys for you as well.
-def undo_business_attributes():
+def undo_business_hours():
     if environment == "production":
         db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
     else:
