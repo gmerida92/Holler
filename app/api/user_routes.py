@@ -15,6 +15,13 @@ def users():
     return {'users': [user.to_dict() for user in users]}
 
 
+# GET current user
+@user_routes.route('/session')
+def session():
+    user = current_user
+    return user.to_dict()
+
+
 @user_routes.route('/<int:id>')
 @login_required
 def user(id):
