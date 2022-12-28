@@ -30,16 +30,3 @@ class Review(db.Model):
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }
-
-    # def to_dict_detail(self):
-    #     return {
-    #         'id': self.id,
-    #         'business_id': self.business_id,
-    #         'stars': self.stars,
-    #         'review': self.review,
-    #         'created_at': self.created_at,
-    #         'updated_at': self.updated_at,
-    #         # 'Owner': {},
-    #         # 'Business': {},
-    #         # 'Images': [{}]
-    #     }

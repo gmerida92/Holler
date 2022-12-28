@@ -55,15 +55,4 @@ class User(db.Model, UserMixin):
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }
-    
-    # def to_dict_detail(self):
-    #     return {
-    #         'id': self.id,
-    #         'first_name': self.first_name,
-    #         'last_name': self.last_name,
-    #         'profile_name': self.profile_image,
-    #         'biography': self.biography,
-    #         'location': self.location,
-    #         # 'review_count': len(self.reviews) if len(self.review) else 0,
-    #         'profile_image': self.profile_image,
-    #     }
+
