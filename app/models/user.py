@@ -19,6 +19,7 @@ class User(db.Model, UserMixin):
     hashed_password = db.Column(db.String(255), nullable=False)
     biography = db.Column(db.String(256), nullable=True)
     location = db.Column(db.String(256), nullable=True)
+    review_count = db.Column(db.Integer, default=0, nullable=False)
     profile_image = db.Column(db.Text, nullable=True)
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
@@ -46,9 +47,10 @@ class User(db.Model, UserMixin):
             'last_name': self.last_name,
             'profile_name': self.profile_name,
             'email': self.email,
-            'password': self.hashed_password,
+            'hashed_password': self.hashed_password,
             'biography': self.biography,
             'location': self.location,
+            'review_count': self.review_count,
             'profile_image': self.profile_image,
             'created_at': self.created_at,
             'updated_at': self.updated_at

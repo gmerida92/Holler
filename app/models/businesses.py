@@ -23,6 +23,8 @@ class Business(db.Model):
     latitude = db.Column(db.Float, nullable=False)
     longitude = db.Column(db.Float, nullable=False)
     description = db.Column(db.String(256), nullable=True)
+    stars = db.Column(db.Float, default=0, nullable=False)
+    review_count = db.Column(db.Integer, default=0, nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
 
