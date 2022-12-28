@@ -23,8 +23,8 @@ def seed_businesses():
 # it will reset the primary keys for you as well.
 def undo_businesses():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.businesses RESTART IDENTITY CASCADE;")
     else:
-        db.session.execute("DELETE FROM users")
+        db.session.execute("DELETE FROM businesses")
         
     db.session.commit()
