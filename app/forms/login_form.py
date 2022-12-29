@@ -14,8 +14,8 @@ def user_exists(form, field):
 
 def password_matches(form, field):
     # Checking if password matches
-    # password = field.data
-    password = form.data['password']
+    password = field.data
+    # password = form.data['password']
     credential = form.data['credential']
     # credential = field.data
     user = User.query.filter(User.email == credential).first()
@@ -26,5 +26,5 @@ def password_matches(form, field):
 
 
 class LoginForm(FlaskForm):
-    credential = StringField('email', validators=[DataRequired(), user_exists])
-    password = StringField('password', validators=[DataRequired(), password_matches])
+    credential = StringField('Email', validators=[DataRequired(), Email(), user_exists])
+    password = StringField('Password', validators=[DataRequired(), password_matches])

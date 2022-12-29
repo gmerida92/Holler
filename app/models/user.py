@@ -14,7 +14,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(256), nullable=False)
     last_name = db.Column(db.String(256), nullable=False)
-    profile_name = db.Column(db.String(40), nullable=False)
+    profile_name = db.Column(db.String(40), nullable=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
     biography = db.Column(db.String(256), nullable=True)
@@ -32,10 +32,18 @@ class User(db.Model, UserMixin):
     @property
     def password(self):
         return self.hashed_password
+    
+    @property
+    def profileName(self):
+        return self.profile_name
 
     @password.setter
     def password(self, password):
         self.hashed_password = generate_password_hash(password)
+
+    @profileName.setter
+    def profileName (self, profileName):
+        self.profile_name = f'{self.first_name} {self.last_name[0].upper()}'
 
     def check_password(self, password):
         return check_password_hash(self.password, password)

@@ -83,14 +83,15 @@ def sign_up():
 
     if form.validate_on_submit():
         user = User(
-            username=form.data['username'],
+            first_name = form.data['first_name'],
+            last_name=form.data['last_name'],
             email=form.data['email'],
             password=form.data['password']
         )
         db.session.add(user)
         db.session.commit()
         login_user(user)
-        return user.to_dict()
+        return user.session_dict()
     return {
         'message': 'validation Error',
         'statusCode': 401,
