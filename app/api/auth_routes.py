@@ -40,6 +40,7 @@ def unauthorized():
     return {'errors': ['Forbidden']}, 401
 
 
+#Login User
 @auth_routes.route('/login', methods=['POST'])
 def login():
     """
@@ -61,7 +62,7 @@ def login():
         }, 401
 
 
-
+#Logout User
 @auth_routes.route('/logout')
 @login_required
 def logout():
@@ -72,7 +73,7 @@ def logout():
     return {'message': 'User logged out'}
 
 
-
+#Sign up and create a new user
 @auth_routes.route('/signup', methods=['POST'])
 def sign_up():
     """
@@ -85,12 +86,16 @@ def sign_up():
         user = User(
             first_name = form.data['first_name'],
             last_name=form.data['last_name'],
+            profile_name=form.data['first_name'] + ' ' + form.data['last_name'][0].upper() + '.',
             email=form.data['email'],
             password=form.data['password']
         )
+
         db.session.add(user)
         db.session.commit()
+
         login_user(user)
+        
         return user.session_dict()
     return {
         'message': 'validation Error',
@@ -99,12 +104,9 @@ def sign_up():
         }, 401
 
 
-
-# GET Current Session User
+# Get Current Session User
 @auth_routes.route('/mysession', methods=["GET"])
 @login_required
 def session():
     user = current_user
     return user.session_dict()
-
-

@@ -32,18 +32,27 @@ class User(db.Model, UserMixin):
     @property
     def password(self):
         return self.hashed_password
-    
-    @property
-    def profileName(self):
-        return self.profile_name
-
     @password.setter
     def password(self, password):
         self.hashed_password = generate_password_hash(password)
 
-    @profileName.setter
-    def profileName (self, profileName):
-        self.profile_name = f'{self.first_name} {self.last_name[0].upper()}'
+
+    @property
+    def current_profile_name(self):
+        return f'{self.first_name} {self.last_name[0].upper()}.'
+    @current_profile_name.setter
+    def profile_name (self, current_profile_name):
+        self.profile_name = current_profile_name
+
+
+    @property
+    def update_review_count(self):
+        return len(self.reviews)
+    @update_review_count.setter
+    def review_count(self, update_review_count):
+        self.review_count = update_review_count
+
+
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
@@ -73,5 +82,19 @@ class User(db.Model, UserMixin):
             'email': self.email,
             'password': self.password,
             'profile_image': self.profile_image
+        }
+
+    def user_dict(self):
+        return {
+            'id': self.id,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'profile_name': self.profile_name,
+            'biography': self.biography,
+            'location': self.location,
+            'review_count': self.review_count,
+            'profile_image': self.profile_image,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
         }
 
