@@ -22,12 +22,25 @@ def validation_errors_to_error_messages(validation_errors):
 def authenticate():
     """
     Authenticates a user.
+    If a user login or @login required fails, leads to this route.
     """
-    if current_user.is_authenticated:
-        return current_user.to_dict()
-    return {'errors': ['Unauthorized']}
+    # if current_user.is_authenticated:
+    #     return current_user.to_dict()
+    return {
+        'message': 'Authentication Required',
+        'statusCode': 401
+        }, 401
 
 
+@auth_routes.route('/unauthorized')
+def unauthorized():
+    """
+    Returns unauthorized JSON when flask-login authentication fails
+    """
+    return {'errors': ['Forbidden']}, 401
+
+
+#Login User
 @auth_routes.route('/login', methods=['POST'])
 def login():
     """
@@ -39,13 +52,19 @@ def login():
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         # Add the user to the session, we are logged in!
-        user = User.query.filter(User.email == form.data['email']).first()
+        user = User.query.filter(User.email == form.data['credential']).first()
         login_user(user)
-        return user.to_dict()
-    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+        return user.session_dict()
+    return {
+        'message': 'validation Error',
+        'statusCode': 401,
+        'errors': validation_errors_to_error_messages(form.errors)
+        }, 401
 
 
+#Logout User
 @auth_routes.route('/logout')
+@login_required
 def logout():
     """
     Logs a user out
@@ -54,6 +73,7 @@ def logout():
     return {'message': 'User logged out'}
 
 
+#Sign up and create a new user
 @auth_routes.route('/signup', methods=['POST'])
 def sign_up():
     """
@@ -61,22 +81,32 @@ def sign_up():
     """
     form = SignUpForm()
     form['csrf_token'].data = request.cookies['csrf_token']
+
     if form.validate_on_submit():
         user = User(
-            username=form.data['username'],
+            first_name = form.data['first_name'],
+            last_name=form.data['last_name'],
+            profile_name=form.data['first_name'] + ' ' + form.data['last_name'][0].upper() + '.',
             email=form.data['email'],
             password=form.data['password']
         )
+
         db.session.add(user)
         db.session.commit()
+
         login_user(user)
-        return user.to_dict()
-    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+        
+        return user.session_dict()
+    return {
+        'message': 'validation Error',
+        'statusCode': 401,
+        'errors': validation_errors_to_error_messages(form.errors)
+        }, 401
 
 
-@auth_routes.route('/unauthorized')
-def unauthorized():
-    """
-    Returns unauthorized JSON when flask-login authentication fails
-    """
-    return {'errors': ['Unauthorized']}, 401
+# Get Current Session User
+@auth_routes.route('/mysession', methods=["GET"])
+@login_required
+def session():
+    user = current_user
+    return user.session_dict()
