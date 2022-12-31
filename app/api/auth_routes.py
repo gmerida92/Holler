@@ -18,17 +18,20 @@ def validation_errors_to_error_messages(validation_errors):
     return errorMessages
 
 
-@auth_routes.route('/')
-def authenticate():
+@auth_routes.route('/unauthorized', methods=['GET', 'PUT', 'DELETE'])
+def unauthenticated():
     """
     Authenticates a user.
-    If a user login or @login required fails, leads to this route.
+    If a user login or @login_required fails, leads to this route.
+
     """
     # if current_user.is_authenticated:
     #     return current_user.to_dict()
-    return {
-        'message': 'Authentication Required',
-        'statusCode': 401
+    
+    if not current_user.is_authenticated:
+        return {
+            'message': 'Authentication Required',
+            'statusCode': 401
         }, 401
 
 
@@ -85,10 +88,10 @@ def sign_up():
     if form.validate_on_submit():
         user = User(
             first_name = form.data['first_name'],
-            last_name=form.data['last_name'],
-            profile_name=form.data['first_name'] + ' ' + form.data['last_name'][0].upper() + '.',
-            email=form.data['email'],
-            password=form.data['password']
+            last_name = form.data['last_name'],
+            profile_name = form.data['first_name'] + ' ' + form.data['last_name'][0].upper() + '.',
+            email = form.data['email'],
+            password = form.data['password']
         )
 
         db.session.add(user)
