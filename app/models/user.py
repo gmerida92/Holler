@@ -14,7 +14,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(256), nullable=False)
     last_name = db.Column(db.String(256), nullable=False)
-    profile_name = db.Column(db.String(40), nullable=True)
+    profile_name = db.Column(db.String(256), nullable=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
     biography = db.Column(db.String(256), nullable=True)
@@ -37,20 +37,20 @@ class User(db.Model, UserMixin):
         self.hashed_password = generate_password_hash(password)
 
 
-    @property
-    def current_profile_name(self):
-        return f'{self.first_name} {self.last_name[0].upper()}.'
-    @current_profile_name.setter
-    def profile_name (self, current_profile_name):
-        self.profile_name = current_profile_name
+    # @property
+    # def current_profile_name(self):
+    #     return f'{self.first_name} {self.last_name[0].upper()}.'
+    # @current_profile_name.setter
+    # def profile_name (self, current_profile_name):
+    #     self.profile_name = current_profile_name
 
 
-    @property
-    def update_review_count(self):
-        return len(self.reviews)
-    @update_review_count.setter
-    def review_count(self, update_review_count):
-        self.review_count = update_review_count
+    # @property
+    # def update_review_count(self):
+    #     return len(self.reviews)
+    # @update_review_count.setter
+    # def review_count(self, update_review_count):
+    #     self.review_count = update_review_count
 
 
 
