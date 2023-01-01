@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, session, request
 from flask_login import login_required, current_user
 from app.models import User, Business, BusinessAttribute, BusinessCategory, BusinessHour, Image, Review, db
-from .user_routes import authorization_required, user_exists, validation_errors_to_error_messages
+from .user_routes import user_exists, validation_errors_to_error_messages
 from ..forms.edit_business_form import EditBusinessForm
 from ..forms.create_business_form import CreateBusinessForm
 
@@ -23,6 +23,26 @@ def business_exists(business_route_method):
     
     business_route_method_wrapper.__name__ = business_route_method.__name__
     return business_route_method_wrapper
+
+
+
+def authorization_required(modify_user_route_method):
+    def modify_user_route_method_wrapper(id):
+        # id = args
+        business = Business.query.get(id)
+
+        if business.user_id == current_user.id:
+            return modify_user_route_method(id)
+        else:
+            return {
+                "message": "Forbidden",
+                "statusCode": 403
+            }, 403
+
+    modify_user_route_method_wrapper.__name__ = modify_user_route_method.__name__
+    return modify_user_route_method_wrapper
+
+
 
 # Get all Businesses
 @business_routes.route('/', methods=['GET'])
@@ -56,11 +76,27 @@ def get_business_details(id):
 @business_routes.route('/', methods=['POST'])
 @login_required
 def create_business():
+    current_user_id = current_user.get_id()
+
     form = CreateBusinessForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
         business = Business(
+            user_id = current_user_id,
+            name = form.data['name'],
+            address = form.data['address'],
+            address_2 = form.data['address_2'],
+            city = form.data['city'],
+            state = form.data['state'],
+            postal_code = form.data['postal_code'],
+            country = form.data['country'],
+            phone = form.data['phone'],
+            web_address = form.data['web_address'],
+            is_open = form.data['is_open'],
+            latitude = form.data['latitude'],
+            longitude = form.data['longitude'],
+            description = form.data['description']
         )
 
         db.session.add(business)
@@ -74,5 +110,63 @@ def create_business():
         }, 401
 
 # Add an Image to a Business based on the Businesses Id
+@business_routes.route('/<int:id>/images', methods=['POST'])
+@login_required
+@business_exists
+@authorization_required
+def create_image(id):
+    pass
+
 # Edit a Business
+@business_routes.route('/<int:id>', methods=['PUT'])
+@login_required
+@business_exists
+@authorization_required
+def edit_business(id):
+
+    business = Business.query.get(id)
+
+    form = EditBusinessForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+
+        business.name= form.data['name']
+        business.address= form.data['address']
+        business.address_2= form.data['address_2']
+        business.city= form.data['city']
+        business.state= form.data['state']
+        business.postal_code= form.data['postal_code']
+        business.country= form.data['country']
+        business.phone= form.data['phone']
+        business.web_address= form.data['web_address']
+        business.is_open= form.data['is_open']
+        business.latitude= form.data['latitude']
+        business.longitude= form.data['longitude']
+        business.description= form.data['description']
+        
+        db.session.commit()
+        return business.to_dict()
+
+    return {
+        'message': 'validation Error',
+        'statusCode': 401,
+        'errors': validation_errors_to_error_messages(form.errors)
+    }, 401 
+
 # Delete a Business
+@business_routes.route('/<int:id>', methods=['DELETE'])
+@login_required
+@business_exists
+@authorization_required
+def delete_business(id):
+
+    business = Business.query.get(id)
+
+    db.session.delete(business)
+    db.session.commit()
+
+    return {
+        "message": "Successfully deleted",
+        "statusCode": 200
+    }, 200

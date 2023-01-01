@@ -18,7 +18,7 @@ def validation_errors_to_error_messages(validation_errors):
     return errorMessages
 
 
-@auth_routes.route('/unauthorized', methods=['GET', 'PUT', 'DELETE'])
+@auth_routes.route('/unauthorized', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def unauthenticated():
     """
     Authenticates a user.

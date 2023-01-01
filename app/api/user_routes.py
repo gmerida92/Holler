@@ -135,4 +135,4 @@ def delete_post(id):
     return {
         "message": "Successfully deleted",
         "statusCode": 200
-    }
+    }, 200

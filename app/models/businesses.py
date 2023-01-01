@@ -75,8 +75,8 @@ class Business(db.Model):
             'description': self.description,
             'created_at': self.created_at,
             'updated_at': self.updated_at,
-            'stars': round(sum([review.to_dict()['stars'] for review in self.reviews]) / len(self.reviews) * 2 ) / 2,
-            'review_count': len(self.reviews),
+            'stars': round(sum([review.to_dict()['stars'] for review in self.reviews]) / len(self.reviews) * 2 ) / 2 if len(self.reviews) > 0 else self.stars,
+            'review_count': len(self.reviews) if len(self.reviews) > 0 else self.reviews,
             'Images': [image.for_business_to_dict() for image in self.images]
         }
     
@@ -99,8 +99,8 @@ class Business(db.Model):
             'description': self.description,
             'created_at': self.created_at,
             'updated_at': self.updated_at,
-            'stars': round(sum([review.to_dict()['stars'] for review in self.reviews]) / len(self.reviews) * 2 ) / 2,
-            'review_count': len(self.reviews),
+            'stars': round(sum([review.to_dict()['stars'] for review in self.reviews]) / len(self.reviews) * 2 ) / 2 if len(self.reviews) > 0 else self.stars,
+            'review_count': len(self.reviews) if len(self.reviews) > 0 else self.reviews,
             'Owner': self.users.for_business_to_dict(),
             'Images': [image.for_business_to_dict() for image in self.images]
         }
