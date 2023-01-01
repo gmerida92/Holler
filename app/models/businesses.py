@@ -55,3 +55,30 @@ class Business(db.Model):
             'created_at': self.created_at,
             'updated_at': self.updated_at,
         }
+
+    def all_to_dict(self):
+        print(self.reviews)
+        return {
+            'id': self.id,
+            'user_id': self.users.id,
+            'name': self.name,
+            'address': self.address,
+            'address_2': self.address_2,
+            'city': self.city,
+            'state': self.state,
+            'postal_code': self.postal_code,
+            'country': self.country,
+            'phone': self.phone,
+            'web_address': self.web_address,
+            'is_open': self.is_open,
+            'latitude': self.latitude,
+            'longitude': self.longitude,
+            'description': self.description,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at,
+            # 'review_count': db.session.func.count([review.to_dict() for review in self.reviews]).scalar(),
+            # 'review_count': db.session.query(func.count(self.reviews)).scalar()
+            'review_count': len(self.reviews),
+            'stars': round(sum([review.to_dict()['stars'] for review in self.reviews]) / len(self.reviews) * 2 ) / 2,
+            'Images': [image.for_business_to_dict() for image in self.images]
+        }
