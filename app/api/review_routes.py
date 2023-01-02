@@ -40,6 +40,7 @@ def authorization_required(modify_review_route_method):
     return modify_review_route_method_wrapper
 
 
+
 # Get all Reviews by Current Session User
 @review_routes.route('/mysession', methods=['GET'])
 @login_required
@@ -48,12 +49,14 @@ def get_reviews_owned():
     reviews = Review.query.filter(Review.user_id == current_user_id).all()
     return {'Reviews': [review.detail_to_dict() for review in reviews]}
 
+
 # Get all Reviews by User Id
 @review_routes.route('/users/<int:id>', methods=['GET'])
 @user_exists
 def get_reviews_by_user(id):
     reviews = Review.query.filter(Review.user_id == id).all()
     return {'Reviews': [review.detail_to_dict() for review in reviews]}
+
 
 # Get all Reviews by Business Id
 @review_routes.route('/businesses/<int:id>', methods=['GET'])
@@ -62,6 +65,7 @@ def get_reviews_for_business(id):
     reviews = Review.query.filter(Review.business_id == id).all()
     return {'Reviews': [review.detail_to_dict() for review in reviews]}
 
+
 # Get Review based on Id
 @review_routes.route('/<int:id>', methods=['GET'])
 @review_exists
@@ -69,9 +73,11 @@ def get_review_detail(id):
     review = Review.query.get(id)
     return review.detail_to_dict()
 
+
 # Create Review based on the Business Id
 @review_routes.route('/businesses/<int:id>', methods=['POST'])
 @login_required
+@business_exists
 def create_review(id):
     current_user_id = current_user.get_id()
 
@@ -88,6 +94,7 @@ def create_review(id):
 
         db.session.add(review)
         db.session.commit()
+
         return review.to_dict()
 
     return {
@@ -96,14 +103,6 @@ def create_review(id):
         'errors': validation_errors_to_error_messages(form.errors)
         }, 401
 
-# # Add Image to Review based on Review Id
-# @review_routes.route('/<int:id>/images', methods=['POST'])
-# @login_required
-# @review_exists
-# @authorization_required
-# def create_image(id):
-#     # form['csrf_token'].data = request.cookies['csrf_token']
-#     pass
 
 # Edit Review
 @review_routes.route('/<int:id>', methods=['PUT'])
@@ -128,7 +127,7 @@ def edit_review(id):
         'statusCode': 401,
         'errors': validation_errors_to_error_messages(form.errors)
         }, 401
-    pass
+        
 
 # Delete Review
 @review_routes.route('/<int:id>', methods=['DELETE'])
