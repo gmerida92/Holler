@@ -3,7 +3,7 @@ from wtforms import StringField
 from wtforms.validators import DataRequired, Email, ValidationError
 from app.models import User
 
-class EditUserForm(FlaskForm):
+class UserForm(FlaskForm):
     first_name = StringField('First Name',validators=[DataRequired()])
     last_name = StringField('Last Name',validators=[DataRequired()])
     biography = StringField('Biography',validators=[DataRequired()])

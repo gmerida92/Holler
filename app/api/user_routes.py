@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, session, request
 from flask_login import login_required, current_user
-from ..forms.edit_user_form import EditUserForm
+from ..forms.user_form import UserForm
 from app.models import User, Business, BusinessAttribute, BusinessCategory, BusinessHour, Image, Review, db
 
 user_routes = Blueprint('users', __name__)
@@ -98,7 +98,7 @@ def edit_user(id):
 
     user = User.query.get(id)
    
-    form = EditUserForm()
+    form = UserForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
