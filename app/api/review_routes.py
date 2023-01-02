@@ -39,7 +39,7 @@ def authorization_required(modify_review_route_method):
     return modify_review_route_method_wrapper
 
 # Get all Reviews by Current Session User
-@review_routes
+# @review_routes
 # Get all Reviews by User Id
 # Get all Reviews by Business Id
 # Get all Review by Review Id
