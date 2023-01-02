@@ -14,7 +14,7 @@ class Image(db.Model):
     review_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('reviews.id')), nullable=True)
     image_url = db.Column(db.Text, nullable=False)
     caption = db.Column(db.String(256), nullable=True)
-    label = db.Column(db.String(256), nullable=False)
+    label = db.Column(db.String(256), nullable=True)
     tag = db.Column(db.String(256), nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
