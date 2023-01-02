@@ -104,3 +104,15 @@ class Business(db.Model):
             'Owner': self.users.for_business_to_dict(),
             'Images': [image.for_business_to_dict() for image in self.images]
         }
+
+    def for_review_to_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'name': self.name,
+            'address': self.address,
+            'address_2': self.address_2,
+            'city': self.city,
+            'state': self.state,
+            'postal_code': self.postal_code
+        }

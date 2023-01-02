@@ -26,21 +26,21 @@ def business_exists(business_route_method):
 
 
 
-def authorization_required(modify_user_route_method):
-    def modify_user_route_method_wrapper(id):
+def authorization_required(modify_business_route_method):
+    def modify_business_route_method_wrapper(id):
         # id = args
         business = Business.query.get(id)
 
         if business.user_id == current_user.id:
-            return modify_user_route_method(id)
+            return modify_business_route_method(id)
         else:
             return {
                 "message": "Forbidden",
                 "statusCode": 403
             }, 403
 
-    modify_user_route_method_wrapper.__name__ = modify_user_route_method.__name__
-    return modify_user_route_method_wrapper
+    modify_business_route_method_wrapper.__name__ = modify_business_route_method.__name__
+    return modify_business_route_method_wrapper
 
 
 

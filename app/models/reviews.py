@@ -30,3 +30,17 @@ class Review(db.Model):
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }
+    
+    def detail_to_dict(self):
+        return {
+            'id': self.id,
+            'business_id': self.business_id,
+            'user_id': self.user_id,
+            'stars': self.stars,
+            'review': self.review,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at,
+            'Owner': self.users.for_review_to_dict(),
+            "Business": self.businesses.for_review_to_dict(),
+            'Images': [image.for_review_to_dict() for image in self.images]
+        }
