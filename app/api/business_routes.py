@@ -2,8 +2,8 @@ from flask import Blueprint, jsonify, session, request
 from flask_login import login_required, current_user
 from app.models import User, Business, BusinessAttribute, BusinessCategory, BusinessHour, Image, Review, db
 from .user_routes import user_exists, validation_errors_to_error_messages
-from ..forms.edit_business_form import EditBusinessForm
-from ..forms.create_business_form import CreateBusinessForm
+from ..forms.business_form import BusinessForm
+
 
 
 business_routes = Blueprint('businesses', __name__)
@@ -53,7 +53,7 @@ def get_all_businesses():
 # Get all Businesses owned by the Current Session User
 @business_routes.route('/mysession', methods=['GET'])
 @login_required
-def get_business_owned():
+def get_businesses_owned():
     current_user_id = current_user.get_id()
     businesses = Business.query.filter(Business.user_id == current_user_id).all()
     return {'Businesses': [business.all_to_dict() for business in businesses]}
@@ -61,7 +61,7 @@ def get_business_owned():
 # Get all Businesses by User Id
 @business_routes.route('/users/<int:id>', methods=['GET'])
 @user_exists
-def get_business_by_user_id(id):
+def get_businesses_by_user_id(id):
     businesses = Business.query.filter(Business.user_id == id).all()
     return {'Businesses': [business.detail_to_dict() for business in businesses]}
 
@@ -78,7 +78,7 @@ def get_business_details(id):
 def create_business():
     current_user_id = current_user.get_id()
 
-    form = CreateBusinessForm()
+    form = BusinessForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
@@ -109,13 +109,14 @@ def create_business():
         'errors': validation_errors_to_error_messages(form.errors)
         }, 401
 
-# Add an Image to a Business based on the Businesses Id
-@business_routes.route('/<int:id>/images', methods=['POST'])
-@login_required
-@business_exists
-@authorization_required
-def create_image(id):
-    pass
+# # Add an Image to a Business based on the Businesses Id
+# @business_routes.route('/<int:id>/images', methods=['POST'])
+# @login_required
+# @business_exists
+# @authorization_required
+# def create_image(id):
+#     # form['csrf_token'].data = request.cookies['csrf_token']
+#     pass
 
 # Edit a Business
 @business_routes.route('/<int:id>', methods=['PUT'])
@@ -123,10 +124,9 @@ def create_image(id):
 @business_exists
 @authorization_required
 def edit_business(id):
-
     business = Business.query.get(id)
 
-    form = EditBusinessForm()
+    form = BusinessForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
@@ -160,7 +160,6 @@ def edit_business(id):
 @business_exists
 @authorization_required
 def delete_business(id):
-
     business = Business.query.get(id)
 
     db.session.delete(business)
