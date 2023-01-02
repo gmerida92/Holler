@@ -36,3 +36,10 @@ class Image(db.Model):
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }
+
+    def for_business_to_dict(self):
+        return {
+            'id': self.id,
+            'business_id': self.business_id,
+            'image_url': self.image_url
+        }

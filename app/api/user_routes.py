@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, session, request
 from flask_login import login_required, current_user
 from ..forms.edit_user_form import EditUserForm
-from app.models import User, db
+from app.models import User, Business, BusinessAttribute, BusinessCategory, BusinessHour, Image, Review, db
 
 user_routes = Blueprint('users', __name__)
 
@@ -78,7 +78,7 @@ def user_exists(user_route_method):
 
 
 # Get user by id 
-@user_routes.route('/<int:id>')
+@user_routes.route('/<int:id>', methods=['GET'])
 @user_exists
 def user(id):
     """
@@ -135,4 +135,4 @@ def delete_post(id):
     return {
         "message": "Successfully deleted",
         "statusCode": 200
-    }
+    }, 200
