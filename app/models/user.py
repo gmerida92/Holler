@@ -67,7 +67,7 @@ class User(db.Model, UserMixin):
             'hashed_password': self.hashed_password,
             'biography': self.biography,
             'location': self.location,
-            'review_count': self.review_count,
+            'review_count': len(self.reviews) if len(self.reviews) > 0 else self.review_count,
             'profile_image': self.profile_image,
             'created_at': self.created_at,
             'updated_at': self.updated_at
@@ -92,7 +92,7 @@ class User(db.Model, UserMixin):
             'profile_name': self.profile_name,
             'biography': self.biography,
             'location': self.location,
-            'review_count': self.review_count,
+            'review_count': len(self.reviews) if len(self.reviews) > 0 else self.review_count,
             'profile_image': self.profile_image,
             'created_at': self.created_at,
             'updated_at': self.updated_at
@@ -105,5 +105,17 @@ class User(db.Model, UserMixin):
             'last_name': self.last_name,
             'profile_name': self.profile_name,
             'profile_image': self.profile_image
+        }
+
+    def for_review_to_dict(self):
+        return {
+            'id': self.id,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'location': self.location,
+            'profile_name': self.profile_name,
+            'profile_image': self.profile_image,
+            'review_count': len(self.reviews) if len(self.reviews) > 0 else self.review_count,
+            # 'created_at': self.created_at
         }
 

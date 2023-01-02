@@ -41,5 +41,22 @@ class Image(db.Model):
         return {
             'id': self.id,
             'business_id': self.business_id,
-            'image_url': self.image_url
+            'image_url': self.image_url,
+            'caption': self.caption,
+            'label': self.label,
+            'tag': self.tag,
+            'created_at': self.created_at
+        }
+    
+    def for_review_to_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'business_id': self.business_id,
+            'review_id': self.review_id,
+            'image_url': self.image_url,
+            'caption': self.caption,
+            'label': self.label,
+            'tag': self.tag,
+            'created_at': self.created_at
         }
