@@ -23,8 +23,8 @@ class BusinessHour(db.Model):
             'id': self.id,
             'business_id': self.business_id,
             'day': self.day,
-            'open_time': self.open_time,
-            'close_time': self.close_time,
+            'open_time': self.open_time.isoformat(),
+            'close_time': self.close_time.isoformat(),
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }
