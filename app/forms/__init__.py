@@ -6,3 +6,4 @@ from .review_form import ReviewForm
 from .image_form import ImageForm
 from .business_hour_form import BusinessHourForm
 from .business_category_form import BusinessCategoryForm
+from .business_attribute_form import BusinessAttributeForm
