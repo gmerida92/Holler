@@ -22,7 +22,7 @@ def business_hours_exists(business_hours_route_method):
             return business_hours_route_method(bus_hour_id, id)
         else:
             return {
-                "message": "Business couldn't be found",
+                "message": "Business Hours couldn't be found",
                 "statusCode": 404
             }, 404
     

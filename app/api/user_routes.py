@@ -15,22 +15,6 @@ def validation_errors_to_error_messages(validation_errors):
             errorMessages.append(f'{field} : {error}')
     return errorMessages
 
-
-def authorization_required(modify_user_route_method):
-    def modify_user_route_method_wrapper(id):
-        # id = args
-        if id == current_user.id:
-            return modify_user_route_method(id)
-        else:
-            return {
-                "message": "Forbidden",
-                "statusCode": 403
-            }, 403
-
-    modify_user_route_method_wrapper.__name__ = modify_user_route_method.__name__
-    return modify_user_route_method_wrapper
-
-
 def user_exists(user_route_method):
     def user_route_method_wrapper(id):
         # id = args
@@ -46,6 +30,21 @@ def user_exists(user_route_method):
     
     user_route_method_wrapper.__name__ = user_route_method.__name__
     return user_route_method_wrapper
+
+def authorization_required(modify_user_route_method):
+    def modify_user_route_method_wrapper(id):
+        # id = args
+        if id == current_user.id:
+            return modify_user_route_method(id)
+        else:
+            return {
+                "message": "Forbidden",
+                "statusCode": 403
+            }, 403
+
+    modify_user_route_method_wrapper.__name__ = modify_user_route_method.__name__
+    return modify_user_route_method_wrapper
+
 
 
 # def user_authorized(user):
