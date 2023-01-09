@@ -6,6 +6,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 
 auth_routes = Blueprint('auth', __name__)
 
+
 def validation_errors_to_error_messages(validation_errors):
     """
     Simple function that turns the WTForms validation errors into a simple list
@@ -16,7 +17,8 @@ def validation_errors_to_error_messages(validation_errors):
             errorMessages.append(f'{field} : {error}')
     return errorMessages
 
-@auth_routes.route('/unauthorized', methods=['GET', 'POST', 'PUT', 'DELETE'])
+
+@auth_routes.route('/authenticate', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def unauthenticated():
     """
     Authenticates a user.
@@ -25,12 +27,16 @@ def unauthenticated():
     """
     # if current_user.is_authenticated:
     #     return current_user.to_dict()
-    
+
     if not current_user.is_authenticated:
         return {
-            'message': 'Authentication Required',
-            'statusCode': 401
+            'errors': {
+                'message': 'Authentication Required',
+                'statusCode': 401
+            }
         }, 401
+    return current_user.session_dict()
+
 
 @auth_routes.route('/unauthorized')
 def unauthorized():
@@ -40,8 +46,7 @@ def unauthorized():
     return {'errors': ['Forbidden']}, 401
 
 
-
-#Login User
+# Login User
 @auth_routes.route('/login', methods=['POST'])
 def login():
     """
@@ -60,10 +65,10 @@ def login():
         'message': 'validation Error',
         'statusCode': 401,
         'errors': validation_errors_to_error_messages(form.errors)
-        }, 401
+    }, 401
 
 
-#Logout User
+# Logout User
 @auth_routes.route('/logout')
 @login_required
 def logout():
@@ -74,7 +79,7 @@ def logout():
     return {'message': 'User logged out'}
 
 
-#Sign up and create a new user
+# Sign up and create a new user
 @auth_routes.route('/signup', methods=['POST'])
 def sign_up():
     """
@@ -85,25 +90,26 @@ def sign_up():
 
     if form.validate_on_submit():
         user = User(
-            first_name = form.data['first_name'],
-            last_name = form.data['last_name'],
-            profile_name = form.data['first_name'] + ' ' + form.data['last_name'][0].upper() + '.',
-            email = form.data['email'],
-            password = form.data['password']
+            first_name=form.data['first_name'],
+            last_name=form.data['last_name'],
+            profile_name=form.data['first_name'] + ' ' +
+            form.data['last_name'][0].upper() + '.',
+            email=form.data['email'],
+            password=form.data['password']
         )
 
         db.session.add(user)
         db.session.commit()
 
         login_user(user)
-        
+
         return user.session_dict()
-        
+
     return {
         'message': 'validation Error',
         'statusCode': 401,
         'errors': validation_errors_to_error_messages(form.errors)
-        }, 401
+    }, 401
 
 
 # Get Current Session User
