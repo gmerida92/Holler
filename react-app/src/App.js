@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import LoginForm from './components/auth/LoginForm';
-import SignUpForm from './components/auth/SignUpForm';
-import NavBar from './components/NavBar';
+import { authenticate } from './store/session';
+import LandingPage from './components/LandingPage/LandingPage';
+import SignUpPage from './components/Authorized/SignUpPage/SignUpPage';
+import LoginPage from './components/Authorized/LoginPage/LoginPage';
 // import ProtectedRoute from './components/auth/ProtectedRoute';
 // import UsersList from './components/UsersList';
 // import User from './components/User';
-import { authenticate } from './store/session';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -26,15 +26,37 @@ function App() {
 
   return (
     <>
-      <NavBar />
+
       <Switch>
+        <Route path='/' exact={true}>
+          <LandingPage />
+        </Route>
+        <Route path='/sign-up' exact={true}>
+          <SignUpPage />
+        </Route>
+        <Route path='/login' exact={true}>
+          <LoginPage />
+        </Route>
+      </Switch>
+
+      {/* <Switch>
+      <NavigationBar />
+        <Route path='/' exact={true}>
+          <LandingPage />
+        </Route>
         <Route path='/login' exact={true}>
           <LoginForm />
         </Route>
         <Route path='/sign-up' exact={true}>
           <SignUpForm />
         </Route>
-      </Switch>
+        <Route path='/myprofile' exact={true}>
+          <ProfilePage />
+        </Route>
+        <Route path='/businesses/:id' exact={true}>
+          <BusinessPage />
+        </Route>
+      </Switch> */}
     </>
     // <BrowserRouter>
     //   <NavBar />
