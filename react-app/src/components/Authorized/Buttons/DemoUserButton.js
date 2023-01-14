@@ -1,23 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
+// import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { login } from '../../../store/session';
 
-import { Box, TextField, Toolbar, Button, AppBar, Typography, FormControl, InputLabel, FormGroup, Grid, Paper, Card } from '@mui/material';
+import { Button } from '@mui/material';
 
 function DemoUserButton() {
 
     const user = useSelector(state => state.session.user);
     const dispatch = useDispatch();
 
-    const [errors, setErrors] = useState([]);
+    // const [errors, setErrors] = useState([]);
 
     const onLogin = async (e) => {
         e.preventDefault();
-        const data = await dispatch(login('demouser@gmail.com', 'password1234'));
-        if (data) {
-            setErrors(data);
-        }
+        await dispatch(login('demouser@gmail.com', 'password1234'));
+        // const data = await dispatch(login('demouser@gmail.com', 'password1234'));
+        // if (data) {
+        //     setErrors(data);
+        // }
     };
 
     if (user) {

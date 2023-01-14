@@ -6,11 +6,11 @@ import { login } from '../../../store/session';
 import NavigationBarNonActive from '../../NavigationBar/NavigationBarNonActive';
 import DemoUserButton from '../Buttons/DemoUserButton';
 
-import { Box, TextField, Toolbar, Button, AppBar, Typography, FormControl, InputLabel, FormGroup, Grid, Paper, Card } from '@mui/material';
+import { Box, TextField, Button, Typography, Paper} from '@mui/material';
 
 
 function LoginPage() {
-  const [errors, setErrors] = useState([]);
+  // const [errors, setErrors] = useState([]);
   const [credential, setCredential] = useState('');
   const [password, setPassword] = useState('');
 
@@ -19,10 +19,11 @@ function LoginPage() {
 
   const onLogin = async (e) => {
     e.preventDefault();
-    const data = await dispatch(login(credential, password));
-    if (data) {
-      setErrors(data);
-    }
+    await dispatch(login(credential, password));
+    // const data = await dispatch(login(credential, password));
+    // if (data) {
+    //   setErrors(data);
+    // }
   };
 
   const updateCredential = (e) => {

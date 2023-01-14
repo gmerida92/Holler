@@ -1,18 +1,19 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { AppBar, Toolbar, Box, Typography, Button, IconButton, MenuItem, Menu } from '@mui/material';
+// import { NavLink } from 'react-router-dom';
+import { IconButton, MenuItem, Menu } from '@mui/material';
+// import { AppBar, Toolbar, Box, Typography, Button, IconButton, MenuItem, Menu } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../../store/session';
 
 function UserAccountButton() {
     const dispatch = useDispatch()
-    const [auth, setAuth] = React.useState(true);
+    // const [auth, setAuth] = React.useState(true);
     const [anchorEl, setAnchorEl] = React.useState(null);
 
-    const handleChange = (event) => {
-        setAuth(event.target.checked);
-    };
+    // const handleChange = (event) => {
+    //     setAuth(event.target.checked);
+    // };
 
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget);

@@ -1,10 +1,13 @@
 import React from 'react';
-import { NavLink, Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { authenticate } from '../../store/session';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+// import { NavLink, Link } from 'react-router-dom';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { authenticate } from '../../store/session';
 
-import { AppBar, Toolbar, Box, Typography, Button, IconButton, MenuItem, Menu } from '@mui/material';
-import AccountCircle from '@mui/icons-material/AccountCircle';
+import { AppBar, Toolbar, Box, Typography, Button } from '@mui/material';
+// import { AppBar, Toolbar, Box, Typography, Button, IconButton, MenuItem, Menu } from '@mui/material';
+// import AccountCircle from '@mui/icons-material/AccountCircle';
 
 import UserAccountButtone from './Buttons/UserAccountButton'
 import AuthUserButton from './Buttons/AuthUserButtons';
@@ -20,7 +23,7 @@ function NavigationBarActive() {
       <AppBar sx={{ background: '#316B83' }}>
         <Toolbar>
 
-          <Box sx={{ml: 10, width: 100, height: 100, flexGrow: 1 }}>
+          <Box sx={{ ml: 10, width: 100, height: 100, flexGrow: 1 }}>
             <Button component={Link} to='/' sx={{ padding: 0, width: 100, height: 100 }}>
               <img width={100} height={100} src={logo} alt="logo" />
             </Button>
@@ -30,7 +33,7 @@ function NavigationBarActive() {
             <Button sx={{ my: 2, color: 'white', display: 'block' }}>
               <Typography>Write a Review</Typography>
             </Button>
-            <Button sx={{ my: 2, color: 'white', display: 'block'}}>
+            <Button sx={{ my: 2, color: 'white', display: 'block' }}>
               <Typography>For Businesses</Typography>
             </Button>
             {sessionUser ? <UserAccountButtone /> : <AuthUserButton />}
