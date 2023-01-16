@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import { loadAllBusinessCategory } from "../../../store/business_category";
 import { loadAllBusinessAttribute } from "../../../store/business_attribute";
 import { loadAllBusinessHour } from "../../../store/business_hour";
 
-import { Card, CardContent, Rating, CardActions, CardMedia, Typography, Box, Button, CardActionArea, } from "@mui/material";
+import { Card, CardContent, Rating, CardActions, CardMedia, Typography, Box, Button, CardActionArea } from "@mui/material";
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+
+
 import ImageCarousel from "./ImageCarousel/ImageCarousel";
+import RatingDetail from "./RatingDetail/RatingDetail";
 import TimeComponent from "./TimeComponent/TimeComponent";
+import ReviewSample from "./ReviewSample/ReviewSample";
 
 
 
@@ -35,21 +40,14 @@ function BusinessCard({ business }) {
     const categoriesCurrentBusinessLength = categoriesCurrentBusiness.length > 3 ? 3 : categoriesCurrentBusiness.length;
 
     return (
-        <Card sx={{ width: 700, height: 250, mb: 1, ml: 10 }}>
+        <Card sx={{ width: 700, height: 250, mb: 2, ml: 10 }}>
             <CardContent>
-
                 <Box sx={{ display: 'flex' }}>
-
                     <ImageCarousel images={business.Images} />
-
                     <Box sx={{ ml: 3 }}>
 
                         <Typography variant="h5" sx={{ mb: 0.5, fontWeight: 'bold' }}>{business.name}</Typography>
-
-                        <Box sx={{ mb: 1.5, display: "flex", alignItems: 'center', color: 'gray' }}>
-                            <Rating name="read-only" value={business.stars} precision={0.5} readOnly />
-                            <Typography sx={{ ml: 1 }}>{business.review_count}</Typography>
-                        </Box>
+                        <RatingDetail business={business} />
 
                         <Box sx={{ mb: 1, display: 'flex', alignItems: 'center' }}>
                             {categoriesCurrentBusiness.slice(0, categoriesCurrentBusinessLength).map((categoryObj) => {
@@ -65,10 +63,7 @@ function BusinessCard({ business }) {
                         </Box>
 
                         <TimeComponent id={business.id} />
-
-                        <Box>
-                            <Typography variant="body2">"Reviews"</Typography>
-                        </Box>
+                        <ReviewSample id={business.id}/>
 
                         <Box>
                             <Typography variant="body2">"Attributes"</Typography>
@@ -77,7 +72,6 @@ function BusinessCard({ business }) {
                     </Box>
 
                 </Box>
-
             </CardContent>
         </Card>
     )

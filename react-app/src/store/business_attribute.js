@@ -31,7 +31,7 @@ export const loadAllBusinessAttribute = (id) => async (dispatch) => {
 
     } else {
 
-        return ['An error occurred. Please try again'];
+        return ['An error occurred. Please try again.'];
 
     }
 
