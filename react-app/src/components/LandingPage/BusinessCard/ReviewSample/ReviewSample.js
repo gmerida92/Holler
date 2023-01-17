@@ -47,7 +47,7 @@ function ReviewSample({ id }) {
 
 
     return (
-        <Box sx={{mb:1, display:'flex', alignItems:"flex-start"}}>
+        <Box sx={{mb:2, display:'flex', alignItems:"flex-start"}}>
             <ChatBubbleOutlineIcon sx={{mt:0.4, mr:1, fontSize:"12px"}}/>
             <Typography variant="body2" color='grey'>{`"${truncate(sampleReview.review)}"`}</Typography>
         </Box>
