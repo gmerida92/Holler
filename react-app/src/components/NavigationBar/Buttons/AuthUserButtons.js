@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import { AppBar, Toolbar, Box, Typography, Button, IconButton, MenuItem, Menu } from '@mui/material';
-import AccountCircle from '@mui/icons-material/AccountCircle';
+import { Link } from 'react-router-dom';
+import { Button } from '@mui/material';
+// import { AppBar, Toolbar, Box, Typography, Button, IconButton, MenuItem, Menu } from '@mui/material';
+// import AccountCircle from '@mui/icons-material/AccountCircle';
 
 function AuthUserButton() {
 

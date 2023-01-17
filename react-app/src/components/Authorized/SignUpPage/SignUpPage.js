@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { signUp } from '../../../store/session';
 
 import NavigationBarNonActive from '../../NavigationBar/NavigationBarNonActive';
 
-import { Box, TextField, Toolbar, Button, AppBar, Typography, FormControl, InputLabel, FormGroup, Grid, Paper, Card } from '@mui/material';
+import { Box, TextField, Button, Typography, Paper} from '@mui/material';
+// import { Box, TextField, Toolbar, Button, AppBar, Typography, FormControl, InputLabel, FormGroup, Grid, Paper, Card } from '@mui/material';
 
 
 function SignUpPage() {
 
-  const [errors, setErrors] = useState([]);
+  // const [errors, setErrors] = useState([]);
   const [firstName, setfirstName] = useState('');
   const [lastName, setlastName] = useState('');
   const [email, setEmail] = useState('');
@@ -21,10 +22,11 @@ function SignUpPage() {
 
   const onSignUp = async (e) => {
     e.preventDefault();
-    const data = await dispatch(signUp(firstName, lastName, email, password));
-    if (data) {
-      setErrors(data)
-    }
+    await dispatch(signUp(firstName, lastName, email, password));
+    // const data = await dispatch(signUp(firstName, lastName, email, password));
+    // if (data) {
+    //   setErrors(data)
+    // }
   };
 
   const updateFirstName = (e) => {

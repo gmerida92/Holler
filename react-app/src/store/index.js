@@ -1,9 +1,20 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
+
+import reviewReducer from './review';
+import businessReducer from './business';
+import businessCategoryReducer from './business_category';
+import businessAttributeReducer from './business_attribute';
+import businessHourReducer from './business_hour';
 import sessionReducer from './session'
 
 const rootReducer = combineReducers({
   session: sessionReducer,
+  business: businessReducer,
+  businessCategory: businessCategoryReducer,
+  businessAttribute: businessAttributeReducer,
+  businessHour: businessHourReducer,
+  review: reviewReducer
 });
 
 
