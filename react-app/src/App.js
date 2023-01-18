@@ -1,10 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useState, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+
 import { authenticate } from './store/session';
+
 import LandingPage from './components/LandingPage/LandingPage';
+import BusinessPage from './components/BusinessPage/BusinessPage';
 import SignUpPage from './components/Authorized/SignUpPage/SignUpPage';
 import LoginPage from './components/Authorized/LoginPage/LoginPage';
+
 // import ProtectedRoute from './components/auth/ProtectedRoute';
 // import UsersList from './components/UsersList';
 // import User from './components/User';
@@ -36,6 +41,9 @@ function App() {
         </Route>
         <Route path='/login' exact={true}>
           <LoginPage />
+        </Route>
+        <Route path='/businesses/:id' exact={true}>
+          <BusinessPage />
         </Route>
       </Switch>
 

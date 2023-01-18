@@ -120,9 +120,9 @@ function TimeComponent({ id }) {
 
     useEffect(() => {
         dispatch(loadAllBusinessHour(id))
-    }, [dispatch])
+    }, [dispatch, id])
 
-    const all_business_hour = useSelector((state) => Object?.values(state?.businessHour)) || ''
+    const all_business_hour = useSelector((state) => state?.businessHour[id]) || ''
 
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const today = new Date();
@@ -135,7 +135,7 @@ function TimeComponent({ id }) {
     const untilTime = timeUntil(businessStatus, day, nextDay, hoursCurrentBusiness);
 
     return (
-        <Box sx={{mb:1, display: 'flex' }}>
+        <Box sx={{ mb: 1, display: 'flex' }}>
             <Typography variant="body2" sx={{ mr: 0.5, fontWeight: 'bold', color: `${businessStatus === 'Open' ? 'green' : 'red'}` }}>{businessStatus}</Typography>
             <Typography variant="body2">until {untilTime}</Typography>
         </Box>

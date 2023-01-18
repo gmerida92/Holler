@@ -43,20 +43,26 @@ const initialState = {};
 
 //Redux Reducer
 const reviewReducer = (state = initialState, action) => {
-
-    let newState = { ...state }
-    Object.keys(state).forEach((businessId) => {
-        newState[businessId] = [...state[businessId]]
-
-        newState[businessId].forEach((review, index) => {
-            review['Owner'] = { ...state[businessId][index]['Owner'] };
-            review['Business'] = { ...state[businessId][index]['Business'] };
-            review['Images'] = [...state[businessId][index]['Images']];
-        })
-    })
+    let newState;
 
     switch (action.type) {
         case LOAD_REVIEW_BY_BUSINESS_ID:
+            newState = { ...state }
+
+            if (Object.keys(newState).length > 0) {
+
+                Object.keys(state).forEach((businessId) => {
+                    newState[businessId] = [...state[businessId]]
+
+                    newState[businessId].forEach((review, index) => {
+                        review['Owner'] = { ...state[businessId][index]['Owner'] };
+                        review['Business'] = { ...state[businessId][index]['Business'] };
+                        review['Images'] = [...state[businessId][index]['Images']];
+                    });
+                });
+
+            };
+
 
             let businessId = action.payload.Reviews[0].business_id;
             newState[businessId] = []

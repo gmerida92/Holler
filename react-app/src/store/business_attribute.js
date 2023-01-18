@@ -10,23 +10,24 @@ const loadBusinessAttribute = (payload) => {
     }
 }
 
+
 //Thunk action creators
 
 // Get Business Attribute based on a Business Id
 export const loadAllBusinessAttribute = (id) => async (dispatch) => {
     const response = await fetch(`/api/businessattributes/businesses/${id}`)
 
-    if (response.ok) {
+    if (response?.ok) {
 
-        const businessAttribute = await response.json();
+        const businessAttribute = await response?.json();
         dispatch(loadBusinessAttribute(businessAttribute))
         return response;
 
-    } else if (response.status < 500) {
+    } else if (response?.status < 500) {
 
-        const data = await response.json();
-        if (data.errors) {
-            return data.errors;
+        const data = await response?.json();
+        if (data?.errors) {
+            return data?.errors;
         }
 
     } else {
@@ -34,9 +35,8 @@ export const loadAllBusinessAttribute = (id) => async (dispatch) => {
         return ['An error occurred. Please try again.'];
 
     }
-
-
 }
+
 
 
 //Initial State Object
@@ -45,16 +45,22 @@ const initialState = {};
 
 //Redux Reducer
 const businessAttributeReducer = (state = initialState, action) => {
-    let newState = { ...state }
-    Object.values(state).forEach((business) => {
-        newState[business.id] = { ...business }
-
-    })
+    let newState;
 
     switch (action.type) {
         case LOAD_BUSINESS_ATTRIBUTES:
+            newState = { ...state };
 
-            newState[action.payload.id] = { ...action.payload };
+            if (Object.keys(newState).length > 0) {
+
+                Object.keys(state)?.forEach((businessId) => {
+                    newState[businessId] = { ...state[businessId] }
+
+                });
+
+            };
+
+            newState[action?.payload?.business_id] = { ...action?.payload };
             return newState;
 
         default:

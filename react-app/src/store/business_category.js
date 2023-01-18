@@ -44,17 +44,25 @@ const initialState = {};
 
 //Redux Reducer
 const businessCategoryReducer = (state = initialState, action) => {
-    let newState = { ...state }
-    Object.values(state).forEach((business) => {
-        newState[business.id] = {...business}
+    let newState;
 
-    })
-    
     switch (action.type) {
         case LOAD_BUSINESS_CATEGORY:
+            newState = { ...state }
+
+            if (Object.keys(newState).length > 0) {
+
+                Object.keys(state).forEach((businessId) => {
+                    newState[businessId] = [...state[businessId]]
+                });
+
+            };
+
+            let businessId = action.payload['Business Categories'][0].business_id;
+            newState[businessId] = [];
 
             action.payload['Business Categories'].forEach((businessCategory) => {
-                newState[businessCategory.id] = { ...businessCategory }
+                newState[businessId].push({ ...businessCategory })
             });
             return newState;
 
