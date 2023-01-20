@@ -12,7 +12,6 @@ const loadBusinesses = (payload) => {
 };
 
 
-
 //Thunk action creators
 
 // Get all Businesses
