@@ -7,6 +7,7 @@ import businessCategoryReducer from './business_category';
 import businessAttributeReducer from './business_attribute';
 import businessHourReducer from './business_hour';
 import sessionReducer from './session'
+import singleBusinessDetailReducer from './singleBusinessDetail';
 
 const rootReducer = combineReducers({
   session: sessionReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   businessCategory: businessCategoryReducer,
   businessAttribute: businessAttributeReducer,
   businessHour: businessHourReducer,
-  review: reviewReducer
+  review: reviewReducer,
+  singleBusiness: singleBusinessDetailReducer,
 });
 
 

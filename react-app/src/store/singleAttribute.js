@@ -1,11 +1,11 @@
 //Type Key String Literals
-const LOAD_BUSINESS_ATTRIBUTES = "/api/getBusinessAttribute";
+const LOAD_SINGLE_ATTRIBUTE = "/api/getBusinessAttribute";
 
 
 //Redux action creators
-const loadBusinessAttribute = (payload) => {
+const loadAttribute = (payload) => {
     return {
-        type: LOAD_BUSINESS_ATTRIBUTES,
+        type: LOAD_SINGLE_ATTRIBUTES,
         payload
     }
 }
@@ -14,13 +14,13 @@ const loadBusinessAttribute = (payload) => {
 //Thunk action creators
 
 // Get Business Attribute based on a Business Id
-export const loadAllBusinessAttribute = (id) => async (dispatch) => {
+export const loadSingleAttribute = (id) => async (dispatch) => {
     const response = await fetch(`/api/businessattributes/businesses/${id}`)
 
     if (response?.ok) {
 
         const businessAttribute = await response?.json();
-        dispatch(loadBusinessAttribute(businessAttribute))
+        dispatch(loadAttribute(businessAttribute))
         return response;
 
     } else if (response?.status < 500) {
@@ -47,19 +47,10 @@ const businessAttributeReducer = (state = initialState, action) => {
     let newState;
 
     switch (action.type) {
-        case LOAD_BUSINESS_ATTRIBUTES:
-            newState = { ...state };
+        case LOAD_SINGLE_ATTRIBUTE:
+            newState = {};
 
-            if (Object.keys(newState).length > 0) {
-
-                Object.keys(state)?.forEach((businessId) => {
-                    newState[businessId] = { ...state[businessId] }
-
-                });
-
-            };
-
-            newState[action?.payload?.business_id] = { ...action?.payload };
+            newState[action.payload.business_id] = { ...action.payload };
             return newState;
 
         default:
