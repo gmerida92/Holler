@@ -14,7 +14,7 @@ const loadCategory = (payload) => {
 //Thunk action creators
 
 //Get Business Category based on a Business Id
-export const loadBusinessCategory = (id) => async (dispatch) => {
+export const loadSingleBusinessCategory = (id) => async (dispatch) => {
     const response = await fetch(`/api/businesscategories/businesses/${id}`)
 
     if (response.ok) {

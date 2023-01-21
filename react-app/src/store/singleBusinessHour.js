@@ -47,7 +47,7 @@ const hourReducer = (state = initialState, action) => {
     let newState;
 
     switch (action.type) {
-        case LOAD_SINGLE_ATTRIBUTE:
+        case LOAD_HOUR:
             newState = {};
 
             let businessId = action.payload['Business Hours'][0].business_id;

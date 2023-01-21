@@ -7,6 +7,10 @@ import { useParams } from 'react-router-dom';
 import NavigationBarActive from '../NavigationBar/NavigationBarActive';
 
 import { loadSingleBusiness } from '../../store/singleBusinessDetail';
+import { loadSingleAttribute } from '../../store/singleAttribute';
+import { loadSingleBusinessCategory } from '../../store/singleCategory';
+import { loadSingleBusinessHour } from '../../store/singleBusinessHour';
+
 
 function BusinessPage() {
     const { id } = useParams();
@@ -14,6 +18,9 @@ function BusinessPage() {
 
     useEffect(() => {
         dispatch(loadSingleBusiness(id))
+        dispatch(loadSingleAttribute(id))
+        dispatch(loadSingleBusinessCategory(id))
+        dispatch(loadSingleBusinessHour(id))
     }, [dispatch])
 
     return (
