@@ -1,5 +1,5 @@
 //Type Key String Literals
-const LOAD_SINGLE_ATTRIBUTE = "/api/getBusinessAttribute";
+const LOAD_SINGLE_ATTRIBUTES = "/api/getBusinessAttribute";
 
 
 //Redux action creators
@@ -43,11 +43,11 @@ const initialState = {};
 
 
 //Redux Reducer
-const businessAttributeReducer = (state = initialState, action) => {
+const attributeReducer = (state = initialState, action) => {
     let newState;
 
     switch (action.type) {
-        case LOAD_SINGLE_ATTRIBUTE:
+        case LOAD_SINGLE_ATTRIBUTES:
             newState = {};
 
             newState[action.payload.business_id] = { ...action.payload };
@@ -58,4 +58,4 @@ const businessAttributeReducer = (state = initialState, action) => {
     }
 }
 
-export default businessAttributeReducer;
+export default attributeReducer;
