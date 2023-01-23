@@ -1,5 +1,5 @@
 //Type Key String Literals
-const LOAD_HOUR = "/api/getBusinessHour";
+const LOAD_HOUR = "/api/getSingleBusinessHour";
 
 
 //Redux action creators

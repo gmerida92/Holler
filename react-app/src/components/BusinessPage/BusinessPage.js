@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 
 
 import NavigationBarActive from '../NavigationBar/NavigationBarActive';
+import MainComponent from './MainComponent/MainComponent';
 
 import { loadSingleBusiness } from '../../store/singleBusinessDetail';
 import { loadSingleAttribute } from '../../store/singleAttribute';
@@ -26,6 +27,7 @@ function BusinessPage() {
     return (
         <>
             <NavigationBarActive />
+            <MainComponent id={id} />
         </>
     )
 }

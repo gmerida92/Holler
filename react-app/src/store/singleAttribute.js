@@ -1,5 +1,5 @@
 //Type Key String Literals
-const LOAD_SINGLE_ATTRIBUTES = "/api/getBusinessAttribute";
+const LOAD_SINGLE_ATTRIBUTES = "/api/getSingleBusinessAttribute";
 
 
 //Redux action creators

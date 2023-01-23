@@ -1,5 +1,5 @@
 //Type Key String Literals
-const LOAD_CATEGORY = "/api/getBusinessCategory";
+const LOAD_CATEGORY = "/api/getSingleBusinessCategory";
 
 
 //Redux action creators
