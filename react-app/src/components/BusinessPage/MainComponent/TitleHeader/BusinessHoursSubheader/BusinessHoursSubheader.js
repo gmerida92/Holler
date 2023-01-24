@@ -45,18 +45,24 @@ function checkOpenStatus(todayDateObject, todayDay, hours) {
 }
 
 function todayStoreHours(todayDay, hours) {
-    let storeHoursString = ''
-    for (let i = 0; i < hours.length; i++) {
-        let scheduleToCheck = hours[i];
 
-        if (scheduleToCheck.day !== todayDay) {
-            continue
+    let storeHours = [];
+    for (let i = 0; i < hours.length; i++) {
+        let hoursToCheck = hours[i];
+        if (hoursToCheck.day === todayDay) {
+            storeHours.push(hoursToCheck)
         }
+    }
+
+
+    let storeHoursString = ''
+    for (let i = 0; i < storeHours.length; i++) {
+        let scheduleToCheck = storeHours[i];
 
         let openTime = convert24to12String(scheduleToCheck.open_time);
         let closeTime = convert24to12String(scheduleToCheck.close_time);
 
-        if (i < hours.length - 1) {
+        if (i < storeHours.length - 1) {
             storeHoursString = storeHoursString + openTime + " - " + closeTime + ", "
         }
         else {
@@ -80,8 +86,8 @@ function BusinessHoursSubheader({ id }) {
 
     return (
         <Box sx={{ display: 'flex', gap: 1 }}>
-            <Typography sx={{ fontWeight: 'bold', color: `${businessStatus === 'Open' ? 'green' : 'red'}` }}>{`${businessStatus}`}</Typography>
-            <Typography sx={{ fontWeight: 'bold' }}>{storeHours}</Typography>
+            <Typography sx={{ fontSize: '16px', fontWeight: 'bold', color: `${businessStatus === 'Open' ? 'green' : 'red'}` }}>{`${businessStatus}`}</Typography>
+            <Typography sx={{ fontSize: '16px', fontWeight: 'bold' }}>{storeHours}</Typography>
         </Box>
     )
 }
