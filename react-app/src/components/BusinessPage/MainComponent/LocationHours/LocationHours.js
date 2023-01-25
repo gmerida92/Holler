@@ -4,20 +4,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import Location from './Location/Location';
+import Hours from './Hours/Hours';
 
 import { Box, Typography } from '@mui/material';
 
 function LocationHours({ id }) {
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3}}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
             <Box>
                 <Typography variant='h6' sx={{ fontSize: '20px', fontWeight: 'bold' }}>Location & Hours</Typography>
             </Box>
 
-            <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'row', gap: 5 }}>
                 <Location id={id} />
-                {/* <Hours /> */}
+                <Hours id={id} />
             </Box>
         </Box>
     )
