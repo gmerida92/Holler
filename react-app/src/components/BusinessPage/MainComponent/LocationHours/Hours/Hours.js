@@ -18,31 +18,60 @@ function convert24to12String(time) {
     return time.join(''); // return adjusted time or original string
 }
 
-function convertTimeStringToObject(timeString) {
+function convertOpenTimeStringToObject(timeString) {
     let todayDateObject = new Date();
     let timeStringSplit = timeString.split(':');
     let timeObject = new Date(todayDateObject.getFullYear(), todayDateObject.getMonth(), todayDateObject.getDate(), parseInt(timeStringSplit[0]), parseInt(timeStringSplit[1]), parseInt(timeStringSplit[2]));
     return timeObject;
 }
 
-function checkOpenStatus(businessHours) {
+function convertCloseTimeStringToObject(timeString) {
+    let todayDateObject = new Date();
+    let timeStringSplit = timeString.split(':');
+    let timeObject = new Date(todayDateObject.getFullYear(), todayDateObject.getMonth(), todayDateObject.getDate(), parseInt(timeStringSplit[0]), parseInt(timeStringSplit[1]), parseInt(timeStringSplit[2]));
+    return timeObject;
+}
+
+function checkOpenStatus(scheduleToCheck) {
 
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     let currentDateObject = new Date();
-    // let nextDayIndex = currentDateObject.getDay() < 6 ? currentDateObject.getDay() + 1 : 0;
     let currentDay = days[currentDateObject.getDay()];
-    // let nextDay = days[nextDayIndex];
 
-    let openTime = convertTimeStringToObject(businessHours.open_time);
-    let closeTime = convertTimeStringToObject(businessHours.close_time);
 
-    if (businessHours.day === currentDay) {
-        if (currentDateObject >= openTime && currentDateObject <= closeTime) {
-            return 'Open Now'
+    let status = false
+
+    let opensAt = scheduleToCheck.open_time;
+    let opens = opensAt.split(':');
+    let openTime = new Date(currentDateObject.getFullYear(), currentDateObject.getMonth(), currentDateObject.getDate(), parseInt(opens[0]), parseInt(opens[1]), parseInt(opens[2]));
+
+    let closesAt = scheduleToCheck.close_time;
+    let closes = closesAt.split(':');
+    let closesTime = parseInt(closes[0]) < parseInt(opens[0]) ? new Date(currentDateObject.getFullYear(), currentDateObject.getMonth(), currentDateObject.getDate() + 1, parseInt(closes[0]), parseInt(closes[1]), parseInt(closes[2])) : new Date(currentDateObject.getFullYear(), currentDateObject.getMonth(), currentDateObject.getDate(), parseInt(closes[0]), parseInt(closes[1]), parseInt(closes[2]));
+
+    // let storeHours = businessHours[i];
+    // let openTime = convertOpenTimeStringToObject(dayHours.open_time);
+    // let closeTime = convertTimeStringToObject(dayHours.close_time);
+
+    if (scheduleToCheck.day === currentDay) {
+        if (currentDateObject >= openTime && currentDateObject <= closesTime) {
+            status = true;
         }
     }
 
-    return 'Closed Now'
+    // for (let i = 0; i < businessHours.length; i++) {
+    //     let storeHours = businessHours[i];
+    //     let openTime = convertTimeStringToObject(storeHours.open_time);
+    //     let closeTime = convertTimeStringToObject(storeHours.close_time);
+
+    //     if (businessHours.day === currentDay) {
+    //         if (currentDateObject >= openTime && currentDateObject <= closeTime) {
+    //             status = true;
+    //         }
+    //     }
+    // }
+
+    return status
 }
 
 function restructureBusinessHours(hours) {
@@ -71,6 +100,10 @@ function Hours({ id }) {
     const storeHours = useSelector((state) => state?.singleBusinessHour[id])
     let restructuredHours = restructureBusinessHours(storeHours)
 
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    let currentDateObject = new Date();
+    let currentDay = days[currentDateObject.getDay()];
+
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'row', gap: 4 }}>
@@ -93,35 +126,117 @@ function Hours({ id }) {
                 })}
             </Box>
 
+
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                 {restructuredHours.map((hoursArray) => {
                     return (<Box>
+
                         {hoursArray.map((hours, index) => {
                             return (
                                 <Typography sx={{ fontWeight: 'bold', fontSize: '16px' }}>{`${convert24to12String(hours?.open_time)} - ${convert24to12String(hours?.close_time)}`}</Typography>
                             )
                         })}
+
+                        {/* {currentDay === hoursArray[0]?.day ? <Typography sx={{ fontWeight: 'bold', fontSize: '16px' }}>{`${checkOpenStatus(hoursArray)}`}</Typography> : <Typography sx={{ fontWeight: 'bold', fontSize: '16px' }}>&nbsp;</Typography>} */}
+
                     </Box>)
                 })}
             </Box>
+
 
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+
                 {restructuredHours.map((hoursArray) => {
-                    return (<Box>
-                        {hoursArray.map((hours, index) => {
-                            // if(checkOpenStatus(hours)){
+                    return (
+                        <Box>
+                            {hoursArray.map((schedule, index) => {
 
-                            // }
-                            return (
-                                <Typography sx={{ fontWeight: 'bold', fontSize: '16px' }}>{checkOpenStatus(hours)}</Typography>
-                            )
-                        })}
-                    </Box>)
+                                if (schedule.day === currentDay) {
+
+                                    if (hoursArray.length > 1) {
+
+                                        if (checkOpenStatus(schedule)) {
+
+                                            return (<Box>
+                                                <Typography sx={{ fontWeight: 'bold', fontSize: '16px' }}>{`${checkOpenStatus(schedule) ? 'Open Now' : 'Closed Now'}`}</Typography>
+                                            </Box>)
+
+                                        } else if (!checkOpenStatus(schedule)) {
+
+                                            if (index === 0) {
+
+                                                if (checkOpenStatus(hoursArray[index + 1])) {
+
+                                                    return (<Box>
+                                                        <Typography sx={{ fontWeight: 'bold', fontSize: '16px' }}>&nbsp;</Typography>
+                                                    </Box>)
+
+                                                } else {
+                                                    return (<Box>
+                                                        <Typography sx={{ fontWeight: 'bold', fontSize: '16px' }}>{`${checkOpenStatus(schedule) ? 'Open Now' : 'Closed Now'}`}</Typography>
+                                                    </Box>)
+                                                }
+                                            }
+
+                                            // if (index <= hoursArray.length - 1) {}
+
+                                            return (<Box>
+                                                <Typography sx={{ fontWeight: 'bold', fontSize: '16px' }}>&nbsp;</Typography>
+                                            </Box>)
+                                        }
+
+
+                                    }
+
+                                    return (
+                                        <Typography sx={{ fontWeight: 'bold', fontSize: '16px' }}>{`${checkOpenStatus(schedule) ? 'Open Now' : 'Closed Now'}`}</Typography>
+                                    )
+                                }
+
+                                return (<Box>
+                                    <Typography sx={{ fontWeight: 'bold', fontSize: '16px' }}>&nbsp;</Typography>
+                                </Box>)
+                            })}
+                        </Box>
+                    )
                 })}
-            </Box>
 
+            </Box>
         </Box >
     )
 }
 
 export default Hours;
+
+
+{/* {hoursArray.map((hours, index) => {
+                            return (
+                                <Typography sx={{ fontWeight: 'bold', fontSize: '16px' }}>{checkOpenStatus(hours)}</Typography>
+                            )
+                        })} */}
+
+
+
+                         // if (index === 0 && !checkOpenStatus(schedule)) {
+                                        //     return (<Box>
+                                        //         <Typography sx={{ fontWeight: 'bold', fontSize: '16px' }}>&nbsp;</Typography>
+                                        //     </Box>)
+                                        // } else if (index > 0 && !checkOpenStatus(schedule)) {
+                                        //     return (<Box>
+                                        //         <Typography sx={{ fontWeight: 'bold', fontSize: '16px' }}>{`${checkOpenStatus(schedule) ? 'Open Now' : 'Closed Now'}`}</Typography>
+                                        //     </Box>)
+                                        // }
+
+
+
+
+
+
+                                                            //     return (<Box>
+                    //         <Typography sx={{ fontWeight: 'bold', fontSize: '16px' }}>&nbsp;</Typography>
+                    //     </Box>)
+                    // }
+
+                    // return (<Box>
+                    //     <Typography sx={{ fontWeight: 'bold', fontSize: '16px' }}>{`${checkOpenStatus(hoursArray)}`}</Typography>
+                    // </Box>)

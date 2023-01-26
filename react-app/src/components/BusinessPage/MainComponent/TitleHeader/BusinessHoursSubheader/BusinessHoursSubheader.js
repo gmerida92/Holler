@@ -34,10 +34,17 @@ function checkOpenStatus(todayDateObject, todayDay, hours) {
             continue
         }
 
-        let openTime = convertTimeStringToObject(scheduleToCheck.open_time);
-        let closeTime = convertTimeStringToObject(scheduleToCheck.close_time);
+        let opensAt = scheduleToCheck.open_time;
+        let opens = opensAt.split(':');
+        let openTime = new Date(todayDateObject.getFullYear(), todayDateObject.getMonth(), todayDateObject.getDate(), parseInt(opens[0]), parseInt(opens[1]), parseInt(opens[2]));
 
-        if (todayDateObject >= openTime && todayDateObject <= closeTime) {
+        let closesAt = scheduleToCheck.close_time;
+        let closes = closesAt.split(':');
+        let closesTime = parseInt(closes[0]) < parseInt(opens[0]) ? new Date(todayDateObject.getFullYear(), todayDateObject.getMonth(), todayDateObject.getDate() + 1, parseInt(closes[0]), parseInt(closes[1]), parseInt(closes[2])) : new Date(todayDateObject.getFullYear(), todayDateObject.getMonth(), todayDateObject.getDate(), parseInt(closes[0]), parseInt(closes[1]), parseInt(closes[2]));
+        // let openTime = convertTimeStringToObject(scheduleToCheck.open_time);
+        // let closeTime = convertTimeStringToObject(scheduleToCheck.close_time);
+
+        if (todayDateObject >= openTime && todayDateObject <= closesTime) {
             return 'Open'
         }
     }
