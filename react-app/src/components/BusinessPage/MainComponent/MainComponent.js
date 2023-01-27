@@ -15,7 +15,7 @@ import { Box } from '@mui/material';
 function MainComponent({ id }) {
     return (
         <Container sx={{ background: "white", borderRadius: '5px', display: 'flex', width: '100%' }}>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, mb: 5, mt: 5, width: '100%' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, mb: 5, mt: 5, width: '50%' }}>
                 <TitleHeader id={id} />
                 <UtilityButtons id={id} />
                 <LocationHours id={id} />
