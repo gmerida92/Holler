@@ -41,35 +41,44 @@ function checkOpenStatus(scheduleToCheck) {
 
     let status = false
 
-    let opensAt = scheduleToCheck.open_time;
-    let opens = opensAt.split(':');
-    let openTime = new Date(currentDateObject.getFullYear(), currentDateObject.getMonth(), currentDateObject.getDate(), parseInt(opens[0]), parseInt(opens[1]), parseInt(opens[2]));
+    // let opensAt = scheduleToCheck.open_time;
+    // let opens = opensAt.split(':');
+    // let openTime = new Date(currentDateObject.getFullYear(), currentDateObject.getMonth(), currentDateObject.getDate(), parseInt(opens[0]), parseInt(opens[1]), parseInt(opens[2]));
 
-    let closesAt = scheduleToCheck.close_time;
-    let closes = closesAt.split(':');
-    let closesTime = parseInt(closes[0]) < parseInt(opens[0]) ? new Date(currentDateObject.getFullYear(), currentDateObject.getMonth(), currentDateObject.getDate() + 1, parseInt(closes[0]), parseInt(closes[1]), parseInt(closes[2])) : new Date(currentDateObject.getFullYear(), currentDateObject.getMonth(), currentDateObject.getDate(), parseInt(closes[0]), parseInt(closes[1]), parseInt(closes[2]));
+    // let closesAt = scheduleToCheck.close_time;
+    // let closes = closesAt.split(':');
+    // let closesTime = parseInt(closes[0]) < parseInt(opens[0]) ? new Date(currentDateObject.getFullYear(), currentDateObject.getMonth(), currentDateObject.getDate() + 1, parseInt(closes[0]), parseInt(closes[1]), parseInt(closes[2])) : new Date(currentDateObject.getFullYear(), currentDateObject.getMonth(), currentDateObject.getDate(), parseInt(closes[0]), parseInt(closes[1]), parseInt(closes[2]));
 
     // let storeHours = businessHours[i];
     // let openTime = convertOpenTimeStringToObject(dayHours.open_time);
     // let closeTime = convertTimeStringToObject(dayHours.close_time);
 
-    if (scheduleToCheck.day === currentDay) {
-        if (currentDateObject >= openTime && currentDateObject <= closesTime) {
-            status = true;
-        }
-    }
-
-    // for (let i = 0; i < businessHours.length; i++) {
-    //     let storeHours = businessHours[i];
-    //     let openTime = convertTimeStringToObject(storeHours.open_time);
-    //     let closeTime = convertTimeStringToObject(storeHours.close_time);
-
-    //     if (businessHours.day === currentDay) {
-    //         if (currentDateObject >= openTime && currentDateObject <= closeTime) {
-    //             status = true;
-    //         }
+    // if (scheduleToCheck.day === currentDay) {
+    //     if (currentDateObject >= openTime && currentDateObject <= closesTime) {
+    //         status = true;
     //     }
     // }
+
+    for (let i = 0; i < scheduleToCheck.length; i++) {
+        let storeHours = scheduleToCheck[i];
+        // let openTime = convertTimeStringToObject(storeHours.open_time);
+        // let closeTime = convertTimeStringToObject(storeHours.close_time);
+
+        let opensAt = storeHours.open_time;
+        let opens = opensAt.split(':');
+        let openTime = new Date(currentDateObject.getFullYear(), currentDateObject.getMonth(), currentDateObject.getDate(), parseInt(opens[0]), parseInt(opens[1]), parseInt(opens[2]));
+
+        let closesAt = storeHours.close_time;
+        let closes = closesAt.split(':');
+        let closesTime = parseInt(closes[0]) < parseInt(opens[0]) ? new Date(currentDateObject.getFullYear(), currentDateObject.getMonth(), currentDateObject.getDate() + 1, parseInt(closes[0]), parseInt(closes[1]), parseInt(closes[2])) : new Date(currentDateObject.getFullYear(), currentDateObject.getMonth(), currentDateObject.getDate(), parseInt(closes[0]), parseInt(closes[1]), parseInt(closes[2]));
+
+
+        if (storeHours.day === currentDay) {
+            if (currentDateObject >= openTime && currentDateObject <= closesTime) {
+                status = true;
+            }
+        }
+    }
 
     return status
 }
@@ -154,43 +163,20 @@ function Hours({ id }) {
                                 if (schedule.day === currentDay) {
 
                                     if (hoursArray.length > 1) {
-
-                                        if (checkOpenStatus(schedule)) {
-
+                                        if (index === 0) {
                                             return (<Box>
-                                                <Typography sx={{ fontWeight: 'bold', fontSize: '16px' }}>{`${checkOpenStatus(schedule) ? 'Open Now' : 'Closed Now'}`}</Typography>
-                                            </Box>)
-
-                                        } else if (!checkOpenStatus(schedule)) {
-
-                                            if (index === 0) {
-
-                                                if (checkOpenStatus(hoursArray[index + 1])) {
-
-                                                    return (<Box>
-                                                        <Typography sx={{ fontWeight: 'bold', fontSize: '16px' }}>&nbsp;</Typography>
-                                                    </Box>)
-
-                                                } else {
-                                                    return (<Box>
-                                                        <Typography sx={{ fontWeight: 'bold', fontSize: '16px' }}>{`${checkOpenStatus(schedule) ? 'Open Now' : 'Closed Now'}`}</Typography>
-                                                    </Box>)
-                                                }
-                                            }
-
-                                            // if (index <= hoursArray.length - 1) {}
-
-                                            return (<Box>
-                                                <Typography sx={{ fontWeight: 'bold', fontSize: '16px' }}>&nbsp;</Typography>
+                                                <Typography sx={{ fontWeight: 'bold', fontSize: '16px', color: checkOpenStatus(hoursArray) ? 'green' : 'red' }}>{`${checkOpenStatus(hoursArray) ? 'Open Now' : 'Closed Now'}`}</Typography>
                                             </Box>)
                                         }
-
-
+                                        return (<Box>
+                                            <Typography sx={{ fontWeight: 'bold', fontSize: '16px' }}>&nbsp;</Typography>
+                                        </Box>)
                                     }
 
-                                    return (
-                                        <Typography sx={{ fontWeight: 'bold', fontSize: '16px' }}>{`${checkOpenStatus(schedule) ? 'Open Now' : 'Closed Now'}`}</Typography>
-                                    )
+                                    return (<Box>
+                                        <Typography sx={{ fontWeight: 'bold', fontSize: '16px', color: checkOpenStatus(new Array({ ...schedule })) ? 'green' : 'red' }}>{`${checkOpenStatus(new Array({ ...schedule })) ? 'Open Now' : 'Closed Now'}`}</Typography>
+                                    </Box>)
+
                                 }
 
                                 return (<Box>
@@ -207,36 +193,3 @@ function Hours({ id }) {
 }
 
 export default Hours;
-
-
-{/* {hoursArray.map((hours, index) => {
-                            return (
-                                <Typography sx={{ fontWeight: 'bold', fontSize: '16px' }}>{checkOpenStatus(hours)}</Typography>
-                            )
-                        })} */}
-
-
-
-                         // if (index === 0 && !checkOpenStatus(schedule)) {
-                                        //     return (<Box>
-                                        //         <Typography sx={{ fontWeight: 'bold', fontSize: '16px' }}>&nbsp;</Typography>
-                                        //     </Box>)
-                                        // } else if (index > 0 && !checkOpenStatus(schedule)) {
-                                        //     return (<Box>
-                                        //         <Typography sx={{ fontWeight: 'bold', fontSize: '16px' }}>{`${checkOpenStatus(schedule) ? 'Open Now' : 'Closed Now'}`}</Typography>
-                                        //     </Box>)
-                                        // }
-
-
-
-
-
-
-                                                            //     return (<Box>
-                    //         <Typography sx={{ fontWeight: 'bold', fontSize: '16px' }}>&nbsp;</Typography>
-                    //     </Box>)
-                    // }
-
-                    // return (<Box>
-                    //     <Typography sx={{ fontWeight: 'bold', fontSize: '16px' }}>{`${checkOpenStatus(hoursArray)}`}</Typography>
-                    // </Box>)
