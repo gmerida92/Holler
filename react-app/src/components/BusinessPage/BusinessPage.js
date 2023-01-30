@@ -11,6 +11,7 @@ import { loadSingleBusiness } from '../../store/singleBusinessDetail';
 import { loadSingleAttribute } from '../../store/singleAttribute';
 import { loadSingleBusinessCategory } from '../../store/singleCategory';
 import { loadSingleBusinessHour } from '../../store/singleBusinessHour';
+import { loadSingleReview } from '../../store/singleBusinessReview';
 
 
 function BusinessPage() {
@@ -22,11 +23,12 @@ function BusinessPage() {
         dispatch(loadSingleAttribute(id))
         dispatch(loadSingleBusinessCategory(id))
         dispatch(loadSingleBusinessHour(id))
+        dispatch(loadSingleReview(id))
     }, [dispatch])
 
     return (
         <>
-            <NavigationBarActive />
+            {/* <NavigationBarActive /> */}
             <MainComponent id={id} />
         </>
     )
