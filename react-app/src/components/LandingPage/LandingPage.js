@@ -20,7 +20,7 @@ function LandingPage() {
             <NavigationBarActive />
             {Object.keys(business).map((businessId) => {
                 return (
-                    <BusinessCard key={businessId} business={business[businessId]} />
+                    <BusinessCard key={businessId} id={businessId} />
                 )
             })}
         </>

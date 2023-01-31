@@ -1,11 +1,11 @@
 //Type Key String Literals
-const LOAD_REVIEW_BY_BUSINESS_ID = "/api/getBusinessReviews";
+const LOAD_SINGLE_BUSINESS_REVIEWS = "/api/getSingleBusinessReview"
 
 
 //Redux action creators
-const loadReviewsForBusiness = (payload) => {
+const loadReviews = (payload) => {
     return {
-        type: LOAD_REVIEW_BY_BUSINESS_ID,
+        type: LOAD_SINGLE_BUSINESS_REVIEWS,
         payload
     }
 }
@@ -13,14 +13,14 @@ const loadReviewsForBusiness = (payload) => {
 
 //Thunk action creators
 
-// Get all Reviews based on Business Id
-export const loadAllReviewsForBusiness = (id) => async (dispatch) => {
-    const response = await fetch(`/api/reviews/businesses/${id}`);
+//Get all Reviews based on a Business Id
+export const loadSingleReview = (id) => async (dispatch) => {
+    const response = await fetch(`/api/reviews/businesses/${id}`)
 
     if (response.ok) {
 
         const review = await response.json();
-        dispatch(loadReviewsForBusiness(review));
+        dispatch(loadReviews(review));
         return response;
 
     } else if (response.status < 500) {
@@ -37,32 +37,17 @@ export const loadAllReviewsForBusiness = (id) => async (dispatch) => {
     }
 }
 
-
 //Initial State Object
 const initialState = {};
 
+
 //Redux Reducer
-const reviewReducer = (state = initialState, action) => {
+const businessReviewsReducer = (state = initialState, action) => {
     let newState;
 
     switch (action.type) {
-        case LOAD_REVIEW_BY_BUSINESS_ID:
-            newState = { ...state }
-
-            if (Object.keys(newState).length > 0) {
-
-                Object.keys(state).forEach((businessId) => {
-                    newState[businessId] = [...state[businessId]]
-
-                    newState[businessId].forEach((review, index) => {
-                        review['Owner'] = { ...state[businessId][index]['Owner'] };
-                        review['Business'] = { ...state[businessId][index]['Business'] };
-                        review['Images'] = [...state[businessId][index]['Images']];
-                    });
-                });
-
-            };
-
+        case LOAD_SINGLE_BUSINESS_REVIEWS:
+            newState = {};
 
             let businessId = action.payload.Reviews[0].business_id;
             newState[businessId] = []
@@ -82,4 +67,4 @@ const reviewReducer = (state = initialState, action) => {
     }
 }
 
-export default reviewReducer;
+export default businessReviewsReducer;

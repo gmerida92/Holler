@@ -51,7 +51,7 @@ function ImageCarousel({ images }) {
     const classes = useStyles();
 
     const [activeStep, setActiveStep] = useState(0);
-    const maxSteps = images.length ? images.length : null;
+    const maxSteps = images?.length ? images?.length : null;
 
     const handleNext = () => {
         setActiveStep(activeStep === maxSteps - 1 ? 0 : activeStep + 1)
@@ -62,18 +62,18 @@ function ImageCarousel({ images }) {
         // setActiveStep((prevActiveStep) => prevActiveStep - 1)
     };
 
-    if (!Array.isArray(images) || images.length <= 0) return null
+    if (!Array.isArray(images) || images?.length <= 0) return null
 
     return (
 
         <Box className={classes.imageSwipper}>
             {maxSteps > 1 && <Button className={classes.leftArrow} onClick={handlePrevious} ><ArrowCircleLeftIcon /></Button>}
             {maxSteps > 1 && <Button className={classes.rightArrow} onClick={handleNext} ><ArrowCircleRightIcon /></Button>}
-            {images.map((image, index) => {
+            {images?.map((image, index) => {
                 return (
                     // { index === activeStep && <Box className={classes.businessMedia} component="img" src={image.image_url} key={image.id} />}
                     <Box className={classes.imageContainer} key={index}>
-                        {index === activeStep && <Box className={classes.businessMedia} component="img" src={image.image_url} key={image.id} />}
+                        {index === activeStep && <Box className={classes.businessMedia} component="img" src={image?.image_url} key={image?.id} />}
                     </Box>
                 )
             })}

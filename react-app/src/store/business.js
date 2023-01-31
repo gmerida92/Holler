@@ -2,6 +2,7 @@
 const LOAD_BUSINESSES = "/api/getBusinesses";
 
 
+
 //Redux action creators
 const loadBusinesses = (payload) => {
     return {
@@ -15,19 +16,19 @@ const loadBusinesses = (payload) => {
 
 // Get all Businesses
 export const loadAllBusinesses = () => async (dispatch) => {
-    const response = await fetch("/api/businesses/");
+    const response = await fetch(`/api/businesses/`);
 
-    if (response.ok) {
+    if (response?.ok) {
 
-        const businesses = await response.json();
+        const businesses = await response?.json();
         dispatch(loadBusinesses(businesses));
         return response;
 
-    } else if (response.status < 500) {
+    } else if (response?.status < 500) {
 
-        const data = await response.json();
-        if (data.errors) {
-            return data.errors;
+        const data = await response?.json();
+        if (data?.errors) {
+            return data?.errors;
         }
 
     } else {
@@ -37,28 +38,22 @@ export const loadAllBusinesses = () => async (dispatch) => {
     }
 }
 
+
 //Initial State Object
 const initialState = {};
 
 
 //Redux Reducer
 const businessReducer = (state = initialState, action) => {
-
-    // let newState = { ...state };
-    // Object.values(state).forEach((business) => {
-    //     newState[business.id] = { ...business }
-    //     newState[business.id]['Images'] = [...business.Images]
-
-    // })
-
-    let newState = {};
+    let newState;
 
     switch (action.type) {
         case LOAD_BUSINESSES:
+            newState = {}
 
-            action.payload.Businesses.forEach((business) => {
-                newState[business.id] = { ...business };
-                newState[business.id]['Images'] = [...business.Images]
+            action?.payload?.Businesses?.forEach((business) => {
+                newState[business?.id] = { ...business };
+                newState[business?.id]['Images'] = [...business?.Images]
             });
             return newState;
 

@@ -26,7 +26,7 @@ function randomSampleReview(arrayOfReviews) {
 
 
 function truncate(str, max = 150, len = 125) {
-    if(!str) {
+    if (!str) {
         return ''
     }
 
@@ -41,15 +41,15 @@ function ReviewSample({ id }) {
         dispatch(loadAllReviewsForBusiness(id))
     }, [dispatch]);
 
-    const allReviews = useSelector(state => state.review);
+    const allReviews = useSelector(state => state?.review) || ''
     const reviewsForBusiness = allReviews[id];
     const sampleReview = randomSampleReview(reviewsForBusiness);
 
 
     return (
-        <Box sx={{mb:2, display:'flex', alignItems:"flex-start"}}>
-            <ChatBubbleOutlineIcon sx={{mt:0.4, mr:1, fontSize:"12px"}}/>
-            <Typography variant="body2" color='grey'>{`"${truncate(sampleReview.review)}"`}</Typography>
+        <Box sx={{ mb: 2, display: 'flex', alignItems: "flex-start" }}>
+            <ChatBubbleOutlineIcon sx={{ mt: 0.4, mr: 1, fontSize: "12px" }} />
+            <Typography variant="body2" color='grey'>{`"${truncate(sampleReview?.review)}"`}</Typography>
         </Box>
     )
 }

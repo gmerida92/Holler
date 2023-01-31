@@ -45,19 +45,26 @@ const initialState = {};
 
 //Redux Reducer
 const businessHourReducer = (state = initialState, action) => {
-    // let newState = {};
-    let newState = { ...state }
-    Object.values(state).forEach((business) => {
-        newState[business.id] = {...business}
-
-    })
+    let newState;
 
     switch (action.type) {
         case LOAD_BUSINESS_HOURS:
+            newState = { ...state }
+
+            if (Object.keys(newState).length > 0) {
+
+                Object.keys(state).forEach((businessId) => {
+                    newState[businessId] = [...state[businessId]]
+                });
+
+            };
+
+
+            let businessId = action.payload['Business Hours'][0].business_id;
+            newState[businessId] = []
 
             action.payload['Business Hours'].forEach((businessHour) => {
-                newState[businessHour.id] = { ...businessHour }
-
+                newState[businessId].push({ ...businessHour })
             });
             return newState;
 
