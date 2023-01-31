@@ -13,7 +13,7 @@ import BusinessHoursSubheader from './BusinessHoursSubheader/BusinessHoursSubhea
 function TitleHeader({ id }) {
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, paddingTop: 5, paddingBottom: 5 }}>
             <Header id={id} />
             <RatingSubheader id={id} />
             <AmenitiesSubheader id={id} />

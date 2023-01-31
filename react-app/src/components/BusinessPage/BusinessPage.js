@@ -28,7 +28,7 @@ function BusinessPage() {
 
     return (
         <>
-            {/* <NavigationBarActive /> */}
+            <NavigationBarActive />
             <MainComponent id={id} />
         </>
     )
