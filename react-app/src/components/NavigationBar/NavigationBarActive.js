@@ -30,9 +30,9 @@ function NavigationBarActive() {
           </Box>
 
           <Box sx={{ mr: 5, display: 'flex', alignItems: 'center', textAlign: 'center', flexGrow: 0 }}>
-            <Button sx={{ my: 2, color: 'white', display: 'block' }}>
+            {/* <Button sx={{ my: 2, color: 'white', display: 'block' }}>
               <Typography>Write a Review</Typography>
-            </Button>
+            </Button> */}
             <Button sx={{ my: 2, color: 'white', display: 'block' }}>
               <Typography>For Businesses</Typography>
             </Button>

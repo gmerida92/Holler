@@ -1,5 +1,6 @@
 //Type Key String Literals
 const LOAD_BUSINESSES = "/api/getBusinesses";
+const LOAD_CURRENT_USER_BUSINESSES = "/api/getBusinessesByUser"
 
 
 
@@ -10,6 +11,13 @@ const loadBusinesses = (payload) => {
         payload
     }
 };
+
+const loadUserBusinesses = (payload) => {
+    return {
+        type: LOAD_CURRENT_USER_BUSINESSES,
+        payload
+    }
+}
 
 
 //Thunk action creators
@@ -38,6 +46,30 @@ export const loadAllBusinesses = () => async (dispatch) => {
     }
 }
 
+// Get all Businesses based on Current Session User
+export const loadAllBusinessesByUser = () => async (dispatch) => {
+    const response = await fetch(`/api/businesses/mysession`)
+
+    if (response.ok) {
+
+        const businesses = await response.json();
+        dispatch(loadUserBusinesses(businesses));
+        return response;
+
+    } else if (response.status < 500) {
+
+        const data = await response.json();
+        if (data.errors) {
+            return data.errors;
+        }
+
+    } else {
+
+        return ['An error occurred. Please try again.']
+
+    }
+}
+
 
 //Initial State Object
 const initialState = {};
@@ -55,6 +87,16 @@ const businessReducer = (state = initialState, action) => {
                 newState[business?.id] = { ...business };
                 newState[business?.id]['Images'] = [...business?.Images]
             });
+            return newState;
+
+        case LOAD_CURRENT_USER_BUSINESSES:
+            newState = {}
+
+            action?.payload?.Businesses?.forEach((business) => {
+                newState[business?.id] = { ...business };
+                newState[business?.id]['Images'] = [...business?.Images]
+            });
+            
             return newState;
 
         default:

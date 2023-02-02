@@ -9,6 +9,7 @@ import LandingPage from './components/LandingPage/LandingPage';
 import BusinessPage from './components/BusinessPage/BusinessPage';
 import SignUpPage from './components/Authorized/SignUpPage/SignUpPage';
 import LoginPage from './components/Authorized/LoginPage/LoginPage';
+import ProfilePage from './components/ProfilePage/ProfilePage';
 
 // import ProtectedRoute from './components/auth/ProtectedRoute';
 // import UsersList from './components/UsersList';
@@ -44,6 +45,9 @@ function App() {
         </Route>
         <Route path='/businesses/:id' exact={true}>
           <BusinessPage />
+        </Route>
+        <Route path='/profile' exact={true}>
+          <ProfilePage />
         </Route>
       </Switch>
 

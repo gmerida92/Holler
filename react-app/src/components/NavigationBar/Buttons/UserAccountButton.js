@@ -1,10 +1,13 @@
 import React from 'react';
-// import { NavLink } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+
+import { logout } from '../../../store/session';
+
 import { IconButton, MenuItem, Menu } from '@mui/material';
 // import { AppBar, Toolbar, Box, Typography, Button, IconButton, MenuItem, Menu } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import { useDispatch } from 'react-redux';
-import { logout } from '../../../store/session';
 
 function UserAccountButton() {
     const dispatch = useDispatch()
@@ -17,6 +20,11 @@ function UserAccountButton() {
 
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget);
+    };
+
+    const handleClickProfile = async (e) => {
+        setAnchorEl(null);
+        return <Redirect to="/profile" />
     };
 
     const handleClose = async (e) => {
@@ -56,7 +64,7 @@ function UserAccountButton() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem component={Link} to='/profile' onClick={handleClose}>Profile</MenuItem>
                 <MenuItem onClick={handleClose}>Account Settings</MenuItem>
                 <MenuItem onClick={handleCloseLogout}>Logout</MenuItem>
             </Menu>

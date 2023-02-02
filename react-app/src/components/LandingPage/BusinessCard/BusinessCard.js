@@ -39,7 +39,7 @@ function BusinessCard({ id }) {
             <CardActionArea>
                 <CardContent>
                     <Box sx={{ display: 'flex' }}>
-                        <ImageCarousel images={business?.Images} />
+                        {business?.Images.length > 0 && <ImageCarousel images={business?.Images} />}
                         <Box sx={{ ml: 3 }}>
 
                             <Typography variant="h5" sx={{ mb: 0.5, fontWeight: 'bold' }}>{business?.name}</Typography>
