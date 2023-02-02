@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Box, MobileStepper, Button } from "@mui/material";
 import { makeStyles } from '@mui/styles'
 
-// import './ImageCarousel.css'
 
 
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
@@ -55,11 +54,9 @@ function ImageCarousel({ images }) {
 
     const handleNext = () => {
         setActiveStep(activeStep === maxSteps - 1 ? 0 : activeStep + 1)
-        // setActiveStep((prevActiveStep) => prevActiveStep + 1)
     };
     const handlePrevious = () => {
         setActiveStep(activeStep === 0 ? maxSteps - 1 : activeStep - 1)
-        // setActiveStep((prevActiveStep) => prevActiveStep - 1)
     };
 
     if (!Array.isArray(images) || images?.length <= 0) return null
@@ -71,32 +68,12 @@ function ImageCarousel({ images }) {
             {maxSteps > 1 && <Button className={classes.rightArrow} onClick={handleNext} ><ArrowCircleRightIcon /></Button>}
             {images?.map((image, index) => {
                 return (
-                    // { index === activeStep && <Box className={classes.businessMedia} component="img" src={image.image_url} key={image.id} />}
                     <Box className={classes.imageContainer} key={index}>
                         {index === activeStep && <Box className={classes.businessMedia} component="img" src={image?.image_url} key={image?.id} />}
                     </Box>
                 )
             })}
         </Box>
-
-        // <div className="image-swiper">
-        //     {maxSteps > 1 && <div className='right-arrow' onClick={handleNext}><ArrowCircleRightIcon /></div>}
-        //     {maxSteps > 1 && <div className='left-arrow' onClick={handlePrevious}><ArrowCircleLeftIcon /></div>}
-        //     {images.map((image, index) => {
-        //         return (
-        //             <div className='image-container' key={index}>
-        //                 {index === activeStep &&
-        //                     <img
-        //                         className="business-media"
-        //                         src={image.image_url}
-        //                         key={image.id}
-        //                         alt='aPicture'
-        //                     />
-        //                 }
-        //             </div>
-        //         )
-        //     })}
-        // </div>
     )
 }
 

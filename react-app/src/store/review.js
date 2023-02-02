@@ -1,11 +1,19 @@
 //Type Key String Literals
 const LOAD_REVIEW_BY_BUSINESS_ID = "/api/getBusinessReviews";
+const LOAD_CURRENT_USER_REVIEWS = "/api/getReviewsByUser"
 
 
 //Redux action creators
 const loadReviewsForBusiness = (payload) => {
     return {
         type: LOAD_REVIEW_BY_BUSINESS_ID,
+        payload
+    }
+}
+
+const loadUserReviews = (payload) => {
+    return {
+        type: LOAD_CURRENT_USER_REVIEWS,
         payload
     }
 }
@@ -37,6 +45,31 @@ export const loadAllReviewsForBusiness = (id) => async (dispatch) => {
     }
 }
 
+// Get all Reviews based on Current Session User
+export const loadAllReviewsByUser = () => async (dispatch) => {
+    const response = await fetch(`/api/reviews/mysession`);
+
+    if (response.ok) {
+
+        const review = await response.json();
+        dispatch(loadUserReviews(review));
+        return response;
+
+    } else if (response.status < 500) {
+
+        const data = await response.json();
+        if (data.errors) {
+            return data.errors;
+        }
+
+    } else {
+
+        return ['An error occurred. Please try again.']
+
+    }
+}
+
+
 
 //Initial State Object
 const initialState = {};
@@ -44,10 +77,13 @@ const initialState = {};
 //Redux Reducer
 const reviewReducer = (state = initialState, action) => {
     let newState;
+    let businessId;
+    let userId;
 
     switch (action.type) {
         case LOAD_REVIEW_BY_BUSINESS_ID:
             newState = { ...state }
+            // newState ={}
 
             if (Object.keys(newState).length > 0) {
 
@@ -64,7 +100,7 @@ const reviewReducer = (state = initialState, action) => {
             };
 
 
-            let businessId = action.payload.Reviews[0].business_id;
+            businessId = action.payload.Reviews[0].business_id;
             newState[businessId] = []
 
             action.payload.Reviews.forEach((review, index) => {
@@ -76,6 +112,23 @@ const reviewReducer = (state = initialState, action) => {
             })
 
             return newState;
+
+        case LOAD_CURRENT_USER_REVIEWS:
+            newState = {};
+
+            userId = action.payload.Reviews[0].Owner.id;
+            newState[userId] = []
+
+            action.payload.Reviews.forEach((review, index) => {
+                newState[userId].push({ ...review });
+                newState[userId][index]['Owner'] = { ...review['Owner'] };
+                newState[userId][index]['Business'] = { ...review['Business'] };
+                newState[userId][index]['Images'] = [...review['Images']];
+
+            })
+
+            return newState;
+
 
         default:
             return state;

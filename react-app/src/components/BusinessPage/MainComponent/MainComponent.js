@@ -19,7 +19,7 @@ import { Box } from '@mui/material';
 function MainComponent({ id }) {
     return (
 
-        <Container sx={{ background: "white", borderRadius: '5px', display: 'flex', width: '100%', height: '100%' }}>
+        <Container maxWidth='lg' sx={{ background: "white", borderRadius: '5px', display: 'flex', width: '100%', height: '100%' }}>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, width: '100%', height: "100%", background: 'white' }}>
                 <TitleHeader id={id} />
 
