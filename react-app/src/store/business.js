@@ -1,6 +1,7 @@
 //Type Key String Literals
 const LOAD_BUSINESSES = "/api/getBusinesses";
 const LOAD_CURRENT_USER_BUSINESSES = "/api/getBusinessesByUser"
+const CREATE_BUSINESS_BY_USER = "/api/createBusinessByUser"
 
 
 
@@ -15,6 +16,13 @@ const loadBusinesses = (payload) => {
 const loadUserBusinesses = (payload) => {
     return {
         type: LOAD_CURRENT_USER_BUSINESSES,
+        payload
+    }
+}
+
+const createBusiness = (payload) => {
+    return {
+        type: CREATE_BUSINESS_BY_USER,
         payload
     }
 }
@@ -70,6 +78,39 @@ export const loadAllBusinessesByUser = () => async (dispatch) => {
     }
 }
 
+// Create a Business 
+
+export const createNewBusiness = (business) => async (dispatch) => {
+    const response = await fetch(`/api/businesses/`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(business)
+    })
+
+    console.log("HERHERHEER", response)
+
+    if (response.ok) {
+
+        const newBusiness = await response.json();
+        dispatch(createBusiness(newBusiness))
+        return response
+
+    } else if (response.status < 500) {
+
+        const data = await response.json();
+        if (data.errors) {
+            return data.errors;
+        }
+
+    } else {
+
+        return ['An error occurred. Please try again.']
+
+    }
+}
+
 
 //Initial State Object
 const initialState = {};
@@ -96,7 +137,24 @@ const businessReducer = (state = initialState, action) => {
                 newState[business?.id] = { ...business };
                 newState[business?.id]['Images'] = [...business?.Images]
             });
-            
+
+            return newState;
+
+        case CREATE_BUSINESS_BY_USER:
+            newState = { ...state }
+
+            if (Object.keys(newState).length > 0) {
+
+                Object.keys(state)?.forEach((businessId) => {
+                    newState[businessId] = { ...state[businessId] }
+                    newState[businessId]['Images'] = [...state[businessId]['Images']]
+                });
+
+            };
+
+            newState[action.payload.id] = { ...action.payload }
+            newState[action.payload.id]['Images'] = [...action.payload['Images']]
+
             return newState;
 
         default:

@@ -10,6 +10,7 @@ import BusinessPage from './components/BusinessPage/BusinessPage';
 import SignUpPage from './components/Authorized/SignUpPage/SignUpPage';
 import LoginPage from './components/Authorized/LoginPage/LoginPage';
 import ProfilePage from './components/ProfilePage/ProfilePage';
+import CreateBusinessPage from './components/ForBusinessPage/CreateBusinessPage/CreateBusinessPage'
 
 // import ProtectedRoute from './components/auth/ProtectedRoute';
 // import UsersList from './components/UsersList';
@@ -48,6 +49,9 @@ function App() {
         </Route>
         <Route path='/profile' exact={true}>
           <ProfilePage />
+        </Route>
+        <Route path='/business/new' exact={true}>
+          <CreateBusinessPage />
         </Route>
       </Switch>
 

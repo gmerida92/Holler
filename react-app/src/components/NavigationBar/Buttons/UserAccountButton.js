@@ -22,10 +22,10 @@ function UserAccountButton() {
         setAnchorEl(event.currentTarget);
     };
 
-    const handleClickProfile = async (e) => {
-        setAnchorEl(null);
-        return <Redirect to="/profile" />
-    };
+    // const handleClickProfile = async (e) => {
+    //     setAnchorEl(null);
+    //     return <Redirect to="/profile" />
+    // };
 
     const handleClose = async (e) => {
         setAnchorEl(null);
@@ -65,7 +65,7 @@ function UserAccountButton() {
                 onClose={handleClose}
             >
                 <MenuItem component={Link} to='/profile' onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>Account Settings</MenuItem>
+                {/* <MenuItem onClick={handleClose}>Account Settings</MenuItem> */}
                 <MenuItem onClick={handleCloseLogout}>Logout</MenuItem>
             </Menu>
         </>

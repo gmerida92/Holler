@@ -72,7 +72,7 @@ def get_business_details(id):
     return business.detail_to_dict()
 
 
-# Create a Business Based on the businesses Id
+# Create a Business 
 @business_routes.route('/', methods=['POST'])
 @login_required
 def create_business():
@@ -102,7 +102,7 @@ def create_business():
         db.session.add(business)
         db.session.commit()
         
-        return business.to_dict()
+        return business.all_to_dict()
 
     return {
         'message': 'validation Error',

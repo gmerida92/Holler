@@ -33,7 +33,7 @@ function NavigationBarActive() {
             {/* <Button sx={{ my: 2, color: 'white', display: 'block' }}>
               <Typography>Write a Review</Typography>
             </Button> */}
-            <Button sx={{ my: 2, color: 'white', display: 'block' }}>
+            <Button component={Link} to='/business/new' sx={{ my: 2, color: 'white', display: 'block' }}>
               <Typography>For Businesses</Typography>
             </Button>
             {sessionUser ? <UserAccountButtone /> : <AuthUserButton />}

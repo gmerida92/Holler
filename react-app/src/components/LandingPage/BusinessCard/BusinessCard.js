@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from 'react-router-dom';
 
 import { loadAllBusinessCategory } from "../../../store/business_category";
 import { loadAllBusinessAttribute } from "../../../store/business_attribute";
@@ -35,11 +36,14 @@ function BusinessCard({ id }) {
     const categoriesCurrentBusinessLength = business_categories?.length > 3 ? 3 : business_categories?.length;
 
     return (
-        <Card variant="outlined" sx={{ width: 700, height: 250, mb: 2, ml: 10 }}>
-            <CardActionArea>
+        <Card variant="outlined" sx={{ display: 'flex', flexDirection: 'row', width: 700, height: 250, mb: 2, ml: 10 }}>
+            <Box sx={{ paddingLeft: 2, paddingTop: 2 }}>
+                {business?.Images.length > 0 && <ImageCarousel images={business?.Images} />}
+            </Box>
+            
+            <CardActionArea component={Link} to={`/businesses/${id}`}>
                 <CardContent>
                     <Box sx={{ display: 'flex' }}>
-                        {business?.Images.length > 0 && <ImageCarousel images={business?.Images} />}
                         <Box sx={{ ml: 3 }}>
 
                             <Typography variant="h5" sx={{ mb: 0.5, fontWeight: 'bold' }}>{business?.name}</Typography>
