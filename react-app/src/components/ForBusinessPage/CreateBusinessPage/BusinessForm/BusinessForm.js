@@ -1,16 +1,15 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import { useHistory } from "react-router-dom";
+// import { useState, useEffect } from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { Redirect } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+// import { useHistory } from "react-router-dom";
 
 
 
-import { Box, TextField, Button, Typography, Paper, Grid } from '@mui/material';
+import { Box, TextField, Button, Typography, Grid } from '@mui/material';
 
-import { createNewBusiness } from '../../../../store/business';
 
 function formatPhoneNumber(phoneNumberString) {
     var cleaned = ('' + phoneNumberString).replace(/\D/g, '');
@@ -21,70 +20,11 @@ function formatPhoneNumber(phoneNumberString) {
     return null;
 }
 
-//   function formatUsPhone(phone) {
 
-//     var phoneTest = new RegExp(/^((\+1)|1)? ?\(?(\d{3})\)?[ .-]?(\d{3})[ .-]?(\d{4})( ?(ext\.? ?|x)(\d*))?$/);
-
-//     phone = phone.trim();
-//     var results = phoneTest.exec(phone);
-//     if (results !== null && results.length > 8) {
-
-//         return "(" + results[3] + ") " + results[4] + "-" + results[5] + (typeof results[8] !== "undefined" ? " x" + results[8] : "");
-
-//     }
-//     else {
-//          return phone;
-//     }
-// }
-
-function BusinessForm() {
-    const history = useHistory();
-    const dispatch = useDispatch()
-
-    const [name, setName] = useState('');
-    const [address, setAddress] = useState('');
-    const [address2, setAddress2] = useState('');
-    const [city, setCity] = useState('');
-    const [state, setState] = useState('');
-    const [postal, setPostal] = useState('');
-    const [country, setCountry] = useState('');
-    const [phone, setPhone] = useState('');
-    const [latitude, setLatitude] = useState('');
-    const [longitude, setLongitude] = useState('');
-    const [webAddress, setWebAddress] = useState('');
-    const [description, setDescription] = useState('');
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-
-        let newBusiness = {
-            name: name,
-            address: address,
-            address_2: address2,
-            city: city,
-            state: state,
-            postal_code: postal,
-            country: "United States of America",
-            phone: phone,
-            web_address: webAddress,
-            is_open: true,
-            latitude: latitude,
-            longitude: longitude,
-            description: description
-        }
-
-        console.log('HEREHER', newBusiness)
-
-        // return dispatch(createNewBusiness(newBusiness)).then(() => { <Redirect to='/' />; })
-        dispatch(createNewBusiness(newBusiness))
-
-        return history.push("/");
-        // return <Redirect to='/' />;
-    }
+function BusinessForm({ nextStep, name, setName, address, setAddress, address2, setAddress2, city, setCity, state, setState, postal, setPostal, country, setCountry, phone, setPhone, latitude, setLatitude, longitude, setLongitude, webAddress, setWebAddress, description, setDescription }) {
 
     return (
-        // <form>
-        <Box component='form' onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', width: '50%', paddingBottom: 5, paddingTop: 5, gap: 3 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', width: '50%', paddingBottom: 5, paddingTop: 5, gap: 3 }}>
             <Typography variant='h4' sx={{ display: 'flex', fontWeight: 'bold' }}>Add Your Business</Typography>
             <Typography variant='body' sx={{ display: 'flex' }}>Add information about your business below.</Typography>
 
@@ -224,11 +164,10 @@ function BusinessForm() {
                     />
                 </Grid>
                 <Grid item sx={{ display: 'flex', justifyContent: 'center' }} xs={12}>
-                    <Button type='submit' variant="contained" sx={{ background: '#f55d98', color: 'white', fontWeight: 'bold' }}>Create Business</Button>
+                    <Button onClick={nextStep} type='submit' variant="contained" sx={{ background: '#f55d98', color: 'white', fontWeight: 'bold' }}>Continue</Button>
                 </Grid>
             </Grid>
         </Box>
-        // </form>
     )
 }
 
