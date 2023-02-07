@@ -11,7 +11,7 @@ function AttributesForm({ prevStep, nextStep,
     freeWiFi, setFreeWiFi, parkingLot, setParkingLot, valetParking, setValetParking,
     streetParking, setStreetParking, garageParking, setGarageParking, bikeParking, setBikeParking,
     businessAcceptsCryptocurrency, setBusinessAcceptsCryptocurrency, businessAcceptsCreditCard, setBusinessAcceptsCreditCard,
-    dogsAllowed, setDogsAllowed, wheelchairAccessible, setWheelchairAccessible, outsideSeating, setOutsideSeating,
+    dogsAllowed, setDogsAllowed, wheelchairAccessible, setWheelChairAccessible, outsideSeating, setOutsideSeating,
     takesReservation, setTakesReservation, offersCatering, setOffersCatering, offersTakeout, setOffersTakeout,
     offersDelivery, setOffersDelivery, goodForKids, setGoodForKids, moderateNoise, setModerateNoise
 }) {
@@ -84,7 +84,7 @@ function AttributesForm({ prevStep, nextStep,
                     <FormControlLabel control={<Checkbox checked={dogsAllowed} onChange={(e) => setDogsAllowed(e.target.checked)} />} label="Dogs Allowed" />
                 </Grid>
                 <Grid item xs={1} >
-                    <FormControlLabel control={<Checkbox checked={wheelchairAccessible} onChange={(e) => setWheelchairAccessible(e.target.checked)} />} label="Wheelchair Accessible" />
+                    <FormControlLabel control={<Checkbox checked={wheelchairAccessible} onChange={(e) => setWheelChairAccessible(e.target.checked)} />} label="Wheelchair Accessible" />
                 </Grid>
                 <Grid item xs={1} >
                     <FormControlLabel control={<Checkbox checked={outsideSeating} onChange={(e) => setOutsideSeating(e.target.checked)} />} label="Outside Seating" />

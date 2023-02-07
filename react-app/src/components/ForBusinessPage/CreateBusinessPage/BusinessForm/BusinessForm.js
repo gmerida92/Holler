@@ -23,6 +23,7 @@ function formatPhoneNumber(phoneNumberString) {
 
 function BusinessForm({ nextStep, name, setName, address, setAddress, address2, setAddress2, city, setCity, state, setState, postal, setPostal, country, setCountry, phone, setPhone, latitude, setLatitude, longitude, setLongitude, webAddress, setWebAddress, description, setDescription }) {
 
+
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', width: '50%', paddingBottom: 5, paddingTop: 5, gap: 3 }}>
             <Typography variant='h4' sx={{ display: 'flex', fontWeight: 'bold' }}>Add Your Business</Typography>
@@ -130,7 +131,7 @@ function BusinessForm({ nextStep, name, setName, address, setAddress, address2, 
                 </Grid>
                 <Grid item xs={12}>
                     <TextField
-                        type="text"
+                        type="number"
                         variant='outlined'
                         label='Latitude'
                         onChange={(e) => setLatitude(parseFloat(e.target.value))}
@@ -141,7 +142,7 @@ function BusinessForm({ nextStep, name, setName, address, setAddress, address2, 
                 </Grid>
                 <Grid item xs={12}>
                     <TextField
-                        type="text"
+                        type="number"
                         variant='outlined'
                         label='Longitude'
                         onChange={(e) => setLongitude(parseFloat(e.target.value))}

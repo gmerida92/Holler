@@ -61,14 +61,19 @@ def get_business_category(id):
 def create_business_category(id):
     form = BusinessCategoryForm()
     form['csrf_token'].data = request.cookies['csrf_token']
+    
+    print("HERE5", form.data)
 
     if form.validate_on_submit():
         business_category = BusinessCategory(
             business_id = id,
-            category_name = form.data["category_name"]
+            category_name = form.data['category_name']
         )
+        print("HERE6", form)
 
         db.session.add(business_category)
+        print("HERE7", business_category)
+        print("HERE8", business_category.to_dict())
         db.session.commit()
 
         return business_category.to_dict()

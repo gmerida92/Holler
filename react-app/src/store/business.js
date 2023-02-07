@@ -89,13 +89,12 @@ export const createNewBusiness = (business) => async (dispatch) => {
         body: JSON.stringify(business)
     })
 
-    console.log("HERHERHEER", response)
 
     if (response.ok) {
 
         const newBusiness = await response.json();
         dispatch(createBusiness(newBusiness))
-        return response
+        return newBusiness
 
     } else if (response.status < 500) {
 

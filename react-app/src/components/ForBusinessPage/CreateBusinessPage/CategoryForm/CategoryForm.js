@@ -27,24 +27,6 @@ function CategoryForm({ prevStep, nextStep, setCategories, inputs, setInputs }) 
     }
 
     useEffect(() => {
-        // let counter = 0;
-
-        // for (let index = 0; index < inputs.length; index++) {
-        //     if (inputs[index][1]) {
-        //         counter++;
-        //     }
-        // }
-
-        // if (counter === 0) {
-        //     const newArray = [];
-        //     for (let index = 0; index < inputs.length; index++) {
-        //         newArray.push(inputs[index][0])
-        //     }
-        //     setCategories(newArray)
-        // } else {
-        //     setCategories([]);
-        // }
-
         const newArray = []
         for (let index = 0; index < inputs?.length; index++) {
             newArray.push(inputs[index][0])
@@ -72,9 +54,9 @@ function CategoryForm({ prevStep, nextStep, setCategories, inputs, setInputs }) 
                     )
                 })}
                 <Grid item sx={{ display: 'flex', flexDirection: 'row', gap: 3, justifyContent: 'center', paddingTop: 5 }} xs={12}>
+                    <Button onClick={prevStep} variant="contained" sx={{ background: '#f55d98', color: 'white', fontWeight: 'bold' }}>Back</Button>
                     <Button onClick={handleAddInput} variant="contained" sx={{ background: '#f55d98', color: 'white', fontWeight: 'bold' }}>Add Category</Button>
-                    <Button onClick={prevStep} type='submit' variant="contained" sx={{ background: '#f55d98', color: 'white', fontWeight: 'bold' }}>Back</Button>
-                    <Button onClick={nextStep} type='submit' variant="contained" sx={{ background: '#f55d98', color: 'white', fontWeight: 'bold' }}>Continue</Button>
+                    <Button onClick={nextStep} variant="contained" sx={{ background: '#f55d98', color: 'white', fontWeight: 'bold' }}>Continue</Button>
                 </Grid>
             </Grid>
         </Box>

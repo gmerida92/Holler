@@ -66,7 +66,7 @@ def create_business_attribute(id):
     if form.validate_on_submit():
         business_attribute = BusinessAttribute(
             business_id = id,
-            health_score = form.data['price_range'],
+            health_score = form.data['health_score'],
             price_range = form.data['price_range'],
             free_wifi = form.data['free_wifi'],
             parking_lot = form.data['parking_lot'],
