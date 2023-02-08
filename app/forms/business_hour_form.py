@@ -5,5 +5,7 @@ from wtforms.validators import DataRequired, Email, ValidationError
 
 class BusinessHourForm(FlaskForm):
     day = SelectField("Day", choices=[("Sunday"), ("Monday"), ("Tuesday"), ("Wednesday"),("Thursday"), ("Friday"), ("Saturday")])
-    open_time = TimeField("Open Time", validators=[DataRequired()])
-    close_time = TimeField("Close Time", validators=[DataRequired()])
+    open_time = TimeField("Open Time")
+    close_time = TimeField("Close Time")
+    # open_time = TimeField("Open Time", validators=[DataRequired()])
+    # close_time = TimeField("Close Time", validators=[DataRequired()])

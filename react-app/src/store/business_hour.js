@@ -47,6 +47,7 @@ export const loadAllBusinessHour = (id) => async (dispatch) => {
 
 // Create Business Hours based on Business Id
 export const createHoursForBusiness = (businessId, newHour) => async(dispatch) => {
+    console.log("HERE3", businessId, newHour)
     const response = await fetch(`/api/businesshours/businesses/${businessId}`, {
         method: "POST",
         headers: {
@@ -55,9 +56,12 @@ export const createHoursForBusiness = (businessId, newHour) => async(dispatch) =
         body: JSON.stringify(newHour)
     })
 
+    console.log("HERE4", response)
+
     if (response.ok) {
 
         const businessHour = await response.json();
+        console.log("HERE5", businessHour)
         dispatch(createBusinessHours(businessHour))
         return response;
 
@@ -118,14 +122,15 @@ const businessHourReducer = (state = initialState, action) => {
 
             businessId = action.payload.business_id;
 
-            if (newState[businessId].length > 0) {
+            if (!(`${businessId}` in newState)) {
+                newState[businessId] = [];
                 newState[businessId].push({ ...action.payload })
             } else {
-                newState[businessId] = [];
                 newState[businessId].push({ ...action.payload })
             }
 
             return newState;
+
         default:
             return state;
     }

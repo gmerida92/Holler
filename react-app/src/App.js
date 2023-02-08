@@ -53,6 +53,9 @@ function App() {
         <Route path='/business/new' exact={true}>
           <CreateBusinessPage />
         </Route>
+        {/* <Route path='/business/edit' exact={true}>
+          <CreateBusinessPage />
+        </Route> */}
       </Switch>
 
       {/* <Switch>

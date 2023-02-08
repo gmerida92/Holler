@@ -4,17 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
-import { Box, Typography, Rating } from '@mui/material';
+import { Box, Typography, Rating, IconButton } from '@mui/material';
 import CircleIcon from '@mui/icons-material/Circle';
+import CreateIcon from '@mui/icons-material/Create';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import { loadAllBusinessAttribute } from '../../../../../../store/business_attribute';
 import { loadAllBusinessCategory } from '../../../../../../store/business_category';
 
-function convertDateTimeStringToDateString(dateTimeString) {
-    let dateTime = new Date(dateTimeString);
-    let dateString = `${dateTime?.getMonth() + 1}/${dateTime?.getDate()}/${dateTime?.getFullYear()}`;
-    return dateString;
-}
 
 function createPriceRangeString(price_range) {
     let priceRange = '';
@@ -45,13 +42,14 @@ function UserBusinessCard({ business }) {
     useEffect(() => {
         dispatch(loadAllBusinessCategory(business?.id))
         dispatch(loadAllBusinessAttribute(business?.id))
-    }, [dispatch])
+    }, [business?.id, dispatch])
 
     const businessAttribute = useSelector((state) => state.businessAttribute[business?.id]) || ''
     const businessCategories = useSelector((state) => state.businessCategory[business?.id]) || ''
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', borderBottom: 1, borderColor: 'divider', paddingBottom: 6 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', borderBottom: 1, borderColor: 'divider', paddingBottom: 3, gap: 3 }}>
+
             <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}>
                 {business?.Images.length > 0 && <Box component='img' src={business?.Images[0]?.image_url} sx={{ height: '60px', width: '60px', borderRadius: '10%', objectFit: 'cover' }} />}
 
@@ -73,7 +71,17 @@ function UserBusinessCard({ business }) {
                         <Typography sx={{ fontSize: '12px' }}>{business?.state?.slice(0, 2)?.toUpperCase()}</Typography>
                         <Typography sx={{ fontSize: '12px' }}>{business?.postal_code}</Typography>
                     </Box>
+
                 </Box>
+            </Box>
+
+            <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
+                <IconButton variant='outlined' size='small'>
+                    <CreateIcon fontSize='inherit' />
+                </IconButton>
+                <IconButton>
+                    <DeleteIcon fontSize='inherit' />
+                </IconButton>
             </Box>
 
         </Box>

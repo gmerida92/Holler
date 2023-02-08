@@ -26,7 +26,7 @@ function BusinessCard({ id }) {
     useEffect(() => {
         dispatch(loadAllBusinessCategory(id))
         dispatch(loadAllBusinessAttribute(id))
-    }, [dispatch])
+    }, [id, dispatch])
 
     const business = useSelector((state) => state?.business[id])
     const business_categories = useSelector((state) => state?.businessCategory[id])
@@ -63,7 +63,7 @@ function BusinessCard({ id }) {
                             </Box>
 
                             <TimeComponent id={business?.id} />
-                            <ReviewSample id={business?.id} />
+                            {business?.review_count > 0 && <ReviewSample id={business?.id} />}
                             <MainAttribute attributes={business_attribute} />
                         </Box>
 

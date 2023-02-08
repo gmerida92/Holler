@@ -21,7 +21,7 @@ import HoursForm from './HoursForm/HoursForm';
 
 function convertTimeObjectToString(dateTimeObject) {
     const timeString = dateTimeObject.toTimeString();
-    const onlyTimeString = timeString.slice(0, 8);
+    const onlyTimeString = timeString.slice(0, 5);
     return onlyTimeString;
 }
 
@@ -144,6 +144,7 @@ function CreateBusinessPage() {
         };
         let newBusiness = await dispatch(createNewBusiness(newBusinessData));
 
+
         let newAttributesData = {
             health_score: healthScore,
             price_range: priceRange,
@@ -167,43 +168,27 @@ function CreateBusinessPage() {
         };
         dispatch(createAttributeForBusiness(newBusiness.id, newAttributesData))
 
-        console.log('Here1', categories)
+
         categories.forEach((category) => {
             let newCategory = {
                 category_name: category
             }
-            console.log("Here2", newBusiness.id, newCategory)
             dispatch(createCategoryForBusiness(newBusiness.id, newCategory))
         })
 
-        // newCategory['category_name'] = category;
-        // newCategory = {
-        //     // business_id: newBusiness.id,
-        //     category_name: category
-        // }
-        // Object.keys(schedule).forEach((day) => {
-        //     let newHours = {
-        //         day: day,
-        //         open_time: convertTimeObjectToString(schedule[day]['openTime']),
-        //         close_time: convertTimeObjectToString(schedule[day]['closeTime'])
-        //     }
 
-        //     // let newHours = {}
-        //     // let newHours = {
-        //     //     // business_id: newBusiness.id,
-        //     //     day: day,
-        //     //     open_time: convertTimeObjectToString(schedule[day]['openTime']),
-        //     //     close_time: convertTimeObjectToString(schedule[day]['closeTime'])
-        //     // }
+        Object.keys(schedule).forEach((day) => {
+            let newHours = {
+                day: day,
+                open_time: convertTimeObjectToString(schedule[day]['openTime']),
+                close_time: convertTimeObjectToString(schedule[day]['closeTime'])
+            }
+            console.log("HERE1", newHours)
+            dispatch(createHoursForBusiness(newBusiness.id, newHours))
+            console.log("HERE2", newBusiness.id, newHours)
+        })
 
-        //     // newHours[day] = day;
-        //     // newHours[open_time] = convertTimeObjectToString(schedule[day]['openTime']);
-        //     // newHours[close_time] = convertTimeObjectToString(schedule[day]['closeTime']);
-
-        //     dispatch(createHoursForBusiness(newBusiness.id, newHours))
-        // })
-
-        // history.push('/')
+        history.push('/')
     }
 
     if (!sessionUser) return <Redirect to="/login" />

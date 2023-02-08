@@ -1,6 +1,5 @@
 //Type Key String Literals
 const LOAD_BUSINESS_ATTRIBUTES = "/api/getBusinessAttribute";
-// const LOAD_USER_BUSINESS_ATTRIBUTES = "/api/getUserBusinessAttribute"
 const CREATE_BUSINESS_ATTRIBUTES = "/api/createBusinessAttribute"
 
 
@@ -11,13 +10,6 @@ const loadBusinessAttribute = (payload) => {
         payload
     }
 }
-
-// const loadUserBusinessAttribut = (payload) => {
-//     return {
-//         type: LOAD_USER_BUSINESS_ATTRIBUTES,
-//         payload
-//     }
-// }
 
 const createBusinessAttribute = (payload) => {
     return {
@@ -52,31 +44,6 @@ export const loadAllBusinessAttribute = (id) => async (dispatch) => {
 
     }
 }
-
-
-// // Get Business Attribute of a User Business based on a Business Id
-// export const loadAttributesUserBusiness = (id) => async (dispatch) => {
-//     const response = await fetch(`/api/businessattributes/businesses/${id}`)
-
-//     if (response?.ok) {
-
-//         const businessAttribute = await response?.json();
-//         dispatch(loadBusinessAttribute(businessAttribute))
-//         return response;
-
-//     } else if (response?.status < 500) {
-
-//         const data = await response?.json();
-//         if (data?.errors) {
-//             return data?.errors;
-//         }
-
-//     } else {
-
-//         return ['An error occurred. Please try again.'];
-
-//     }
-// }
 
 
 // Create Business Attribute based on Business Id
@@ -133,19 +100,6 @@ const businessAttributeReducer = (state = initialState, action) => {
 
             newState[action?.payload?.business_id] = { ...action?.payload };
             return newState;
-
-        // case LOAD_USER_BUSINESS_ATTRIBUTES:
-        //     newState = { ...state };
-        //     businessId = action?.payload?.business_id;
-
-        //     if (Object.keys(newState).length > 0) {
-        //         if (!state[businessId]) {
-        //             newState[businessId] = { ...action?.payload };
-        //         }
-        //     }
-
-        //     // newState[businessId] = { ...action?.payload };
-        //     return newState
 
         case CREATE_BUSINESS_ATTRIBUTES:
             newState = { ...state };

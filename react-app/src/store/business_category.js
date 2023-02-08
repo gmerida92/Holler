@@ -47,7 +47,6 @@ export const loadAllBusinessCategory = (id) => async (dispatch) => {
 
 // Create Business Category based on Business Id
 export const createCategoryForBusiness = (businessId, newCategory) => async (dispatch) => {
-    console.log("HERE3", businessId, newCategory)
     const response = await fetch(`/api/businesscategories/businesses/${businessId}`, {
         method: "POST",
         headers: {
@@ -56,11 +55,9 @@ export const createCategoryForBusiness = (businessId, newCategory) => async (dis
         body: JSON.stringify(newCategory)
     })
 
-    console.log("HERE4", response)
     if (response.ok) {
 
         const businessCategory = await response.json();
-        console.log("HERE5", businessCategory)
         dispatch(createBusinessCategory(businessCategory));
         return response;
 
@@ -121,10 +118,10 @@ const businessCategoryReducer = (state = initialState, action) => {
 
             businessId = action.payload.business_id;
 
-            if (newState[businessId].length > 0) {
+            if (!(`${businessId}` in newState)) {
+                newState[businessId] = [];
                 newState[businessId].push({ ...action.payload })
             } else {
-                newState[businessId] = [];
                 newState[businessId].push({ ...action.payload })
             }
 
