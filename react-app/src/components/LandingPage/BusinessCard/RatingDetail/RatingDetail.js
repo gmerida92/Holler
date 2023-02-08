@@ -8,7 +8,7 @@ function RatingDetail({ stars, reviewCount }) {
     return (
         <Box sx={{ mb: 1.5, display: "flex", alignItems: 'center', color: 'gray' }}>
             <Rating name="read-only" value={stars} precision={0.5} readOnly />
-            <Typography sx={{ ml: 1 }}>{reviewCount}</Typography>
+            <Typography sx={{ ml: 1 }}>{reviewCount > 0 ? reviewCount : 0}</Typography>
         </Box>
     )
 

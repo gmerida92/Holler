@@ -5,7 +5,7 @@ import { signUp } from '../../../store/session';
 
 import NavigationBarNonActive from '../../NavigationBar/NavigationBarNonActive';
 
-import { Box, TextField, Button, Typography, Paper} from '@mui/material';
+import { Box, TextField, Button, Typography, Paper } from '@mui/material';
 // import { Box, TextField, Toolbar, Button, AppBar, Typography, FormControl, InputLabel, FormGroup, Grid, Paper, Card } from '@mui/material';
 
 

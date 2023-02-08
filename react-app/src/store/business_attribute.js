@@ -1,6 +1,6 @@
 //Type Key String Literals
 const LOAD_BUSINESS_ATTRIBUTES = "/api/getBusinessAttribute";
-// const LOAD_USER_BUSINESS_ATTRIBUTES = "/api/getUserBusinessAttribute"
+const CREATE_BUSINESS_ATTRIBUTES = "/api/createBusinessAttribute"
 
 
 //Redux action creators
@@ -11,12 +11,12 @@ const loadBusinessAttribute = (payload) => {
     }
 }
 
-// const loadUserBusinessAttribut = (payload) => {
-//     return {
-//         type: LOAD_USER_BUSINESS_ATTRIBUTES,
-//         payload
-//     }
-// }
+const createBusinessAttribute = (payload) => {
+    return {
+        type: CREATE_BUSINESS_ATTRIBUTES,
+        payload
+    }
+}
 
 
 //Thunk action creators
@@ -46,29 +46,35 @@ export const loadAllBusinessAttribute = (id) => async (dispatch) => {
 }
 
 
-// // Get Business Attribute of a User Business based on a Business Id
-// export const loadAttributesUserBusiness = (id) => async (dispatch) => {
-//     const response = await fetch(`/api/businessattributes/businesses/${id}`)
+// Create Business Attribute based on Business Id
+export const createAttributeForBusiness = (businessId, newAttributes) => async (dispatch) => {
+    const response = await fetch(`/api/businessattributes/businesses/${businessId}`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(newAttributes)
+    })
 
-//     if (response?.ok) {
+    if (response?.ok) {
 
-//         const businessAttribute = await response?.json();
-//         dispatch(loadBusinessAttribute(businessAttribute))
-//         return response;
+        const businessAttribute = await response.json();
+        dispatch(createBusinessAttribute(businessAttribute))
+        return response;
 
-//     } else if (response?.status < 500) {
+    } else if (response?.status < 500) {
 
-//         const data = await response?.json();
-//         if (data?.errors) {
-//             return data?.errors;
-//         }
+        const data = await response?.json();
+        if (data?.errors) {
+            return data?.errors;
+        }
 
-//     } else {
+    } else {
 
-//         return ['An error occurred. Please try again.'];
+        return ['An error occurred. Please try again.'];
 
-//     }
-// }
+    }
+}
 
 //Initial State Object
 const initialState = {};
@@ -95,18 +101,20 @@ const businessAttributeReducer = (state = initialState, action) => {
             newState[action?.payload?.business_id] = { ...action?.payload };
             return newState;
 
-        // case LOAD_USER_BUSINESS_ATTRIBUTES:
-        //     newState = { ...state };
-        //     businessId = action?.payload?.business_id;
+        case CREATE_BUSINESS_ATTRIBUTES:
+            newState = { ...state };
 
-        //     if (Object.keys(newState).length > 0) {
-        //         if (!state[businessId]) {
-        //             newState[businessId] = { ...action?.payload };
-        //         }
-        //     }
+            if (Object.keys(newState).length > 0) {
 
-        //     // newState[businessId] = { ...action?.payload };
-        //     return newState
+                Object.keys(state)?.forEach((businessId) => {
+                    newState[businessId] = { ...state[businessId] }
+
+                });
+
+            };
+
+            newState[action?.payload?.business_id] = { ...action?.payload };
+            return newState;
 
         default:
             return state;
