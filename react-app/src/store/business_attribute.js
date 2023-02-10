@@ -1,7 +1,7 @@
 //Type Key String Literals
 const LOAD_BUSINESS_ATTRIBUTES = "/api/getBusinessAttribute";
 const CREATE_BUSINESS_ATTRIBUTES = "/api/createBusinessAttribute"
-
+const EDIT_BUSINESS_ATTRIBUTES = '/api/editBusinessAttribute';
 
 //Redux action creators
 const loadBusinessAttribute = (payload) => {
@@ -14,6 +14,13 @@ const loadBusinessAttribute = (payload) => {
 const createBusinessAttribute = (payload) => {
     return {
         type: CREATE_BUSINESS_ATTRIBUTES,
+        payload
+    }
+}
+
+const editBusinessAttribute = (payload) => {
+    return {
+        type: EDIT_BUSINESS_ATTRIBUTES,
         payload
     }
 }
@@ -76,6 +83,36 @@ export const createAttributeForBusiness = (businessId, newAttributes) => async (
     }
 }
 
+// Edit Business Attribute based on Business Id
+export const updateAttributeForBusiness = ( businessAttributeId, businessId, attributes) => async (dispatch) => {
+    const response = await fetch(`/api/businessattributes/${businessAttributeId}/businesses/${businessId}`, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(attributes)
+    })
+
+    if (response?.ok) {
+
+        const businessAttribute = await response.json();
+        dispatch(editBusinessAttribute(businessAttribute))
+        return response;
+
+    } else if (response?.status < 500) {
+
+        const data = await response?.json();
+        if (data?.errors) {
+            return data?.errors;
+        }
+
+    } else {
+
+        return ['An error occurred. Please try again.'];
+
+    }
+}
+
 //Initial State Object
 const initialState = {};
 
@@ -102,6 +139,21 @@ const businessAttributeReducer = (state = initialState, action) => {
             return newState;
 
         case CREATE_BUSINESS_ATTRIBUTES:
+            newState = { ...state };
+
+            if (Object.keys(newState).length > 0) {
+
+                Object.keys(state)?.forEach((businessId) => {
+                    newState[businessId] = { ...state[businessId] }
+
+                });
+
+            };
+
+            newState[action?.payload?.business_id] = { ...action?.payload };
+            return newState;
+
+        case EDIT_BUSINESS_ATTRIBUTES:
             newState = { ...state };
 
             if (Object.keys(newState).length > 0) {

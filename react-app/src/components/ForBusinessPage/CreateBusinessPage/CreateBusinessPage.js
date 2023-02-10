@@ -183,9 +183,9 @@ function CreateBusinessPage() {
                 open_time: convertTimeObjectToString(schedule[day]['openTime']),
                 close_time: convertTimeObjectToString(schedule[day]['closeTime'])
             }
-            console.log("HERE1", newHours)
+
             dispatch(createHoursForBusiness(newBusiness.id, newHours))
-            console.log("HERE2", newBusiness.id, newHours)
+
         })
 
         history.push('/')
@@ -196,7 +196,7 @@ function CreateBusinessPage() {
     return (
         <>
             <NavigationBarActive />
-            <Paper sx={{ height: '100vh', display: 'flex', justifyContent: 'center' }}>
+            <Paper sx={{ height: '100%', display: 'flex', justifyContent: 'center' }}>
                 {step === 1 && <BusinessForm nextStep={nextStep}
                     {...{
                         name, setName, address, setAddress, address2, setAddress2,
