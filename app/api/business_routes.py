@@ -138,7 +138,7 @@ def edit_business(id):
         business.description= form.data['description']
         
         db.session.commit()
-        return business.to_dict()
+        return business.all_to_dict()
 
     return {
         'message': 'validation Error',

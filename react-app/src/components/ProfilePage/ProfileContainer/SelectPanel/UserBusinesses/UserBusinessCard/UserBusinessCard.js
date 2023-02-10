@@ -3,11 +3,13 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { Box, Typography, Rating, IconButton } from '@mui/material';
 import CircleIcon from '@mui/icons-material/Circle';
 import CreateIcon from '@mui/icons-material/Create';
 import DeleteIcon from '@mui/icons-material/Delete';
+import ImageTwoToneIcon from '@mui/icons-material/ImageTwoTone';
 
 import { loadAllBusinessAttribute } from '../../../../../../store/business_attribute';
 import { loadAllBusinessCategory } from '../../../../../../store/business_category';
@@ -51,7 +53,7 @@ function UserBusinessCard({ business }) {
         <Box sx={{ display: 'flex', flexDirection: 'column', borderBottom: 1, borderColor: 'divider', paddingBottom: 3, gap: 3 }}>
 
             <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}>
-                {business?.Images.length > 0 && <Box component='img' src={business?.Images[0]?.image_url} sx={{ height: '60px', width: '60px', borderRadius: '10%', objectFit: 'cover' }} />}
+                {business?.Images.length > 0 ? <Box component='img' src={business?.Images[0]?.image_url} sx={{ height: '60px', width: '60px', borderRadius: '10%', objectFit: 'cover' }} /> : <ImageTwoToneIcon sx={{ height: '60px', width: '60px' }} />}
 
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography sx={{ fontSize: '14px', fontWeight: 'bold' }}>{business?.name}</Typography>
@@ -76,7 +78,7 @@ function UserBusinessCard({ business }) {
             </Box>
 
             <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
-                <IconButton variant='outlined' size='small'>
+                <IconButton component={Link} to={`/business/edit/${business?.id}`} size='small'>
                     <CreateIcon fontSize='inherit' />
                 </IconButton>
                 <IconButton>

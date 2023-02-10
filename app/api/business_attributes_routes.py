@@ -111,7 +111,7 @@ def edit_business_attribute(bus_att_id, id):
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
-        business_attribute.health_score = form.data['price_range']
+        business_attribute.health_score = form.data['health_score']
         business_attribute.price_range = form.data['price_range']
         business_attribute.free_wifi = form.data['free_wifi']
         business_attribute.parking_lot = form.data['parking_lot']

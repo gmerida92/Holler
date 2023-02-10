@@ -8,6 +8,7 @@ import { loadAllBusinessAttribute } from "../../../store/business_attribute";
 
 import { Card, CardContent, Rating, CardActions, CardMedia, Typography, Box, Button, CardActionArea } from "@mui/material";
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import ImageTwoToneIcon from '@mui/icons-material/ImageTwoTone';
 
 import ImageCarousel from "./ImageCarousel/ImageCarousel";
 import RatingDetail from "./RatingDetail/RatingDetail";
@@ -38,9 +39,9 @@ function BusinessCard({ id }) {
     return (
         <Card variant="outlined" sx={{ display: 'flex', flexDirection: 'row', width: 700, height: 250, mb: 2, ml: 10 }}>
             <Box sx={{ paddingLeft: 2, paddingTop: 2 }}>
-                {business?.Images.length > 0 && <ImageCarousel images={business?.Images} />}
+                {business?.Images.length > 0 ? <ImageCarousel images={business?.Images} /> : <ImageTwoToneIcon sx={{ height: 220, width: 220 }} />}
             </Box>
-            
+
             <CardActionArea component={Link} to={`/businesses/${id}`}>
                 <CardContent>
                     <Box sx={{ display: 'flex' }}>

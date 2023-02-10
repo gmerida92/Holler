@@ -62,13 +62,7 @@ def get_business_hours(id):
 @authorization_required
 def create_business_hours(id):
     form = BusinessHourForm()
-    print('HERE1', form)
     form['csrf_token'].data = request.cookies['csrf_token']
-
-    print('HERE2', form.data)
-    print('HERE3', form.data['day'])
-    print('HERE4', form.data['open_time'])
-    print('HERE5', form.data['close_time'])
 
     if form.validate_on_submit():
         business_hour = BusinessHour(

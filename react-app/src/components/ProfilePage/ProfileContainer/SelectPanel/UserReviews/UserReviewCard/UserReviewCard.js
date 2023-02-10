@@ -9,6 +9,7 @@ import { loadAllBusinessCategory } from '../../../../../../store/business_catego
 
 import { Box, Typography, Rating } from '@mui/material';
 import CircleIcon from '@mui/icons-material/Circle';
+import ImageTwoToneIcon from '@mui/icons-material/ImageTwoTone';
 
 function convertDateTimeStringToDateString(dateTimeString) {
     let dateTime = new Date(dateTimeString);
@@ -55,7 +56,7 @@ function UserReviewCard({ review }) {
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', borderBottom: 1, borderColor: 'divider', paddingBottom: 6 }}>
             <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}>
-                {review?.Images.length > 0 && <Box component='img' src={review?.Images[0]?.image_url} sx={{ height: '60px', width: '60px', borderRadius: '10%', objectFit: 'cover' }} />}
+                {review?.Images.length > 0 ? <Box component='img' src={review?.Images[0]?.image_url} sx={{ height: '60px', width: '60px', borderRadius: '10%', objectFit: 'cover' }} /> : <ImageTwoToneIcon sx={{ height: '60px', width: '60px' }} /> }
 
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography sx={{ fontSize: '14px', fontWeight: 'bold' }}>{review?.Business?.name}</Typography>
