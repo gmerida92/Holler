@@ -37,7 +37,7 @@ function BusinessCard({ id }) {
     const categoriesCurrentBusinessLength = business_categories?.length > 3 ? 3 : business_categories?.length;
 
     return (
-        <Card variant="outlined" sx={{ display: 'flex', flexDirection: 'row', width: 700, height: 250, mb: 2, ml: 10 }}>
+        <Card variant="outlined" sx={{ display: 'flex', flexDirection: 'row', width: 700, height: 250, mb: 2}}>
             <Box sx={{ paddingLeft: 2, paddingTop: 2 }}>
                 {business?.Images.length > 0 ? <ImageCarousel images={business?.Images} /> : <ImageTwoToneIcon sx={{ height: 220, width: 220 }} />}
             </Box>
