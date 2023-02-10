@@ -1,8 +1,9 @@
 //Type Key String Literals
 const LOAD_REVIEW_BY_BUSINESS_ID = "/api/getBusinessReviews";
 const LOAD_CURRENT_USER_REVIEWS = "/api/getReviewsByUser"
-const CREATE_REVIEW_FOR_BUSINESS = "/apit/createReview"
-const EDIT_REVIEW_FOR_BUSINESS = "/apit/createReview"
+const CREATE_REVIEW_FOR_BUSINESS = "/api/createReviewByUser"
+const EDIT_REVIEW_FOR_BUSINESS = "/api/editReviewByUser"
+const REMOVE_REVIEW_BY_USER = "/api/removeReviewByUser"
 
 
 //Redux action creators
@@ -30,6 +31,13 @@ const createReview = (payload) => {
 const editReview = (payload) => {
     return {
         type: EDIT_REVIEW_FOR_BUSINESS,
+        payload
+    }
+}
+
+const removeReview = (payload) => {
+    return {
+        type: REMOVE_REVIEW_BY_USER,
         payload
     }
 }
@@ -144,7 +152,32 @@ export const updateAReview = (id, review) => async (dispatch) => {
     }
 }
 
+// Delete Review
+export const deleteAReview = (id) => async (dispatch) => {
+    const response = await fetch(`/api/reviews/${id}`, {
+        method: "DELETE"
+    })
 
+    if (response.ok) {
+
+        // const review = await response.json();
+        dispatch(removeReview(id));
+        return response;
+
+    } else if (response.status < 500) {
+
+        const data = await response.json();
+        if (data.errors) {
+            return data.errors;
+        }
+
+    } else {
+
+        return ['An error occurred. Please try again.']
+
+    }
+
+}
 
 //Initial State Object
 const initialState = {};
@@ -207,6 +240,32 @@ const reviewReducer = (state = initialState, action) => {
         // case CREATE_REVIEW_FOR_BUSINESS:
         // case EDIT_REVIEW_FOR_BUSINESS:
 
+        case REMOVE_REVIEW_BY_USER:
+            newState = { ...state }
+
+            // Make deep copy of state
+            Object.keys(state).forEach((userId) => {
+                newState[userId] = [...state[userId]]
+
+                newState[userId].forEach((review, index) => {
+                    review['Owner'] = { ...state[userId][index]['Owner'] };
+                    review['Business'] = { ...state[userId][index]['Business'] };
+                    review['Images'] = [...state[userId][index]['Images']];
+                });
+            });
+
+
+            // Iterate through state to find review
+            Object.keys(state).forEach((userId) => {
+
+                newState[userId].forEach((review, index) => {
+                    if (review.id === action.payload) {
+                        newState[userId].splice(index, 1)
+                    }
+                });
+            });
+
+            return newState
 
         default:
             return state;

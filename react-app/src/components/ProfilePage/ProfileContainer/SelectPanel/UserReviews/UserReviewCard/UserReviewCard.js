@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 
 import { loadAllBusinessAttribute } from '../../../../../../store/business_attribute';
 import { loadAllBusinessCategory } from '../../../../../../store/business_category';
+import { deleteAReview } from '../../../../../../store/review';
+
 
 import { Box, Typography, IconButton, Rating } from '@mui/material';
 import CircleIcon from '@mui/icons-material/Circle';
@@ -56,6 +58,10 @@ function UserReviewCard({ review }) {
     const businessAttribute = useSelector((state) => state.businessAttribute[review?.business_id]) || ''
     const businessCategories = useSelector((state) => state.businessCategory[review?.business_id]) || ''
 
+    const onDelete = (e, reviewId) => {
+        dispatch(deleteAReview(reviewId))
+    }
+
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', borderBottom: 1, borderColor: 'divider', paddingBottom: 3 }}>
             <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}>
@@ -94,7 +100,7 @@ function UserReviewCard({ review }) {
                     <CreateIcon fontSize='inherit' />
                 </IconButton>
                 <IconButton>
-                    <DeleteIcon fontSize='inherit' />
+                    <DeleteIcon onClick={(e) => onDelete(e, review?.id)} fontSize='inherit' />
                 </IconButton>
             </Box>
 
