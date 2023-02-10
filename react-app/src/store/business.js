@@ -2,7 +2,8 @@
 const LOAD_BUSINESSES = "/api/getBusinesses";
 const LOAD_CURRENT_USER_BUSINESSES = "/api/getBusinessesByUser"
 const CREATE_BUSINESS_BY_USER = "/api/createBusinessByUser"
-const EDIT_BUSINESS = "/api/editBusinessByUser"
+const EDIT_BUSINESS_BY_USER = "/api/editBusinessByUser"
+const REMOVE_BUSINESS_BY_USER = "/api/removeBusinessByUser"
 
 
 
@@ -30,11 +31,17 @@ const createBusiness = (payload) => {
 
 const editBusiness = (payload) => {
     return {
-        type: EDIT_BUSINESS,
+        type: EDIT_BUSINESS_BY_USER,
         payload
     }
 }
 
+const removeBusiness = (payload) => {
+    return {
+        type: REMOVE_BUSINESS_BY_USER,
+        payload
+    }
+}
 
 //Thunk action creators
 
@@ -87,7 +94,6 @@ export const loadAllBusinessesByUser = () => async (dispatch) => {
 }
 
 // Create a Business 
-
 export const createNewBusiness = (business) => async (dispatch) => {
     const response = await fetch(`/api/businesses/`, {
         method: "POST",
@@ -117,7 +123,6 @@ export const createNewBusiness = (business) => async (dispatch) => {
 
     }
 }
-
 
 // Edit a Business 
 export const updateABusiness = (businessId, business) => async (dispatch) => {
@@ -149,6 +154,33 @@ export const updateABusiness = (businessId, business) => async (dispatch) => {
 
     }
 }
+
+// Delete a Business
+export const deleteABusiness = (id) => async (dispatch) => {
+    const response = await fetch(`/api/businesses/${id}`, {
+        method: "DELETE"
+    })
+
+    if (response.ok) {
+
+        // const business = await response.json();
+        dispatch(removeBusiness(id));
+        return response;
+
+    } else if (response.status < 500) {
+
+        const data = await response.json();
+        if (data.errors) {
+            return data.errors;
+        }
+
+    } else {
+
+        return ['An error occurred. Please try again.']
+
+    }
+}
+
 
 
 //Initial State Object
@@ -196,22 +228,34 @@ const businessReducer = (state = initialState, action) => {
 
             return newState;
 
-            case EDIT_BUSINESS:
-                newState = { ...state }
-    
-                if (Object.keys(newState).length > 0) {
-    
-                    Object.keys(state)?.forEach((businessId) => {
-                        newState[businessId] = { ...state[businessId] }
-                        newState[businessId]['Images'] = [...state[businessId]['Images']]
-                    });
-    
-                };
-    
-                newState[action.payload.id] = { ...action.payload }
-                newState[action.payload.id]['Images'] = [...action.payload['Images']]
-    
-                return newState;
+        case EDIT_BUSINESS_BY_USER:
+            newState = { ...state }
+
+            if (Object.keys(newState).length > 0) {
+
+                Object.keys(state)?.forEach((businessId) => {
+                    newState[businessId] = { ...state[businessId] }
+                    newState[businessId]['Images'] = [...state[businessId]['Images']]
+                });
+
+            };
+
+            newState[action.payload.id] = { ...action.payload }
+            newState[action.payload.id]['Images'] = [...action.payload['Images']]
+
+            return newState;
+
+        case REMOVE_BUSINESS_BY_USER:
+            newState = { ...state }
+
+            Object.keys(state)?.forEach((businessId) => {
+                newState[businessId] = { ...state[businessId] }
+                newState[businessId]['Images'] = [...state[businessId]['Images']]
+            });
+
+            delete newState[action.payload]
+
+            return newState;
 
         default:
             return state;

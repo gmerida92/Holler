@@ -12,6 +12,8 @@ import LoginPage from './components/Authorized/LoginPage/LoginPage';
 import ProfilePage from './components/ProfilePage/ProfilePage';
 import CreateBusinessPage from './components/ForBusinessPage/CreateBusinessPage/CreateBusinessPage'
 import EditBusinessPage from './components/ForBusinessPage/EditBusinessPage/EditBusinessPage';
+import CreateReviewPage from './components/WriteReviewPage/CreateReviewPage/CreateReviewPage';
+import EditReviewPage from './components/WriteReviewPage/EditReviewPage/EditReviewPage';
 
 // import ProtectedRoute from './components/auth/ProtectedRoute';
 // import UsersList from './components/UsersList';
@@ -56,6 +58,12 @@ function App() {
         </Route>
         <Route path='/business/edit/:id' exact={true}>
           <EditBusinessPage />
+        </Route>
+        <Route path='/review/new/business/:id' exact={true}>
+          <CreateReviewPage />
+        </Route>
+        <Route path='/review/edit/:id' exact={true}>
+          <EditReviewPage />
         </Route>
       </Switch>
 

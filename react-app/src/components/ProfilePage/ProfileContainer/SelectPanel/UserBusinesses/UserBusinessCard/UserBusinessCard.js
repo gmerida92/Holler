@@ -13,6 +13,7 @@ import ImageTwoToneIcon from '@mui/icons-material/ImageTwoTone';
 
 import { loadAllBusinessAttribute } from '../../../../../../store/business_attribute';
 import { loadAllBusinessCategory } from '../../../../../../store/business_category';
+import { deleteABusiness } from '../../../../../../store/business';
 
 
 function createPriceRangeString(price_range) {
@@ -49,6 +50,10 @@ function UserBusinessCard({ business }) {
     const businessAttribute = useSelector((state) => state.businessAttribute[business?.id]) || ''
     const businessCategories = useSelector((state) => state.businessCategory[business?.id]) || ''
 
+    const onDelete = (e, businessId) => {
+        dispatch(deleteABusiness(businessId))
+    }
+
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', borderBottom: 1, borderColor: 'divider', paddingBottom: 3, gap: 3 }}>
 
@@ -82,7 +87,7 @@ function UserBusinessCard({ business }) {
                     <CreateIcon fontSize='inherit' />
                 </IconButton>
                 <IconButton>
-                    <DeleteIcon fontSize='inherit' />
+                    <DeleteIcon onClick={(e) => onDelete(e, business?.id)} fontSize='inherit' />
                 </IconButton>
             </Box>
 
