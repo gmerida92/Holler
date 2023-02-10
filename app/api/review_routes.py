@@ -70,7 +70,10 @@ def get_reviews_for_business(id):
 @review_routes.route('/<int:id>', methods=['GET'])
 @review_exists
 def get_review_detail(id):
+    print("HERE1", id)
     review = Review.query.get(id)
+
+    print('HERE2', review.detail_to_dict())
     return review.detail_to_dict()
 
 

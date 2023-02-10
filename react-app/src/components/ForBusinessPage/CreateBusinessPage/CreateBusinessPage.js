@@ -196,7 +196,7 @@ function CreateBusinessPage() {
     return (
         <>
             <NavigationBarActive />
-            <Paper sx={{ height: '100%', display: 'flex', justifyContent: 'center' }}>
+            <Paper sx={{ height: '100vh', display: 'flex', justifyContent: 'center' }}>
                 {step === 1 && <BusinessForm nextStep={nextStep}
                     {...{
                         name, setName, address, setAddress, address2, setAddress2,

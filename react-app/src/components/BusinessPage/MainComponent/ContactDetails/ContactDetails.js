@@ -7,7 +7,6 @@ import { Box, Typography, Paper } from '@mui/material';
 
 function ContactDetails({ id }) {
     const business = useSelector((state) => state?.singleBusiness[id])
-    console.log('HEREER!!!', business)
 
     return (
         <Paper elevation={3} sx={{ border: "solid", borderColor: 'lightgray', position: 'sticky', top: 110 }}>

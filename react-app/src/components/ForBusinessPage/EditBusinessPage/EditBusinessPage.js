@@ -149,6 +149,7 @@ function EditBusinessPage() {
     const onSubmit = async (e) => {
         e.preventDefault()
 
+
         let updatedBusinessData = {
             name: name,
             address: address,
@@ -165,6 +166,7 @@ function EditBusinessPage() {
             description: description
         };
         dispatch(updateABusiness(id, updatedBusinessData));
+
 
         let updatedAttributesData = {
             health_score: healthScore,
@@ -189,6 +191,7 @@ function EditBusinessPage() {
         };
         dispatch(updateAttributeForBusiness(businessAttribute.id, id, updatedAttributesData))
 
+
         inputs.forEach((input) => {
             let category = {
                 category_name: input[0]
@@ -196,24 +199,20 @@ function EditBusinessPage() {
             dispatch(updateCategoryForBusiness(input[1], id, category))
         })
 
-        console.log('\n\n', "HEREHERE1", schedule, '\n\n')
+
         Object.keys(schedule).forEach((day) => {
             let hours = {
                 day: day,
                 open_time: convertTimeObjectToString(schedule[day]['openTime']),
                 close_time: convertTimeObjectToString(schedule[day]['closeTime'])
             }
-            console.log('\n\n', "HEREHERE2", hours, '\n\n')
-            console.log('\n\n', "HEREHERE3", day, '\n\n')
-            console.log('\n\n', "HEREHERE4", id, '\n\n')
-            console.log('\n\n', "HEREHERE5", schedule[day]['id'], '\n\n')
-
             dispatch(updateHoursForBusiness(schedule[day]['id'], id, hours))
-
         })
 
-        // history.push('/profile')
+        history.push('/profile')
     }
+
+    if (!sessionUser) return <Redirect to="/login" />
 
     return (
         <>

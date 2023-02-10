@@ -3,12 +3,15 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { loadAllBusinessAttribute } from '../../../../../../store/business_attribute';
 import { loadAllBusinessCategory } from '../../../../../../store/business_category';
 
-import { Box, Typography, Rating } from '@mui/material';
+import { Box, Typography, IconButton, Rating } from '@mui/material';
 import CircleIcon from '@mui/icons-material/Circle';
+import CreateIcon from '@mui/icons-material/Create';
+import DeleteIcon from '@mui/icons-material/Delete';
 import ImageTwoToneIcon from '@mui/icons-material/ImageTwoTone';
 
 function convertDateTimeStringToDateString(dateTimeString) {
@@ -54,9 +57,9 @@ function UserReviewCard({ review }) {
     const businessCategories = useSelector((state) => state.businessCategory[review?.business_id]) || ''
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', borderBottom: 1, borderColor: 'divider', paddingBottom: 6 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', borderBottom: 1, borderColor: 'divider', paddingBottom: 3 }}>
             <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}>
-                {review?.Images.length > 0 ? <Box component='img' src={review?.Images[0]?.image_url} sx={{ height: '60px', width: '60px', borderRadius: '10%', objectFit: 'cover' }} /> : <ImageTwoToneIcon sx={{ height: '60px', width: '60px' }} /> }
+                {review?.Images.length > 0 ? <Box component='img' src={review?.Images[0]?.image_url} sx={{ height: '60px', width: '60px', borderRadius: '10%', objectFit: 'cover' }} /> : <ImageTwoToneIcon sx={{ height: '60px', width: '60px' }} />}
 
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography sx={{ fontSize: '14px', fontWeight: 'bold' }}>{review?.Business?.name}</Typography>
@@ -84,6 +87,15 @@ function UserReviewCard({ review }) {
 
             <Box sx={{ paddingBottom: 1 }}>
                 <Typography sx={{ fontSize: '14px' }}>{review?.review}</Typography>
+            </Box>
+
+            <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
+                <IconButton component={Link} to={`/review/edit/${review?.id}`} size='small'>
+                    <CreateIcon fontSize='inherit' />
+                </IconButton>
+                <IconButton>
+                    <DeleteIcon fontSize='inherit' />
+                </IconButton>
             </Box>
 
         </Box>

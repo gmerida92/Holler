@@ -1,6 +1,8 @@
 //Type Key String Literals
 const LOAD_REVIEW_BY_BUSINESS_ID = "/api/getBusinessReviews";
 const LOAD_CURRENT_USER_REVIEWS = "/api/getReviewsByUser"
+const CREATE_REVIEW_FOR_BUSINESS = "/apit/createReview"
+const EDIT_REVIEW_FOR_BUSINESS = "/apit/createReview"
 
 
 //Redux action creators
@@ -18,6 +20,19 @@ const loadUserReviews = (payload) => {
     }
 }
 
+const createReview = (payload) => {
+    return {
+        type: CREATE_REVIEW_FOR_BUSINESS,
+        payload
+    }
+}
+
+const editReview = (payload) => {
+    return {
+        type: EDIT_REVIEW_FOR_BUSINESS,
+        payload
+    }
+}
 
 //Thunk action creators
 
@@ -53,6 +68,66 @@ export const loadAllReviewsByUser = () => async (dispatch) => {
 
         const review = await response.json();
         dispatch(loadUserReviews(review));
+        return response;
+
+    } else if (response.status < 500) {
+
+        const data = await response.json();
+        if (data.errors) {
+            return data.errors;
+        }
+
+    } else {
+
+        return ['An error occurred. Please try again.']
+
+    }
+}
+
+// Create Review based on the Business Id
+export const createNewReview = (businessId, review) => async (dispatch) => {
+    const response = await fetch(`/api/reviews/businesses/${businessId}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(review)
+    })
+
+    if (response.ok) {
+
+        // const newReview = await response.json();
+        // dispatch(createReview(newReview));
+        return response;
+
+    } else if (response.status < 500) {
+
+        const data = await response.json();
+        if (data.errors) {
+            return data.errors;
+        }
+
+    } else {
+
+        return ['An error occurred. Please try again.']
+
+    }
+}
+
+// Edit Review
+export const updateAReview = (id, review) => async (dispatch) => {
+    const response = await fetch(`/api/reviews/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(review)
+    })
+
+    if (response.ok) {
+
+        // const updatedReview = await response.json();
+        // dispatch(editReview(updateReview));
         return response;
 
     } else if (response.status < 500) {
@@ -128,6 +203,9 @@ const reviewReducer = (state = initialState, action) => {
             })
 
             return newState;
+
+        // case CREATE_REVIEW_FOR_BUSINESS:
+        // case EDIT_REVIEW_FOR_BUSINESS:
 
 
         default:
