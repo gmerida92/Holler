@@ -28,6 +28,8 @@ function CreateReviewPage() {
 
     const onSubmit = (e) => {
 
+
+
         if(rating === 0 || rating === null){
             setErrors(['Rating : Must be 1 or greater'])
             return e.preventDefault()

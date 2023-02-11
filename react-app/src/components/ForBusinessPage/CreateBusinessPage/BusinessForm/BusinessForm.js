@@ -51,6 +51,7 @@ function BusinessForm({ nextStep, errors, setErrors, name, setName, address, set
             setErrors(['Phone Number : Field Required'])
             return e.preventDefault()
         }
+
         if (latitude.toString().trim() == null || latitude.toString().trim() == "" || latitude === " ") {
             setErrors(['Latitude : Field Required'])
             return e.preventDefault()

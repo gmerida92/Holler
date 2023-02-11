@@ -148,7 +148,7 @@ function EditBusinessPage() {
 
 
     const onSubmit = async (e) => {
-        
+
         e.preventDefault()
 
         if (name.trim() == null || name.trim() == "" || name === " ") {

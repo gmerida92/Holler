@@ -23,8 +23,7 @@ function EditCatgoryForm({ businessCategory, inputs, setInputs }) {
         //     newArray.push([inputs[index][0], inputs[index][1]])
         // }
         // setCategories(newArray)
-
-  
+        
 
     }, [businessCategory])
 
@@ -35,6 +34,7 @@ function EditCatgoryForm({ businessCategory, inputs, setInputs }) {
 
     const handleOnChange = (e, index) => {
         const inputsOnChange = [...inputs];
+
         inputsOnChange[index][0] = e.target.value;
         setInputs(inputsOnChange);
     }

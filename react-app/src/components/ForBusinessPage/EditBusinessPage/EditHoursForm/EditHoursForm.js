@@ -37,8 +37,12 @@ function EditHoursForm({ businessHour, schedule, setSchedule, mondayOpen, setMon
                 currentSchedule[hour.day] = {}
                 currentSchedule[hour.day]['id'] = hour.id
                 currentSchedule[hour.day]['openTime'] = convertTimeStringToObject(hour.open_time)
+
+
                 currentSchedule[hour.day]['closeTime'] = convertTimeStringToObject(hour.close_time)
+
             })
+
 
             setSchedule(currentSchedule)
 
@@ -68,6 +72,8 @@ function EditHoursForm({ businessHour, schedule, setSchedule, mondayOpen, setMon
             updateState[day] = { ...schedule[day] }
         })
         updateState[dayOfWeek][statusTime] = value;
+
+
         setSchedule(updateState)
     }
 
