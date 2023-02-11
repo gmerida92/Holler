@@ -27,9 +27,8 @@ function EditHoursForm({ businessHour, schedule, setSchedule, mondayOpen, setMon
     thursdayOpen, setThursdayOpen, thursdayClose, setThursdayClose, fridayOpen, setFridayOpen, fridayClose, setFridayClose, saturdayOpen,
     setSaturdayOpen, saturdayClose, setSaturdayClose, sundayOpen, setSundayOpen, sundayClose, setSundayClose }) {
 
-    console.log('\n\n', "HEREHERE6", businessHour, '\n\n')
     useEffect(() => {
-        console.log('\n\n', "HEREHERE7", businessHour, '\n\n')
+
         if (businessHour?.length > 0) {
             let currentSchedule = {};
 
@@ -37,14 +36,14 @@ function EditHoursForm({ businessHour, schedule, setSchedule, mondayOpen, setMon
                 currentSchedule[hour.day] = {}
                 currentSchedule[hour.day]['id'] = hour.id
                 currentSchedule[hour.day]['openTime'] = convertTimeStringToObject(hour.open_time)
-                console.log('\n\n', "HEREHERE8", typeof hour.open_time, '\n\n')
+
                 currentSchedule[hour.day]['closeTime'] = convertTimeStringToObject(hour.close_time)
-                console.log('\n\n', "HEREHERE9", typeof hour.close_time, '\n\n')
+
             })
 
-            console.log('\n\n', "HEREHERE10", currentSchedule, '\n\n')
+
             setSchedule(currentSchedule)
-            console.log('\n\n', "HEREHERE11", schedule, '\n\n')
+
 
 
             setMondayOpen(currentSchedule["Monday"]["openTime"])
@@ -72,7 +71,7 @@ function EditHoursForm({ businessHour, schedule, setSchedule, mondayOpen, setMon
         })
         updateState[dayOfWeek][statusTime] = value;
 
-        console.log('\n\n', "HEREHERE12", updateState, '\n\n')
+
         setSchedule(updateState)
     }
 

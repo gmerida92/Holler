@@ -54,12 +54,10 @@ function BusinessForm({ nextStep, errors, setErrors, name, setName, address, set
             return e.preventDefault()
         }
 
-        // console.log('\n\n', 'HEREHERE1', typeof latitude, latitude, '\n\n')
         if (latitude.toString().trim() == null || latitude.toString().trim() == "" || latitude === " ") {
             setErrors(['Latitude : Field Required'])
             return e.preventDefault()
         }
-        // console.log('\n\n', 'HEREHERE2', typeof longitude, longitude, '\n\n')
         if (longitude.toString().trim() == null || longitude.toString().trim() == "" || longitude === " ") {
             setErrors(['Longitude : Field Required'])
             return e.preventDefault()

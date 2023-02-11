@@ -148,7 +148,7 @@ function EditBusinessPage() {
 
 
     const onSubmit = async (e) => {
-        // console.log('\n\n', 'HEREHERE', typeof postal, '\n\n')
+
         e.preventDefault()
 
         if (name.trim() == null || name.trim() == "" || name === " ") {
