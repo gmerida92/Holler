@@ -61,6 +61,7 @@ def login():
         user = User.query.filter(User.email == form.data['credential']).first()
         login_user(user)
         return user.session_dict()
+    
     return {
         'message': 'validation Error',
         'statusCode': 401,

@@ -19,10 +19,10 @@ function formatPhoneNumber(phoneNumberString) {
 }
 
 
-function EditBusinessForm({business, name, setName, address, setAddress, address2, setAddress2,
+function EditBusinessForm({ errors, business, name, setName, address, setAddress, address2, setAddress2,
     city, setCity, state, setState, postal, setPostal, country, setCountry,
     phone, setPhone, latitude, setLatitude, longitude, setLongitude, webAddress, setWebAddress,
-    description, setDescription}) {
+    description, setDescription }) {
 
     useEffect(() => {
         setName(business?.name)
@@ -37,12 +37,21 @@ function EditBusinessForm({business, name, setName, address, setAddress, address
         setLongitude(business?.longitude)
         setWebAddress(business?.web_address)
         setDescription(business?.description)
-    },[business])
+    }, [business])
 
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', width: '50%', paddingBottom: 5, paddingTop: 5, gap: 3 }}>
             <Typography variant='h4' sx={{ display: 'flex', fontWeight: 'bold' }}>Edit Business Details</Typography>
+            {errors.length > 0 && <Box component="ul" sx={{ color: 'red', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                {errors.map((error) => {
+                    return (
+                        <Box component="li" sx={{ color: 'red' }}>
+                            <Typography sx={{ color: 'red' }}>{`${error.split(':')[0].split('_').join(' ')} : ${error.split(':')[1]}`}</Typography>
+                        </Box>
+                    )
+                })}
+            </Box>}
             <Grid container spacing={3}>
                 <Grid item xs={12}>
                     <TextField

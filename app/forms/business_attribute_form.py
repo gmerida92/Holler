@@ -3,8 +3,8 @@ from wtforms import StringField, BooleanField, DecimalField, SelectField, Intege
 from wtforms.validators import DataRequired, Email, ValidationError
 
 class BusinessAttributeForm(FlaskForm):
-    health_score=StringField("Health Score")
-    price_range=IntegerField("Price Range")
+    health_score=StringField("Health Score", validators=[DataRequired()])
+    price_range=IntegerField("Price Range",validators=[DataRequired()])
     free_wifi=BooleanField("Free Wi-Fi", false_values=(False, 'false', ''))
     parking_lot=BooleanField("Parking Lot", false_values=(False, 'false', ''))
     valet_parking=BooleanField("Valet Parking", false_values=(False, 'false', ''))

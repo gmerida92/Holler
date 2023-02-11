@@ -19,6 +19,13 @@ def user_exists(form, field):
 #     if user:
 #         raise ValidationError('Username is already in use.')
 
+# def only_white_space_exists(form, field):
+#     # first_Name = form.data['first_name']
+#     inputData = field.data
+#     if inputData.isspace():
+#         inputLabel = inputData.split('_')
+#         inputLableString = ' '.join(inputLabel)
+#         raise ValidationError(f'{inputLableString} Needs Characters')
 
 class SignUpForm(FlaskForm):
     first_name = StringField('First Name', validators=[DataRequired()])

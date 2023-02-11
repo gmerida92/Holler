@@ -6,24 +6,25 @@ import { login } from '../../../store/session';
 import NavigationBarNonActive from '../../NavigationBar/NavigationBarNonActive';
 import DemoUserButton from '../Buttons/DemoUserButton';
 
-import { Box, TextField, Button, Typography, Paper} from '@mui/material';
+import { Box, TextField, Button, Typography, Paper } from '@mui/material';
 
 
 function LoginPage() {
   // const [errors, setErrors] = useState([]);
   const [credential, setCredential] = useState('');
   const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState([])
 
-  const user = useSelector(state => state.session.user);
   const dispatch = useDispatch();
+  const user = useSelector(state => state.session.user);
 
   const onLogin = async (e) => {
     e.preventDefault();
-    await dispatch(login(credential, password));
-    // const data = await dispatch(login(credential, password));
-    // if (data) {
-    //   setErrors(data);
-    // }
+    const response = await dispatch(login(credential, password))
+    if (response) {
+      setErrors(response);
+    }
+
   };
 
   const updateCredential = (e) => {
@@ -48,11 +49,37 @@ function LoginPage() {
             <Box sx={{ display: 'flex', justifyContent: 'center', padding: 1 }}>
               <Typography sx={{ display: 'flex', justifyContent: 'center' }} variant='h4'>Login</Typography>
             </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'center', padding: 1 }}>
-              <TextField type='email' value={credential} onChange={updateCredential} label='Email' placeholder='Enter an Email' variant='outlined' fullWidth required />
+            <Box component="ul" sx={{ color: 'red', display:'flex', flexDirection:'column', alignItems:'center'}}>
+              {errors.length > 0 && errors.map((error) => {
+                return (
+                  <Box component="li" sx={{ color: 'red' }}>
+                    <Typography sx={{ color: 'red' }}>{error.split(":")[1]}</Typography>
+                  </Box>
+                )
+              })}
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'center', padding: 1 }}>
-              <TextField type='password' value={password} onChange={updatePassword} label='Password' placeholder='Enter a Password' variant='outlined' fullWidth required />
+              <TextField
+                type='email'
+                value={credential}
+                onChange={updateCredential}
+                label='Email'
+                placeholder='Enter an Email'
+                variant='outlined'
+                fullWidth
+                required
+              />
+            </Box>
+            <Box sx={{ display: 'flex', justifyContent: 'center', padding: 1 }}>
+              <TextField
+                type='password'
+                value={password}
+                onChange={updatePassword}
+                label='Password'
+                placeholder='Enter a Password'
+                variant='outlined'
+                fullWidth
+                required />
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'center', padding: 1 }}>
               <Button sx={{ background: '#f55d98', color: 'white', fontWeight: 'bold', mr: 1 }} type='submit' variant='contained' >Login</Button>

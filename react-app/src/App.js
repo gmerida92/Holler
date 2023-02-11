@@ -53,7 +53,7 @@ function App() {
         <Route path='/profile' exact={true}>
           <ProfilePage />
         </Route>
-        <Route path='/business/new' exact={true}>
+        <Route path='/new/business' exact={true}>
           <CreateBusinessPage />
         </Route>
         <Route path='/business/edit/:id' exact={true}>
@@ -67,45 +67,7 @@ function App() {
         </Route>
       </Switch>
 
-      {/* <Switch>
-      <NavigationBar />
-        <Route path='/' exact={true}>
-          <LandingPage />
-        </Route>
-        <Route path='/login' exact={true}>
-          <LoginForm />
-        </Route>
-        <Route path='/sign-up' exact={true}>
-          <SignUpForm />
-        </Route>
-        <Route path='/myprofile' exact={true}>
-          <ProfilePage />
-        </Route>
-        <Route path='/businesses/:id' exact={true}>
-          <BusinessPage />
-        </Route>
-      </Switch> */}
     </>
-    // <BrowserRouter>
-    //   <NavBar />
-    //   <Switch>
-    //     <Route path='/login' exact={true}>
-    //       <LoginForm />
-    //     </Route>
-    //     <Route path='/sign-up' exact={true}>
-    //       <SignUpForm />
-    //     </Route>
-    //     <ProtectedRoute path='/users' exact={true} >
-    //       <UsersList/>
-    //     </ProtectedRoute>
-    //     <ProtectedRoute path='/users/:userId' exact={true} >
-    //       <User />
-    //     </ProtectedRoute>
-    //     <Route path='/' exact={true} >
-    //       <h1>My Home Page</h1>
-    //     </Route>
-    //   </Switch>
-    // </BrowserRouter>
   );
 }
 
