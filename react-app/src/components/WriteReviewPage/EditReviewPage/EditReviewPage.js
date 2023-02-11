@@ -31,8 +31,20 @@ function EditReviewPage() {
 
     const [rating, setRating] = useState(null);
     const [description, setDescription] = useState(null);
+    const [errors, setErrors] = useState([]);
 
     const onSubmit = (e) => {
+
+        if (rating === 0 || rating === null) {
+            setErrors(['Rating : Must be 1 or greater'])
+            return e.preventDefault()
+        }
+
+        if (description?.trim() == null || description?.trim() == "" || description === " " || description?.length === 0 || description === null) {
+            setErrors(['Review : Field Required'])
+            return e.preventDefault()
+        }
+
         const updatedReview = {
             stars: rating,
             review: description
@@ -51,6 +63,15 @@ function EditReviewPage() {
             <NavigationBarActive />
             <Paper sx={{ height: '100vh', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: 5, gap: 3 }}>
                 <Typography variant='h4' sx={{ display: 'flex', fontWeight: 'bold' }}>Edit Review</Typography>
+                {errors.length > 0 && <Box component="ul" sx={{ color: 'red', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    {errors.map((error) => {
+                        return (
+                            <Box component="li" sx={{ color: 'red' }}>
+                                <Typography sx={{ color: 'red' }}>{`${error.split(':')[0].split('_').join(' ')} : ${error.split(':')[1]}`}</Typography>
+                            </Box>
+                        )
+                    })}
+                </Box>}
                 <EditRating {...{ review, rating, setRating }} />
                 <EditReviewDescription {...{ review, description, setDescription }} />
                 <EditReviewButtons onSubmit={onSubmit} />

@@ -20,6 +20,7 @@ import HoursForm from './HoursForm/HoursForm';
 // import ReviewForms from './ReviewRorm/ReviewForm'
 
 function convertTimeObjectToString(dateTimeObject) {
+    if (!dateTimeObject) return ''
     const timeString = dateTimeObject.toTimeString();
     const onlyTimeString = timeString.slice(0, 5);
     return onlyTimeString;
@@ -70,32 +71,32 @@ function CreateBusinessPage() {
 
     const [schedule, setSchedule] = useState({
         Monday: {
-            openTime: null,
-            closeTime: null
+            openTime: '',
+            closeTime: ''
         },
         Tuesday: {
-            openTime: null,
-            closeTime: null
+            openTime: '',
+            closeTime: ''
         },
         Wednesday: {
-            openTime: null,
-            closeTime: null
+            openTime: '',
+            closeTime: ''
         },
         Thursday: {
-            openTime: null,
-            closeTime: null
+            openTime: '',
+            closeTime: ''
         },
         Friday: {
-            openTime: null,
-            closeTime: null
+            openTime: '',
+            closeTime: ''
         },
         Saturday: {
-            openTime: null,
-            closeTime: null
+            openTime: '',
+            closeTime: ''
         },
         Sunday: {
-            openTime: null,
-            closeTime: null
+            openTime: '',
+            closeTime: ''
         }
     })
     const [mondayOpen, setMondayOpen] = useState(null);
@@ -113,16 +114,43 @@ function CreateBusinessPage() {
     const [sundayOpen, setSundayOpen] = useState(null);
     const [sundayClose, setSundayClose] = useState(null);
 
+    const [errors, setErrors] = useState([])
+
 
     const sessionUser = useSelector((state) => state.session.user)
 
     const nextStep = () => {
+        setErrors([])
         setStep(step + 1)
     }
 
     const prevStep = () => {
+        setErrors([])
         setStep(step - 1)
     }
+
+    // const validateBusinessDetail = async (e) => {
+
+    //     let newBusinessData = {
+    //         name: name,
+    //         address: address,
+    //         address_2: address2,
+    //         city: city,
+    //         state: state,
+    //         postal_code: postal,
+    //         country: country,
+    //         phone: phone,
+    //         web_address: webAddress,
+    //         is_open: true,
+    //         latitude: latitude,
+    //         longitude: longitude,
+    //         description: description
+    //     };
+    //     let newBusiness = await dispatch(createNewBusiness(newBusinessData));
+    //     if (!newBusiness.id) { setErrors(newBusiness) }
+
+    //     return newBusiness
+    // }
 
     const onSubmit = async (e) => {
         e.preventDefault()
@@ -143,6 +171,7 @@ function CreateBusinessPage() {
             description: description
         };
         let newBusiness = await dispatch(createNewBusiness(newBusinessData));
+        if (!newBusiness.id) { setErrors(newBusiness) }
 
 
         let newAttributesData = {
@@ -166,26 +195,36 @@ function CreateBusinessPage() {
             good_for_kids: goodForKids,
             moderate_noise: moderateNoise,
         };
-        dispatch(createAttributeForBusiness(newBusiness.id, newAttributesData))
+        let newAttributes = await dispatch(createAttributeForBusiness(newBusiness.id, newAttributesData))
+        if (!newAttributes.id) { setErrors(newAttributes) }
 
 
-        categories.forEach((category) => {
-            let newCategory = {
-                category_name: category
+        if (!categories.length) {
+            let newCategoryObject = {
+                category_name: ''
             }
-            dispatch(createCategoryForBusiness(newBusiness.id, newCategory))
-        })
+            let newCategory = await dispatch(createCategoryForBusiness(newBusiness.id, newCategoryObject))
+            if (!newCategory.id) { setErrors(newCategory) }
+        } else {
+            categories.forEach(async (category) => {
+                let newCategoryObject = {
+                    category_name: category
+                }
+                let newCategory = await dispatch(createCategoryForBusiness(newBusiness.id, newCategoryObject))
+                if (!newCategory.id) { setErrors(newCategory) }
+            })
+        }
 
 
-        Object.keys(schedule).forEach((day) => {
-            let newHours = {
+        Object.keys(schedule).forEach(async (day) => {
+            let newHoursObject = {
                 day: day,
                 open_time: convertTimeObjectToString(schedule[day]['openTime']),
                 close_time: convertTimeObjectToString(schedule[day]['closeTime'])
             }
 
-            dispatch(createHoursForBusiness(newBusiness.id, newHours))
-
+            let newHours = await dispatch(createHoursForBusiness(newBusiness.id, newHoursObject))
+            if (!newHours.id) { setErrors(newHours) }
         })
 
         history.push('/')
@@ -199,14 +238,14 @@ function CreateBusinessPage() {
             <Paper sx={{ height: '100vh', display: 'flex', justifyContent: 'center' }}>
                 {step === 1 && <BusinessForm nextStep={nextStep}
                     {...{
-                        name, setName, address, setAddress, address2, setAddress2,
+                        errors, setErrors, name, setName, address, setAddress, address2, setAddress2,
                         city, setCity, state, setState, postal, setPostal, country, setCountry,
                         phone, setPhone, latitude, setLatitude, longitude, setLongitude, webAddress, setWebAddress,
                         description, setDescription
                     }} />}
                 {step === 2 && <AttributesForm prevStep={prevStep} nextStep={nextStep}
                     {...{
-                        healthScore, setHealthScore, priceRange, setPriceRange,
+                        errors, setErrors, healthScore, setHealthScore, priceRange, setPriceRange,
                         freeWiFi, setFreeWiFi, parkingLot, setParkingLot, valetParking, setValetParking,
                         streetParking, setStreetParking, garageParking, setGarageParking, bikeParking, setBikeParking,
                         businessAcceptsCryptocurrency, setBusinessAcceptsCryptocurrency, businessAcceptsCreditCard, setBusinessAcceptsCreditCard,
@@ -214,13 +253,17 @@ function CreateBusinessPage() {
                         takesReservation, setTakesReservation, offersCatering, setOffersCatering, offersTakeout, setOffersTakeout,
                         offersDelivery, setOffersDelivery, goodForKids, setGoodForKids, moderateNoise, setModerateNoise
                     }} />}
-                {step === 3 && <CategoryForm prevStep={prevStep} nextStep={nextStep} {...{ setCategories, inputs, setInputs }} />}
-                {step === 4 && <HoursForm prevStep={prevStep} onSubmit={onSubmit} {...{
-                    schedule, setSchedule, mondayOpen, setMondayOpen, mondayClose, setMondayClose,
-                    tuesdayOpen, setTuesdayOpen, tuesdayClose, setTuesdayClose, wednesdayOpen, setWednesdayOpen, wednesdayClose, setWednesdayClose,
-                    thursdayOpen, setThursdayOpen, thursdayClose, setThursdayClose, fridayOpen, setFridayOpen, fridayClose, setFridayClose, saturdayOpen,
-                    setSaturdayOpen, saturdayClose, setSaturdayClose, sundayOpen, setSundayOpen, sundayClose, setSundayClose
-                }} />}
+                {step === 3 && <CategoryForm prevStep={prevStep} nextStep={nextStep}
+                    {...{
+                        errors, setErrors, categories, setCategories, inputs, setInputs
+                    }} />}
+                {step === 4 && <HoursForm prevStep={prevStep} onSubmit={onSubmit}
+                    {...{
+                        errors, setErrors, schedule, setSchedule, mondayOpen, setMondayOpen, mondayClose, setMondayClose,
+                        tuesdayOpen, setTuesdayOpen, tuesdayClose, setTuesdayClose, wednesdayOpen, setWednesdayOpen, wednesdayClose, setWednesdayClose,
+                        thursdayOpen, setThursdayOpen, thursdayClose, setThursdayClose, fridayOpen, setFridayOpen, fridayClose, setFridayClose, saturdayOpen,
+                        setSaturdayOpen, saturdayClose, setSaturdayClose, sundayOpen, setSundayOpen, sundayClose, setSundayClose
+                    }} />}
                 {/* {step === 5 && <ReviewForms prevStep={prevStep} {...{
                     name, setName, address, setAddress, address2, setAddress2,
                     city, setCity, state, setState, postal, setPostal, country, setCountry,

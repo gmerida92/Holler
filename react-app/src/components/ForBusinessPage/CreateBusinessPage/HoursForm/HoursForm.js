@@ -25,7 +25,7 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 //     return newDateTimeObject;
 // }
 
-function HoursForm({ prevStep, onSubmit, schedule, setSchedule, mondayOpen, setMondayOpen, mondayClose, setMondayClose,
+function HoursForm({ prevStep, onSubmit, errors, setErrors, schedule, setSchedule, mondayOpen, setMondayOpen, mondayClose, setMondayClose,
     tuesdayOpen, setTuesdayOpen, tuesdayClose, setTuesdayClose, wednesdayOpen, setWednesdayOpen, wednesdayClose, setWednesdayClose,
     thursdayOpen, setThursdayOpen, thursdayClose, setThursdayClose, fridayOpen, setFridayOpen, fridayClose, setFridayClose, saturdayOpen,
     setSaturdayOpen, saturdayClose, setSaturdayClose, sundayOpen, setSundayOpen, sundayClose, setSundayClose }) {
@@ -39,9 +39,56 @@ function HoursForm({ prevStep, onSubmit, schedule, setSchedule, mondayOpen, setM
         setSchedule(updateState)
     }
 
+    const validateAndSubmit = async (e, submitForm) => {
+        if (
+            mondayOpen == null || mondayOpen === " "
+            ||
+            mondayClose == null || mondayClose === " "
+            ||
+            tuesdayOpen == null || tuesdayOpen === " "
+            ||
+            tuesdayClose == null || tuesdayClose === " "
+            ||
+            wednesdayOpen == null || wednesdayOpen === " "
+            ||
+            wednesdayClose == null || wednesdayClose === " "
+            ||
+            thursdayOpen == null || thursdayOpen === " "
+            ||
+            thursdayClose == null || thursdayClose === " "
+            ||
+            fridayOpen == null || fridayOpen === " "
+            ||
+            fridayClose == null || fridayClose === " "
+            ||
+            saturdayOpen == null || saturdayOpen === " "
+            ||
+            saturdayClose == null || saturdayClose === " "
+            ||
+            sundayOpen == null || sundayOpen === " "
+            ||
+            sundayClose == null || sundayClose === " "
+        ) {
+            setErrors(['Business Hours of Operation : All Fields Required'])
+            return e.preventDefault()
+        }
+
+        setErrors([])
+        submitForm()
+    }
+
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', width: '50%', paddingBottom: 5, paddingTop: 5, gap: 3 }}>
             <Typography variant='h4' sx={{ display: 'flex', justifyContent: 'center', fontWeight: 'bold' }}>Add Hours of Operation</Typography>
+            {errors.length > 0 && <Box component="ul" sx={{ color: 'red', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                {errors.map((error) => {
+                    return (
+                        <Box component="li" sx={{ color: 'red' }}>
+                            <Typography sx={{ color: 'red' }}>{`${error.split(':')[0].split('_').join(' ')} : ${error.split(':')[1]}`}</Typography>
+                        </Box>
+                    )
+                })}
+            </Box>}
             <Grid container spacing={2} >
 
 
@@ -271,9 +318,9 @@ function HoursForm({ prevStep, onSubmit, schedule, setSchedule, mondayOpen, setM
                 </Grid>
 
                 <Grid item sx={{ display: 'flex', flexDirection: 'row', gap: 3, justifyContent: 'center', paddingTop: 5 }} xs={12}>
-                    <Button onClick={prevStep}  variant="contained" sx={{ background: '#f55d98', color: 'white', fontWeight: 'bold' }}>Back</Button>
+                    <Button onClick={prevStep} variant="contained" sx={{ background: '#f55d98', color: 'white', fontWeight: 'bold' }}>Back</Button>
                     {/* <Button onClick={nextStep}  variant="contained" sx={{ background: '#f55d98', color: 'white', fontWeight: 'bold' }}>Continue</Button> */}
-                    <Button type='submit' onClick={onSubmit} variant="contained" sx={{ background: '#f55d98', color: 'white', fontWeight: 'bold' }}>Create Business</Button>
+                    <Button type='submit' onClick={(e) => validateAndSubmit(e, onSubmit)} variant="contained" sx={{ background: '#f55d98', color: 'white', fontWeight: 'bold' }}>Create Business</Button>
                 </Grid>
             </Grid>
         </Box >

@@ -53,6 +53,7 @@ function EditBusinessPage() {
     const businessCategory = useSelector((state) => state?.singleCategory[id]) || ''
     const businessHour = useSelector((state) => state.singleBusinessHour[id]) || ''
 
+    const [errors, setErrors] = useState([])
 
     const [name, setName] = useState(business?.name);
     const [address, setAddress] = useState(business?.address);
@@ -147,7 +148,86 @@ function EditBusinessPage() {
 
 
     const onSubmit = async (e) => {
+        // console.log('\n\n', 'HEREHERE', typeof postal, '\n\n')
         e.preventDefault()
+
+        if (name.trim() == null || name.trim() == "" || name === " ") {
+            setErrors(['Business Name : Field Required'])
+            return e.preventDefault()
+        }
+        if (address.trim() == null || address.trim() == "" || address === " ") {
+            setErrors(['Address : Field Required'])
+            return e.preventDefault()
+        }
+        if (city.trim() == null || city.trim() == "" || city === " ") {
+            setErrors(['City : Field Required'])
+            return e.preventDefault()
+        }
+        if (state.trim() == null || state.trim() == "" || state === " ") {
+            setErrors(['State : Field Required'])
+            return e.preventDefault()
+        }
+        
+        if (postal.toString().trim() == null || postal.toString().trim() == "" || postal === " ") {
+            setErrors(['Postal Code : Field Required'])
+            return e.preventDefault()
+        }
+        if (phone.trim() == null || phone.trim() == "" || phone === " ") {
+            setErrors(['Phone Number : Field Required'])
+            return e.preventDefault()
+        }
+
+        if (latitude.toString().trim() == null || latitude.toString().trim() == "" || latitude === " ") {
+            setErrors(['Latitude : Field Required'])
+            return e.preventDefault()
+        }
+
+        if (longitude.toString().trim() == null || longitude.toString().trim() == "" || longitude === " ") {
+            setErrors(['Longitude : Field Required'])
+            return e.preventDefault()
+        }
+
+        for (let i = 0; i < inputs.length; i++) {
+            let input = inputs[i][0]
+            if (input.trim() == null || input.trim() == "" || input.length === 0 || input === " ") {
+                setErrors(['Category : Field Required'])
+                
+                return e.preventDefault()
+            }
+        }
+
+        if (
+            mondayOpen == null || mondayOpen === " "
+            ||
+            mondayClose == null || mondayClose === " "
+            ||
+            tuesdayOpen == null || tuesdayOpen === " "
+            ||
+            tuesdayClose == null || tuesdayClose === " "
+            ||
+            wednesdayOpen == null || wednesdayOpen === " "
+            ||
+            wednesdayClose == null || wednesdayClose === " "
+            ||
+            thursdayOpen == null || thursdayOpen === " "
+            ||
+            thursdayClose == null || thursdayClose === " "
+            ||
+            fridayOpen == null || fridayOpen === " "
+            ||
+            fridayClose == null || fridayClose === " "
+            ||
+            saturdayOpen == null || saturdayOpen === " "
+            ||
+            saturdayClose == null || saturdayClose === " "
+            ||
+            sundayOpen == null || sundayOpen === " "
+            ||
+            sundayClose == null || sundayClose === " "
+        ) {
+            setErrors(['Business Hours of Operation : All Fields Required'])
+            return e.preventDefault()
+        }
 
 
         let updatedBusinessData = {
@@ -209,6 +289,8 @@ function EditBusinessPage() {
             dispatch(updateHoursForBusiness(schedule[day]['id'], id, hours))
         })
 
+        setErrors([])
+
         history.push('/profile')
     }
 
@@ -219,13 +301,13 @@ function EditBusinessPage() {
             <NavigationBarActive />
             <Paper sx={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'column', alignItems: "center" }}>
                 <EditBusinessForm {...{
-                    business, name, setName, address, setAddress, address2, setAddress2,
+                    errors, setErrors, business, name, setName, address, setAddress, address2, setAddress2,
                     city, setCity, state, setState, postal, setPostal, country, setCountry,
                     phone, setPhone, latitude, setLatitude, longitude, setLongitude, webAddress, setWebAddress,
                     description, setDescription
                 }} />
                 <EditAttributeForm {...{
-                    businessAttribute, healthScore, setHealthScore, priceRange, setPriceRange,
+                    errors, setErrors, businessAttribute, healthScore, setHealthScore, priceRange, setPriceRange,
                     freeWiFi, setFreeWiFi, parkingLot, setParkingLot, valetParking, setValetParking,
                     streetParking, setStreetParking, garageParking, setGarageParking, bikeParking, setBikeParking,
                     businessAcceptsCryptocurrency, setBusinessAcceptsCryptocurrency, businessAcceptsCreditCard, setBusinessAcceptsCreditCard,
@@ -233,14 +315,25 @@ function EditBusinessPage() {
                     takesReservation, setTakesReservation, offersCatering, setOffersCatering, offersTakeout, setOffersTakeout,
                     offersDelivery, setOffersDelivery, goodForKids, setGoodForKids, moderateNoise, setModerateNoise
                 }} />
-                <EditCatgoryForm {...{ businessCategory, inputs, setInputs }} />
+                <EditCatgoryForm {...{
+                    errors, setErrors, businessCategory, inputs, setInputs
+                }} />
                 <EditHoursForm {...{
-                    businessHour, schedule, setSchedule, mondayOpen, setMondayOpen, mondayClose, setMondayClose,
+                    errors, setErrors, businessHour, schedule, setSchedule, mondayOpen, setMondayOpen, mondayClose, setMondayClose,
                     tuesdayOpen, setTuesdayOpen, tuesdayClose, setTuesdayClose, wednesdayOpen, setWednesdayOpen, wednesdayClose, setWednesdayClose,
                     thursdayOpen, setThursdayOpen, thursdayClose, setThursdayClose, fridayOpen, setFridayOpen, fridayClose, setFridayClose, saturdayOpen,
                     setSaturdayOpen, saturdayClose, setSaturdayClose, sundayOpen, setSundayOpen, sundayClose, setSundayClose
                 }} />
-                <Box sx={{ paddingBottom: 5 }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: 10, gap: 3}}>
+                    {errors.length > 0 && <Box component="ul" sx={{ color: 'red', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        {errors.map((error) => {
+                            return (
+                                <Box component="li" sx={{ color: 'red' }}>
+                                    <Typography sx={{ color: 'red' }}>{`${error.split(':')[0].split('_').join(' ')} : ${error.split(':')[1]}`}</Typography>
+                                </Box>
+                            )
+                        })}
+                    </Box>}
                     <Button type='submit' onClick={onSubmit} variant="contained" sx={{ background: '#f55d98', color: 'white', fontWeight: 'bold' }}>Update Business</Button>
                 </Box>
             </Paper>

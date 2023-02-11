@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 
 import { Box, Button, Typography, Grid, Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select } from '@mui/material';
 
-function AttributesForm({ prevStep, nextStep,
+function AttributesForm({ errors, setErrors, prevStep, nextStep,
     healthScore, setHealthScore, priceRange, setPriceRange,
     freeWiFi, setFreeWiFi, parkingLot, setParkingLot, valetParking, setValetParking,
     streetParking, setStreetParking, garageParking, setGarageParking, bikeParking, setBikeParking,
@@ -16,9 +16,32 @@ function AttributesForm({ prevStep, nextStep,
     offersDelivery, setOffersDelivery, goodForKids, setGoodForKids, moderateNoise, setModerateNoise
 }) {
 
+    const onValidate = (e, formPageStep) => {
+        if (healthScore.trim() == null || healthScore.trim() == "" || healthScore === " ") {
+            setErrors(['Health Score : Field Required'])
+            return e.preventDefault()
+        }
+        if (priceRange.toString().trim() == null || priceRange.toString().trim() == "" || priceRange === " ") {
+            setErrors(['Price Range : Field Required'])
+            return e.preventDefault()
+        }
+
+        // setErrors([])
+        formPageStep()
+    }
+
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', width: '30%', paddingBottom: 5, paddingTop: 5, gap: 3 }}>
             <Typography variant='h4' sx={{ display: 'flex', fontWeight: 'bold' }}>Add Attributes to Your Business</Typography>
+            {errors.length > 0 && <Box component="ul" sx={{ color: 'red', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                {errors.map((error) => {
+                    return (
+                        <Box component="li" sx={{ color: 'red' }}>
+                            <Typography sx={{ color: 'red' }}>{`${error.split(':')[0].split('_').join(' ')} : ${error.split(':')[1]}`}</Typography>
+                        </Box>
+                    )
+                })}
+            </Box>}
             <Grid container spacing={2} columns={2}>
                 <Grid item xs={1} >
                     <FormControl fullWidth size="small">
@@ -108,8 +131,8 @@ function AttributesForm({ prevStep, nextStep,
                     <FormControlLabel control={<Checkbox checked={moderateNoise} onChange={(e) => setModerateNoise(e.target.checked)} />} label="Moderate Noise" />
                 </Grid>
                 <Grid item sx={{ display: 'flex', flexDirection: 'row', gap: 3, justifyContent: 'center' }} xs={12}>
-                    <Button onClick={prevStep} type='submit' variant="contained" sx={{ background: '#f55d98', color: 'white', fontWeight: 'bold' }}>Back</Button>
-                    <Button onClick={nextStep} type='submit' variant="contained" sx={{ background: '#f55d98', color: 'white', fontWeight: 'bold' }}>Continue</Button>
+                    <Button onClick={(e) => onValidate(e, prevStep)} type='submit' variant="contained" sx={{ background: '#f55d98', color: 'white', fontWeight: 'bold' }}>Back</Button>
+                    <Button onClick={(e) => onValidate(e, nextStep)} type='submit' variant="contained" sx={{ background: '#f55d98', color: 'white', fontWeight: 'bold' }}>Continue</Button>
                 </Grid>
             </Grid>
         </Box>

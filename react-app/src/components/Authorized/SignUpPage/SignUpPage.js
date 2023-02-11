@@ -16,17 +16,18 @@ function SignUpPage() {
   const [lastName, setlastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState([])
 
   const dispatch = useDispatch();
   const user = useSelector(state => state.session.user);
 
   const onSignUp = async (e) => {
     e.preventDefault();
-    await dispatch(signUp(firstName, lastName, email, password));
+    const response = await dispatch(signUp(firstName, lastName, email, password));
     // const data = await dispatch(signUp(firstName, lastName, email, password));
-    // if (data) {
-    //   setErrors(data)
-    // }
+    if (response) {
+      setErrors(response)
+    }
   };
 
   const updateFirstName = (e) => {
@@ -59,15 +60,56 @@ function SignUpPage() {
             <Box sx={{ display: 'flex', justifyContent: 'center', padding: 1 }}>
               <Typography sx={{ display: 'flex', justifyContent: 'center' }} variant='h4'>Sign Up</Typography>
             </Box>
+            <Box component="ul" sx={{ color: 'red', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              {errors.length > 0 && errors.map((error) => {
+                return (
+                  <Box component="li" sx={{ color: 'red' }}>
+                    <Typography sx={{ color: 'red' }}>{`${error.split(':')[0].split('_').join(' ')} : ${error.split(':')[1]}`}</Typography>
+                  </Box>
+                )
+              })}
+            </Box>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-              <TextField sx={{ padding: 1 }} type='text' value={firstName} onChange={updateFirstName} label='First Name' placeholder='Enter First Name' variant='outlined' fullWidth required />
-              <TextField sx={{ padding: 1 }} type='text' value={lastName} onChange={updateLastName} label='Last Name' placeholder='Enter Last Name' variant='outlined' fullWidth required />
+              <TextField sx={{ padding: 1 }}
+                type='text'
+                value={firstName}
+                onChange={updateFirstName}
+                label='First Name'
+                placeholder='Enter First Name'
+                variant='outlined'
+                fullWidth
+                required />
+              <TextField sx={{ padding: 1 }}
+                type='text'
+                value={lastName}
+                onChange={updateLastName}
+                label='Last Name'
+                placeholder='Enter Last Name'
+                variant='outlined'
+                fullWidth
+                required />
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'center', padding: 1 }}>
-              <TextField type='email' value={email} onChange={updateEmail} label='Email' placeholder='Enter an Email' variant='outlined' fullWidth required />
+              <TextField
+                type='email'
+                value={email}
+                onChange={updateEmail}
+                label='Email'
+                placeholder='Enter an Email'
+                variant='outlined'
+                fullWidth
+                required />
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'center', padding: 1 }}>
-              <TextField type='password' value={password} onChange={updatePassword} label='Password' placeholder='Enter a Password' variant='outlined' fullWidth required />
+              <TextField
+                type='password'
+                value={password}
+                onChange={updatePassword}
+                label='Password'
+                placeholder='Enter a Password'
+                variant='outlined'
+                fullWidth
+                required />
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'center', padding: 1 }}>
               <Button sx={{ background: '#f55d98', color: 'white', fontWeight: 'bold' }} type='submit' variant='contained' >Sign Up</Button>

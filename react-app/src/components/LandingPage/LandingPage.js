@@ -5,6 +5,7 @@ import NavigationBarActive from '../NavigationBar/NavigationBarActive';
 import BusinessCard from './BusinessCard/BusinessCard';
 
 import { loadAllBusinesses } from '../../store/business';
+import { Container } from '@mui/material';
 
 function LandingPage() {
     const dispatch = useDispatch();
@@ -18,11 +19,13 @@ function LandingPage() {
     return (
         <>
             <NavigationBarActive />
-            {Object.keys(business).map((businessId) => {
-                return (
-                    <BusinessCard key={businessId} id={businessId} />
-                )
-            })}
+            <Container sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                {Object.keys(business).map((businessId) => {
+                    return (
+                        <BusinessCard key={businessId} id={businessId} />
+                    )
+                })}
+            </Container>
         </>
     )
 }

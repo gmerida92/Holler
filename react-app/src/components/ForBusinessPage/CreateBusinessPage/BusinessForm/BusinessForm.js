@@ -21,13 +21,70 @@ function formatPhoneNumber(phoneNumberString) {
 }
 
 
-function BusinessForm({ nextStep, name, setName, address, setAddress, address2, setAddress2, city, setCity, state, setState, postal, setPostal, country, setCountry, phone, setPhone, latitude, setLatitude, longitude, setLongitude, webAddress, setWebAddress, description, setDescription }) {
+function BusinessForm({ nextStep, errors, setErrors, name, setName, address, setAddress,
+    address2, setAddress2, city, setCity, state, setState, postal, setPostal, country,
+    setCountry, phone, setPhone, latitude, setLatitude, longitude, setLongitude, webAddress,
+    setWebAddress, description, setDescription }) {
 
+    const onValidate = (e) => {
+        if (name.trim() == null || name.trim() == "" || name === " ") {
+            // let newErrors = ['Business Name : Field Required']
+            // setErrors(newErrors)
+            setErrors(['Business Name : Field Required'])
+            return e.preventDefault()
+        }
+        if (address.trim() == null || address.trim() == "" || address === " ") {
+            setErrors(['Address : Field Required'])
+            return e.preventDefault()
+        }
+        if (city.trim() == null || city.trim() == "" || city === " ") {
+            setErrors(['City : Field Required'])
+            return e.preventDefault()
+        }
+        if (state.trim() == null || state.trim() == "" || state === " ") {
+            setErrors(['State : Field Required'])
+            return e.preventDefault()
+        }
+        if (postal.trim() == null || postal.trim() == "" || postal === " ") {
+            setErrors(['Postal Code : Field Required'])
+            return e.preventDefault()
+        }
+        if (phone.trim() == null || phone.trim() == "" || phone === " ") {
+            setErrors(['Phone Number : Field Required'])
+            return e.preventDefault()
+        }
+
+        // console.log('\n\n', 'HEREHERE1', typeof latitude, latitude, '\n\n')
+        if (latitude.toString().trim() == null || latitude.toString().trim() == "" || latitude === " ") {
+            setErrors(['Latitude : Field Required'])
+            return e.preventDefault()
+        }
+        // console.log('\n\n', 'HEREHERE2', typeof longitude, longitude, '\n\n')
+        if (longitude.toString().trim() == null || longitude.toString().trim() == "" || longitude === " ") {
+            setErrors(['Longitude : Field Required'])
+            return e.preventDefault()
+        }
+
+        // return e.preventDefault()
+        setErrors([])
+        nextStep()
+
+    }
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', width: '50%', paddingBottom: 5, paddingTop: 5, gap: 3 }}>
             <Typography variant='h4' sx={{ display: 'flex', fontWeight: 'bold' }}>Add Your Business</Typography>
+            {errors.length > 0 && <Box component="ul" sx={{ color: 'red', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                {errors.map((error) => {
+                    return (
+                        <Box component="li" sx={{ color: 'red' }}>
+                            <Typography sx={{ color: 'red' }}>{`${error.split(':')[0].split('_').join(' ')} : ${error.split(':')[1]}`}</Typography>
+                        </Box>
+                    )
+                })}
+            </Box>}
             <Typography variant='body' sx={{ display: 'flex' }}>Add information about your business below.</Typography>
+
 
             <Grid container spacing={2}>
                 <Grid item xs={12}>
@@ -39,6 +96,7 @@ function BusinessForm({ nextStep, name, setName, address, setAddress, address2, 
                         value={name}
                         fullWidth
                         size='small'
+                        required
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -50,6 +108,7 @@ function BusinessForm({ nextStep, name, setName, address, setAddress, address2, 
                         value={address}
                         fullWidth
                         size='small'
+                        required
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -61,6 +120,7 @@ function BusinessForm({ nextStep, name, setName, address, setAddress, address2, 
                         value={address2}
                         fullWidth
                         size='small'
+                        required
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -72,6 +132,7 @@ function BusinessForm({ nextStep, name, setName, address, setAddress, address2, 
                         value={city}
                         fullWidth
                         size='small'
+                        required
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -83,6 +144,7 @@ function BusinessForm({ nextStep, name, setName, address, setAddress, address2, 
                         value={state}
                         fullWidth
                         size='small'
+                        required
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -94,6 +156,7 @@ function BusinessForm({ nextStep, name, setName, address, setAddress, address2, 
                         value={postal}
                         fullWidth
                         size='small'
+                        required
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -105,6 +168,7 @@ function BusinessForm({ nextStep, name, setName, address, setAddress, address2, 
                         value={"United States of America"}
                         fullWidth
                         size='small'
+                        required
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -116,6 +180,7 @@ function BusinessForm({ nextStep, name, setName, address, setAddress, address2, 
                         value={phone}
                         fullWidth
                         size='small'
+                        required
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -127,6 +192,7 @@ function BusinessForm({ nextStep, name, setName, address, setAddress, address2, 
                         value={webAddress}
                         fullWidth
                         size='small'
+                        required
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -134,10 +200,11 @@ function BusinessForm({ nextStep, name, setName, address, setAddress, address2, 
                         type="number"
                         variant='outlined'
                         label='Latitude'
-                        onChange={(e) => setLatitude(parseFloat(e.target.value))}
+                        onChange={(e) => setLatitude(e.target.value)}
                         value={latitude}
                         fullWidth
                         size='small'
+                        required
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -145,10 +212,11 @@ function BusinessForm({ nextStep, name, setName, address, setAddress, address2, 
                         type="number"
                         variant='outlined'
                         label='Longitude'
-                        onChange={(e) => setLongitude(parseFloat(e.target.value))}
+                        onChange={(e) => setLongitude(e.target.value)}
                         value={longitude}
                         fullWidth
                         size='small'
+                        required
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -162,10 +230,11 @@ function BusinessForm({ nextStep, name, setName, address, setAddress, address2, 
                         variant="outlined"
                         fullWidth
                         size='small'
+                        required
                     />
                 </Grid>
                 <Grid item sx={{ display: 'flex', justifyContent: 'center' }} xs={12}>
-                    <Button onClick={nextStep} type='submit' variant="contained" sx={{ background: '#f55d98', color: 'white', fontWeight: 'bold' }}>Continue</Button>
+                    <Button onClick={onValidate} type='submit' variant="contained" sx={{ background: '#f55d98', color: 'white', fontWeight: 'bold' }}>Continue</Button>
                 </Grid>
             </Grid>
         </Box>
