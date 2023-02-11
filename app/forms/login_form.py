@@ -1,7 +1,21 @@
+import re
 from flask_wtf import FlaskForm
 from wtforms import StringField
-from wtforms.validators import DataRequired, Email, ValidationError
+from wtforms.validators import DataRequired, ValidationError
+# from wtforms.validators import DataRequired, Email, ValidationError
+# from email_validator import validate_email, EmailNotValidError
 from app.models import User
+
+
+# Define a function for
+# for validating an Email
+
+
+def checkEmail(form, field):
+    pat = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
+    email = field.data
+    if not re.match(pat, email):
+        raise ValidationError('Invalid Email')
 
 
 def user_exists(form, field):
@@ -25,12 +39,16 @@ def password_matches(form, field):
     if not user.check_password(password):
         raise ValidationError('Password Invalid')
 
-def only_white_space_exists(form, field):
-    # first_Name = form.data['first_name']
-    inputData = field.data
-    if inputData.isspace():
-        raise ValidationError('Field Needs Characters')
+
+# def only_white_space_exists(form, field):
+#     # first_Name = form.data['first_name']
+#     inputData = field.data
+#     if inputData.isspace():
+#         raise ValidationError('Field Needs Characters')
+
 
 class LoginForm(FlaskForm):
-    credential = StringField('Email', validators=[DataRequired(), Email(), user_exists])
-    password = StringField('Password', validators=[DataRequired(), only_white_space_exists, password_matches])
+    credential = StringField('Email', validators=[
+                             DataRequired(), checkEmail, user_exists])
+    password = StringField('Password', validators=[
+                           DataRequired(), checkEmail, password_matches])
