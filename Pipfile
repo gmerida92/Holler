@@ -27,6 +27,7 @@ greenlet = "==1.1.0"
 Mako = "==1.1.4"
 boto3 = "*"
 email-validator = "*"
+wtforms-html5 = "*"
 
 [dev-packages]
 

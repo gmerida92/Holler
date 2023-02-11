@@ -51,4 +51,4 @@ class LoginForm(FlaskForm):
     credential = StringField('Email', validators=[
                              DataRequired(), Email(), user_exists])
     password = StringField('Password', validators=[
-                           DataRequired(), Email(), password_matches])
+                           DataRequired(), password_matches])

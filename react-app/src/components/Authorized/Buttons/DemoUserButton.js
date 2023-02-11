@@ -16,7 +16,6 @@ function DemoUserButton() {
     const onLogin = async (e) => {
         e.preventDefault();
         await dispatch(login('demouser@gmail.com', 'password1234'));
-        // const data = await dispatch(login('demouser@gmail.com', 'password1234'));
         // if (data) {
         //     setErrors(data);
         // }
