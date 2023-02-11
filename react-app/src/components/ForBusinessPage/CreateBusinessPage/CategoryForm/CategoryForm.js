@@ -41,7 +41,6 @@ function CategoryForm({ prevStep, nextStep, errors, setErrors, categories, setCa
             }
         }
 
-        // setErrors([])
         formPageStep()
     }
 

@@ -28,8 +28,6 @@ function BusinessForm({ nextStep, errors, setErrors, name, setName, address, set
 
     const onValidate = (e) => {
         if (name.trim() == null || name.trim() == "" || name === " ") {
-            // let newErrors = ['Business Name : Field Required']
-            // setErrors(newErrors)
             setErrors(['Business Name : Field Required'])
             return e.preventDefault()
         }
@@ -63,7 +61,6 @@ function BusinessForm({ nextStep, errors, setErrors, name, setName, address, set
             return e.preventDefault()
         }
 
-        // return e.preventDefault()
         setErrors([])
         nextStep()
 
