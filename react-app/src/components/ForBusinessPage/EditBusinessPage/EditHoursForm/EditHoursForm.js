@@ -27,6 +27,7 @@ function EditHoursForm({ businessHour, schedule, setSchedule, mondayOpen, setMon
     thursdayOpen, setThursdayOpen, thursdayClose, setThursdayClose, fridayOpen, setFridayOpen, fridayClose, setFridayClose, saturdayOpen,
     setSaturdayOpen, saturdayClose, setSaturdayClose, sundayOpen, setSundayOpen, sundayClose, setSundayClose }) {
 
+
     useEffect(() => {
 
         if (businessHour?.length > 0) {
@@ -36,6 +37,7 @@ function EditHoursForm({ businessHour, schedule, setSchedule, mondayOpen, setMon
                 currentSchedule[hour.day] = {}
                 currentSchedule[hour.day]['id'] = hour.id
                 currentSchedule[hour.day]['openTime'] = convertTimeStringToObject(hour.open_time)
+
 
                 currentSchedule[hour.day]['closeTime'] = convertTimeStringToObject(hour.close_time)
 
