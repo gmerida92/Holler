@@ -74,7 +74,7 @@ function HoursForm({ prevStep, onSubmit, errors, setErrors, schedule, setSchedul
         }
 
         setErrors([])
-        submitForm()
+        submitForm(e)
     }
 
     return (
