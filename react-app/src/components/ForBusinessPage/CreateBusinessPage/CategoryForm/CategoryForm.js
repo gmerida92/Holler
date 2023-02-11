@@ -27,7 +27,6 @@ function CategoryForm({ prevStep, nextStep, errors, setErrors, categories, setCa
     }
 
     const onValidate = (e, formPageStep) => {
-        console.log('\n\n', 'HEREHERE1', typeof categories, categories, categories.length, '\n\n')
 
         if (!categories.length) {
             setErrors(['Category : Field Required'])
@@ -38,12 +37,10 @@ function CategoryForm({ prevStep, nextStep, errors, setErrors, categories, setCa
             let category = categories[i]
             if (category.trim() == null || category.trim() == "" || category.length === 0 || category === " ") {
                 setErrors(['Category : Field Required'])
-                console.log('\n\n', 'HEREHERE8', errors, '\n\n')
                 return e.preventDefault()
             }
         }
 
-        // setErrors([])
         formPageStep()
     }
 
