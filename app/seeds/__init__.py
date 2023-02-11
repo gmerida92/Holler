@@ -33,12 +33,12 @@ def seed():
 
     seed_users()
     # Add other seed functions here
+    seed_businesses()
+    seed_business_attributes()
+    seed_business_categories()
+    seed_business_hours()
     seed_reviews()
     seed_images()
-    seed_businesses()
-    seed_business_hours()
-    seed_business_categories()
-    seed_business_attributes()
 
 
 # Creates the `flask seed undo` command
