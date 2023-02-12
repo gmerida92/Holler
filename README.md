@@ -15,7 +15,7 @@ The following project is another stepping stone to improve my skills as a softwa
 7. [Future Implementation](#futute_implementation)
 
 
-<a name="technologies"/>
+
 ## Technologies
 * Flask
 * WTForms
