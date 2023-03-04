@@ -35,7 +35,7 @@ function CreateReviewPage() {
             return e.preventDefault()
         }
 
-        if (review?.trim() == null || review?.trim() == "" || review === " " || review?.length === 0 || review === null) {
+        if (review?.trim() === null || review?.trim() === "" || review === " " || review?.length === 0 || review === null) {
             setErrors(['Review : Field Required'])
             return e.preventDefault()
         }
