@@ -11,7 +11,7 @@ function RatingSubheader({ id }) {
     return (
         <Box sx={{ display: 'flex', gap: '10px', alignItems: 'center', ml: -0.75 }}>
             <Rating sx={{ fontSize: '48px' }} name="read-only" value={business?.stars ? business.stars : ''} precision={0.5} readOnly />
-            <Typography sx={{ fontSize: '16px', fontWeight: 'bold', color:'white' }}>{business?.review_count} reviews</Typography>
+            <Typography sx={{ fontSize: '16px', fontWeight: 'bold', color:'black' }}>{business?.review_count} reviews</Typography>
         </Box>
     )
 }

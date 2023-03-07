@@ -14,11 +14,11 @@ import ImageBackgroundList from './ImageBackgroundList/ImageBackgroundList';
 function TitleHeader({ id }) {
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', position: 'relative', gap: 1, paddingTop: 5, paddingBottom: 5 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, paddingTop: 5, paddingBottom: 5}}>
             <Box>
                 <ImageBackgroundList id={id} />
             </Box>
-            <Box sx={{position: 'absolute', left: '16px', paddingTop:18}}>
+            <Box>
                 <Header id={id} />
                 <RatingSubheader id={id} />
                 <AmenitiesSubheader id={id} />

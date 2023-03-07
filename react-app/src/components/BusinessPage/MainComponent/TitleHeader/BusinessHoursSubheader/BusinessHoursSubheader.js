@@ -93,8 +93,8 @@ function BusinessHoursSubheader({ id }) {
 
     return (
         <Box sx={{ display: 'flex', gap: 1 }}>
-            <Typography sx={{ fontSize: '16px', fontWeight: 'bold', color: `${businessStatus === 'Open' ? 'lightgreen' : 'lightred'}` }}>{`${businessStatus}`}</Typography>
-            <Typography sx={{ fontSize: '16px', fontWeight: 'bold', color:'white' }}>{storeHours}</Typography>
+            <Typography sx={{ fontSize: '16px', fontWeight: 'bold', color: `${businessStatus === 'Open' ? 'green' : 'red'}` }}>{`${businessStatus}`}</Typography>
+            <Typography sx={{ fontSize: '16px', fontWeight: 'bold', color:'black' }}>{storeHours}</Typography>
         </Box>
     )
 }

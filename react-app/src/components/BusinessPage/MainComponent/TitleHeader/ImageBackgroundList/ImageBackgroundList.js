@@ -18,6 +18,7 @@ function ImageBackgroundList({ id }) {
 
   const images = useSelector((state) => state?.singleBusiness[id]?.Images)
   const [showModal, setShowModal] = useState(false);
+  
   return (
     <>
       {(Array.isArray(images) && images.length > 0) && <ImageList onClick={() => setShowModal(true)} sx={{ width: '100%', height: 300, overflow: 'hidden', cursor: 'pointer' }} cols={3} rowHeight={164}>

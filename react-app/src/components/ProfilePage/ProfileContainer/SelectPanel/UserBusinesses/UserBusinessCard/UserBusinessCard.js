@@ -13,6 +13,7 @@ import ImageTwoToneIcon from '@mui/icons-material/ImageTwoTone';
 
 import { loadAllBusinessAttribute } from '../../../../../../store/business_attribute';
 import { loadAllBusinessCategory } from '../../../../../../store/business_category';
+import { loadAllReviewsByUser } from '../../../../../../store/review';
 import { deleteABusiness } from '../../../../../../store/business';
 
 
@@ -51,7 +52,7 @@ function UserBusinessCard({ business }) {
     const businessCategories = useSelector((state) => state.businessCategory[business?.id]) || ''
 
     const onDelete = (e, businessId) => {
-        dispatch(deleteABusiness(businessId))
+        return dispatch(deleteABusiness(businessId)).then(() => { dispatch(loadAllReviewsByUser()) })
     }
 
     return (

@@ -42,9 +42,9 @@ function AmenitiesSubheader({ id }) {
 
     return (
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <Typography sx={{ fontSize: '16px', fontWeight: 'bold', color: 'black', color:'white' }}>{priceRangeArray}</Typography>
-            <CircleIcon sx={{ fontSize: '5px', fontWeight: 'bold', color:'white' }} />
-            <Typography sx={{ fontSize: '16px', fontWeight: 'bold', color:'white' }}>{amenities}</Typography>
+            <Typography sx={{ fontSize: '16px', fontWeight: 'bold', color: 'black' }}>{priceRangeArray}</Typography>
+            <CircleIcon sx={{ fontSize: '5px', fontWeight: 'bold', color:'black' }} />
+            <Typography sx={{ fontSize: '16px', fontWeight: 'bold', color:'black' }}>{amenities}</Typography>
         </Box>
     )
 }
