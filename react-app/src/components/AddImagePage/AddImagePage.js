@@ -9,6 +9,10 @@ import NavigationBarActive from '../NavigationBar/NavigationBarActive';
 import CreateImageForm from './CreateImageForm/CreateImageForm';
 
 function AddImagePage() {
+    const sessionUser = useSelector((state) => state?.session.user);
+
+    if (!sessionUser) return <Redirect to="/login" />
+    
     return (
         <>
             <NavigationBarActive />
