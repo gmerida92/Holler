@@ -19,7 +19,7 @@ function ProfileContainer({ id }) {
                 <SelectPanel id={id} />
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                     <Typography>About</Typography>
-                    <Link href="https://github.com/gmerida92/Holler">Github</Link>
+                    <Link href="https://github.com/gmerida92">Github</Link>
                     <Link href="https://www.linkedin.com/in/george-merida-441988140">LinkedIn</Link>
                 </Box>
             </Box>

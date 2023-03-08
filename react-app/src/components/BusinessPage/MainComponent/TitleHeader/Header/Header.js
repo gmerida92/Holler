@@ -10,7 +10,7 @@ function Header({ id }) {
 
     return (
         <Box>
-            <Typography sx={{ fontSize: '48px', fontWeight: 'Bold' }} variant='h1'>{business?.name}</Typography>
+            <Typography sx={{ fontSize: '48px', fontWeight: 'Bold', color:'black' }} variant='h1'>{business?.name}</Typography>
         </Box>
     )
 }

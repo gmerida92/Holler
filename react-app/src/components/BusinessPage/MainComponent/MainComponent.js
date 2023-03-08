@@ -10,7 +10,7 @@ import AboutBusiness from './AboutBusiness/AboutBusiness';
 import AmenitiesMore from './AmenitiesMore/AmenitiesMore';
 import RecommendedReviews from './RecommendedReviews/RecommendedReviews';
 import ContactDetails from './ContactDetails/ContactDetails';
-import NavigationBarActive from '../../NavigationBar/NavigationBarActive';
+// import NavigationBarActive from '../../NavigationBar/NavigationBarActive';
 
 
 import { Container } from '@mui/system';

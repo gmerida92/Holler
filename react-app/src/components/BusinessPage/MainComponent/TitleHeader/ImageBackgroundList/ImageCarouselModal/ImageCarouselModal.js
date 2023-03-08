@@ -1,0 +1,80 @@
+import React, { useState } from "react";
+import { Box, MobileStepper, Button } from "@mui/material";
+import { makeStyles } from '@mui/styles'
+
+
+
+import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
+import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
+
+const useStyles = makeStyles({
+    imageSwipper: {
+        position: 'relative',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 750,
+        height: 750,
+        objectFit: 'contain'
+    },
+
+    imageContainer: {
+        display: 'flex',
+        maxWidth: "100%",
+        maxHeight: "100%"
+    },
+
+    rightArrow: {
+        position: 'absolute',
+        top: '50%',
+        right: '-18px',
+        color: "#d9d9d9",
+    },
+
+    leftArrow: {
+        position: 'absolute',
+        top: '50%',
+        left: '-18px',
+        color: "#d9d9d9",
+    },
+
+    businessMedia: {
+        borderRadius: "8%",
+        width: "600px",
+        height: "600px",
+        objectFit: 'cover'
+    }
+})
+
+function ImageCarouselModal({ images }) {
+    const classes = useStyles();
+
+    const [activeStep, setActiveStep] = useState(0);
+    const maxSteps = images?.length ? images?.length : null;
+
+    const handleNext = () => {
+        setActiveStep(activeStep === maxSteps - 1 ? 0 : activeStep + 1)
+    };
+    const handlePrevious = () => {
+        setActiveStep(activeStep === 0 ? maxSteps - 1 : activeStep - 1)
+    };
+
+    if (!Array.isArray(images) || images?.length <= 0) return null
+
+    return (
+
+        <Box className={classes.imageSwipper}>
+            {maxSteps > 1 && <Button className={classes.leftArrow} onClick={handlePrevious} ><ArrowCircleLeftIcon /></Button>}
+            {maxSteps > 1 && <Button className={classes.rightArrow} onClick={handleNext} ><ArrowCircleRightIcon /></Button>}
+            {images?.map((image, index) => {
+                return (
+                    <Box className={classes.imageContainer} key={index}>
+                        {index === activeStep && <Box className={classes.businessMedia} component="img" src={image?.image_url} key={image?.id} />}
+                    </Box>
+                )
+            })}
+        </Box>
+    )
+}
+
+export default ImageCarouselModal;

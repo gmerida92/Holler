@@ -14,6 +14,7 @@ import CreateBusinessPage from './components/ForBusinessPage/CreateBusinessPage/
 import EditBusinessPage from './components/ForBusinessPage/EditBusinessPage/EditBusinessPage';
 import CreateReviewPage from './components/WriteReviewPage/CreateReviewPage/CreateReviewPage';
 import EditReviewPage from './components/WriteReviewPage/EditReviewPage/EditReviewPage';
+import AddImagePage from './components/AddImagePage/AddImagePage';
 
 // import ProtectedRoute from './components/auth/ProtectedRoute';
 // import UsersList from './components/UsersList';
@@ -64,6 +65,9 @@ function App() {
         </Route>
         <Route path='/review/edit/:id' exact={true}>
           <EditReviewPage />
+        </Route>
+        <Route path='/image/new/business/:id' exact={true}>
+          <AddImagePage />
         </Route>
       </Switch>
 
