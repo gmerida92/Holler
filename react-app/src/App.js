@@ -15,6 +15,7 @@ import EditBusinessPage from './components/ForBusinessPage/EditBusinessPage/Edit
 import CreateReviewPage from './components/WriteReviewPage/CreateReviewPage/CreateReviewPage';
 import EditReviewPage from './components/WriteReviewPage/EditReviewPage/EditReviewPage';
 import AddImagePage from './components/AddImagePage/AddImagePage';
+import MapPageA from './components/MapComponent/map';
 
 // import ProtectedRoute from './components/auth/ProtectedRoute';
 // import UsersList from './components/UsersList';
@@ -69,6 +70,9 @@ function App() {
         <Route path='/image/new/business/:id' exact={true}>
           <AddImagePage />
         </Route>
+        {/* <Route path='/map' exact={true}>
+          <MapPageA />
+        </Route> */}
       </Switch>
 
     </>
