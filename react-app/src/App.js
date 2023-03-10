@@ -70,9 +70,6 @@ function App() {
         <Route path='/image/new/business/:id' exact={true}>
           <AddImagePage />
         </Route>
-        {/* <Route path='/map' exact={true}>
-          <MapPageA />
-        </Route> */}
       </Switch>
 
     </>
