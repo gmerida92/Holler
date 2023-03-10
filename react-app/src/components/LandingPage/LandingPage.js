@@ -3,8 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import NavigationBarActive from '../NavigationBar/NavigationBarActive';
 import BusinessCard from './BusinessCard/BusinessCard';
+import MapPageA from '../MapComponent/map';
 
 import { loadAllBusinesses } from '../../store/business';
+
+import { Box } from '@mui/material';
 import { Container } from '@mui/material';
 
 function LandingPage() {
@@ -19,12 +22,17 @@ function LandingPage() {
     return (
         <>
             <NavigationBarActive />
-            <Container sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                {Object.keys(business).map((businessId) => {
-                    return (
-                        <BusinessCard key={businessId} id={businessId} />
-                    )
-                })}
+            <Container sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', gap: 5 }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    {Object.keys(business).map((businessId) => {
+                        return (
+                            <BusinessCard key={businessId} id={businessId} />
+                        )
+                    })}
+                </Box>
+                <Box>
+                    <MapPageA />
+                </Box>
             </Container>
         </>
     )

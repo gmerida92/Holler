@@ -15,6 +15,7 @@ import EditBusinessPage from './components/ForBusinessPage/EditBusinessPage/Edit
 import CreateReviewPage from './components/WriteReviewPage/CreateReviewPage/CreateReviewPage';
 import EditReviewPage from './components/WriteReviewPage/EditReviewPage/EditReviewPage';
 import AddImagePage from './components/AddImagePage/AddImagePage';
+import MapPageA from './components/MapComponent/map';
 
 // import ProtectedRoute from './components/auth/ProtectedRoute';
 // import UsersList from './components/UsersList';
