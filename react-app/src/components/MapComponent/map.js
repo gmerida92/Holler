@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
-
+import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
+import { useSelector } from 'react-redux';
 
 function MapPageA() {
 
@@ -27,11 +27,14 @@ function MapPageA() {
         setMap(null)
     }, [])
 
+    const business = useSelector((state) => state.business)
+    console.log('\n\n', 'HERE!', business, '\n\n')
+    console.log('\n\n', 'HERE!', Object.keys(business), '\n\n')
 
     return (
         // Important! Always set the container height explicitly
 
-        <div className="map_page__container" style={{position:'sticky', top: 110}}>
+        <div className="map_page__container" style={{ position: 'sticky', top: 110 }}>
 
             <div style={{ height: '900px', width: '100vh' }}>
                 {isLoaded && <GoogleMap
@@ -40,6 +43,22 @@ function MapPageA() {
                     center={currentPosition}
                     onUnmount={onUnmount}
                 >
+                    {Object.keys(business).map((businessId) => {
+                        return (
+                            <Marker key={businessId}
+                                position={{ lat: business[businessId].latitude, lng: business[businessId].longitude }}
+                                title={business[businessId].name}
+                                icon={{
+                                    path: 'M 100 100 L 300 100 L 200 300 z',
+                                    fillColor: 'red',
+                                    fillOpacity: 1,
+                                    scale: .2,
+                                    strokeColor: 'gold',
+                                    strokeWeight: 2
+                                }}
+                                streetView={false} />
+                        )
+                    })}
                 </GoogleMap>}
             </div>
 
