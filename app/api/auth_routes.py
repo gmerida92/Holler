@@ -2,20 +2,35 @@ from flask import Blueprint, jsonify, session, request
 from app.models import User, db
 from app.forms import LoginForm
 from app.forms import SignUpForm
+from app.utility.error_handlers.error_handler import validation_errors_to_error_messages
 from flask_login import current_user, login_user, logout_user, login_required
 
 auth_routes = Blueprint('auth', __name__)
 
 
-def validation_errors_to_error_messages(validation_errors):
-    """
-    Simple function that turns the WTForms validation errors into a simple list
-    """
-    errorMessages = []
-    for field in validation_errors:
-        for error in validation_errors[field]:
-            errorMessages.append(f'{field} : {error}')
-    return errorMessages
+# def validation_errors_to_error_messages(validation_errors):
+#     """
+#     Simple function that turns the WTForms validation errors into a simple list
+#     """
+#     errorMessages = []
+#     for field in validation_errors:
+#         print("\n\n", "HERE!4", field, validation_errors, "\n\n")
+#         for error in validation_errors[field]:
+#             print("\n\n", "HERE!5", error, validation_errors[field], "\n\n")
+#             errorMessages.append(f'{field} : {error}')
+#     return errorMessages
+
+# def validation_errors_to_error_messages(validation_errors):
+#     """
+#     Simple function that turns the WTForms validation errors into a simple list
+#     """
+#     errorMessages = []
+#     for field in validation_errors:
+#         print("\n\n", "HERE!4", field, validation_errors, "\n\n")
+#         for error in validation_errors[field]:
+#             print("\n\n", "HERE!5", error, validation_errors[field], "\n\n")
+#             errorMessages.append(f'{error}')
+#     return errorMessages
 
 
 @auth_routes.route('/authenticate', methods=['GET', 'POST', 'PUT', 'DELETE'])
@@ -62,6 +77,9 @@ def login():
         login_user(user)
         return user.session_dict()
     
+    print("\n\n", "HERE!2", form.errors, "\n\n"),
+    print("\n\n", "HERE!3", validation_errors_to_error_messages(form.errors), "\n\n"),
+
     return {
         'message': 'validation Error',
         'statusCode': 401,

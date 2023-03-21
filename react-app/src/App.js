@@ -7,19 +7,15 @@ import { authenticate } from './store/session';
 
 import LandingPage from './components/LandingPage/LandingPage';
 import BusinessPage from './components/BusinessPage/BusinessPage';
-import SignUpPage from './components/Authorized/SignUpPage/SignUpPage';
-import LoginPage from './components/Authorized/LoginPage/LoginPage';
+import SignUpPage from './components/UserAuthorizePage/SignUpPage/SignUpPage';
+import LoginPage from './components/UserAuthorizePage/LoginPage/LoginPage'
 import ProfilePage from './components/ProfilePage/ProfilePage';
 import CreateBusinessPage from './components/ForBusinessPage/CreateBusinessPage/CreateBusinessPage'
 import EditBusinessPage from './components/ForBusinessPage/EditBusinessPage/EditBusinessPage';
 import CreateReviewPage from './components/WriteReviewPage/CreateReviewPage/CreateReviewPage';
 import EditReviewPage from './components/WriteReviewPage/EditReviewPage/EditReviewPage';
 import AddImagePage from './components/AddImagePage/AddImagePage';
-import MapPageA from './components/MapComponent/map';
 
-// import ProtectedRoute from './components/auth/ProtectedRoute';
-// import UsersList from './components/UsersList';
-// import User from './components/User';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -38,7 +34,6 @@ function App() {
 
   return (
     <>
-
       <Switch>
         <Route path='/' exact={true}>
           <LandingPage />
@@ -71,7 +66,6 @@ function App() {
           <AddImagePage />
         </Route>
       </Switch>
-
     </>
   );
 }

@@ -11,11 +11,11 @@ from app.models import User
 # for validating an Email
 
 
-def checkEmail(form, field):
-    pat = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
-    email = field.data
-    if not re.match(pat, email):
-        raise ValidationError('Invalid Email')
+# def checkEmail(form, field):
+#     pat = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
+#     email = field.data
+#     if not re.match(pat, email):
+#         raise ValidationError('Invalid Email')
 
 
 def user_exists(form, field):

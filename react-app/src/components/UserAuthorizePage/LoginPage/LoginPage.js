@@ -22,6 +22,7 @@ function LoginPage() {
     e.preventDefault();
     const response = await dispatch(login(credential, password))
     if (response) {
+      console.log('\n\n', "HERE1!", response, "\n\n")
       setErrors(response);
     }
 
@@ -49,14 +50,23 @@ function LoginPage() {
             <Box sx={{ display: 'flex', justifyContent: 'center', padding: 1 }}>
               <Typography sx={{ display: 'flex', justifyContent: 'center' }} variant='h4'>Login</Typography>
             </Box>
-            <Box component="ul" sx={{ color: 'red', display:'flex', flexDirection:'column', alignItems:'center'}}>
-              {errors.length > 0 && errors.map((error) => {
+            <Box sx={{ color: 'red', display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+              <Box component="ul" sx={{ color: 'red', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                {/* {errors.length > 0 && errors.map((error) => {
                 return (
                   <Box component="li" sx={{ color: 'red' }}>
                     <Typography sx={{ color: 'red' }}>{error.split(":")[1]}</Typography>
                   </Box>
                 )
-              })}
+              })} */}
+                {errors.length > 0 && errors.map((error) => {
+                  return (
+                    <Box component="li" sx={{ color: 'red', }}>
+                      <Typography sx={{ color: 'red' }}>{error}</Typography>
+                    </Box>
+                  )
+                })}
+              </Box>
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'center', padding: 1 }}>
               <TextField
